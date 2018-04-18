@@ -1,8 +1,7 @@
 package TankGame;
 
-
 public class TankGame {
-    private boolean isWon, isGameOver, isFinished;
+    private static boolean isWon, isGameOver, isFinished;
     
     public TankGame() {
         isWon = false;
@@ -13,8 +12,17 @@ public class TankGame {
     public static void main(String[] args) {
         final GameWorld world = new GameWorld();
         final GameClock clock = new GameClock();
+        final Window window = new Window();
         /*Create sound manager*/
         /*Create actual game window for rendering*/
+        
+        clock.addObserver(world);
+        clock.addObserver(window);
+        
+        while(!isGameOver) {
+            clock.tickClock();
+        }
+        
     }
     
 }
