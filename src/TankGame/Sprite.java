@@ -21,7 +21,7 @@ public class Sprite {
 			spritesArray[i] = spritesSheet.getSubimage(2,2,2,2);
 	}
 	
-	public void draw(Graphics g) {
-		g.drawImage(spritesArray[], 10, 10, 0);
+	public void draw(Graphics g, int i) {
+		g.drawImage(spritesArray[i], 10, 10, 0);
 	}
 }
