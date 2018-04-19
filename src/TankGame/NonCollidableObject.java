@@ -1,6 +1,6 @@
 package TankGame;
 
-public class NonCollidableObject extends GameObject{
+public abstract class NonCollidableObject extends GameObject{
     public NonCollidableObject() {
         
     }

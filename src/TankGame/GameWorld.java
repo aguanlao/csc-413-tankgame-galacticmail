@@ -8,8 +8,12 @@ public class GameWorld implements Observer{
     private ArrayList<CollidableObject> walls;
     private ArrayList<NonCollidableObject> explosions;
     
+    public GameWorld() {
+        
+    }
     
-    public void update() {
+    
+    public void update(Observable observed, Object arg) {
         
     }
     

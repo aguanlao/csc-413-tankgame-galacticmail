@@ -9,8 +9,9 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Window extends JFrame implements Observer{
-        private static final int WINDOW_WIDTH = 1200;
-        private static final int WINDOW_HEIGHT = 800;
+        private final int WINDOW_WIDTH = 1200;
+        private final int WINDOW_HEIGHT = 800;
+        private final String BACKGROUND_IMAGE = "resources" + File.separator + "background_tile.png";
         
         private final JFrame mainWindow;        
 	private BufferedImage background;
@@ -19,19 +20,14 @@ public class Window extends JFrame implements Observer{
             mainWindow = new JFrame("Tanks");
             initializeFrame();
             
-            File test = new File("resources/background_tile.png");
+            File test = new File(BACKGROUND_IMAGE);
             
             System.out.println("CWD: " + System.getProperty("user.dir"));
             try {
                 background = ImageIO.read(test);
             }   catch   (IOException e) {
                 System.out.println("Error reading background file.");
-//            }
-//            JLabel label = new JLabel(new ImageIcon(background));
-//            mainWindow.add(label);
-//            mainWindow.repaint();
-//            
-    
+                
             }
             JLabel label = new JLabel(new ImageIcon(background));
             label.setPreferredSize(new Dimension(100,100));

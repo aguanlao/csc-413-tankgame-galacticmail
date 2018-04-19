@@ -1,11 +1,17 @@
 package TankGame;
 
-public class CollidableObject extends GameObject{
-    public CollidableObject() {
+import java.awt.Rectangle;
+
+public abstract class CollidableObject extends GameObject{
+    
+    protected boolean isLive;
+    protected Rectangle hitbox;
+    
+    public boolean collides (CollidableObject object) {
+        return hitbox.intersects(object.hitbox);
     }
     
-    public boolean collides (GameObject object) {
-        //If object intersects with this, return true
-        return false;
+    public boolean isLiveNow() {
+        return isLive;
     }
 }
