@@ -21,9 +21,10 @@
 # Netbeans Project Files
 build.xml
 manifest.mf
-src/TankGame/nbproject
+/nbproject
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /bin/
 /src/TankGame/nbproject/private/
+/nbproject/private/
