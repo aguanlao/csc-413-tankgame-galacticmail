@@ -7,9 +7,15 @@ import java.io.*;
 import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class Window extends JFrame implements Observer {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final int WINDOW_WIDTH = 1200;
 	private static final int WINDOW_HEIGHT = 800;
 	
@@ -55,10 +61,20 @@ public class Window extends JFrame implements Observer {
         mainWindow.setLocationRelativeTo(null);
 
         JPanel pane = new JPanel() {
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.drawImage(background, 0, 0, null);
+                Graphics2D make_bg = (Graphics2D) g.create();
+                int w = background.getWidth();
+                int h = background.getHeight();
+                for (int y = 0; y < getHeight(); y += h)
+                	for (int x = 0; x < getWidth(); x += w)
+                		make_bg.drawImage(background, x, y, this);
             }
         };
         mainWindow.add(pane);
