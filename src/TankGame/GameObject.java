@@ -10,11 +10,12 @@ import javax.imageio.ImageIO;
 public class GameObject extends Observable {
 
     protected int x, y;
-    private Sprite sprite;
+    protected Sprite sprite;
     private BufferedImage image;
     
     public GameObject(String input) throws IOException {
     	image = ImageIO.read(new File (input) );
+        sprite = new Sprite(image);
     }
     
     public int getX() {
@@ -39,5 +40,9 @@ public class GameObject extends Observable {
     
     public int getWidth() {
     	return 0;
+    }
+    
+    public Sprite getSprite() {
+        return sprite;
     }
 }
