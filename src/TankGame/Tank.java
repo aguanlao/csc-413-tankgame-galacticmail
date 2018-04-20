@@ -1,5 +1,7 @@
 package TankGame;
 
+import java.math.*;
+
 /*  Direction defined as an angle within range of [0-359]
     inclusive. 0 degrees begins facing directly RIGHT and
     increases going counter-clockwise.
@@ -10,7 +12,6 @@ public class Tank extends CollidableObject {
     private float direction;
     private int speed;
     private int health;
-    private boolean isLive;
     
     public Tank(int x, int y) {
         this.x = x;
