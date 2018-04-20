@@ -2,6 +2,7 @@ package TankGame;
 
 public class CollidableObject extends GameObject{
     public CollidableObject() {
+    	
     }
     
     public boolean collides (GameObject object) {
