@@ -45,15 +45,6 @@ public class Window extends JFrame implements Observer {
         mainWindow.repaint();
         
     }
-    /*
-    @Override
-    public void paint(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
-        System.out.println("Drawing image.");
-        
-        g2.drawImage(background, 300, 300, null);
-        g2.drawString("Testing drawing", 100, 50);
-    }*/
     
     private void initializeFrame() {
     	mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
