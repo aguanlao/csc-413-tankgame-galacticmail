@@ -12,9 +12,8 @@ public class GameWorld implements Observer{
         
     }
     
-    
+    @Override
     public void update(Observable observed, Object arg) {
         
-    }
-    
+    }    
 }

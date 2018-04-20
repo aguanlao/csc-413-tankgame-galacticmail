@@ -1,12 +1,20 @@
 package TankGame;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Observable;
 
+import javax.imageio.ImageIO;
+
 public class GameObject extends Observable {
+
     protected int x, y;
+    private Sprite sprite;
+    private BufferedImage image;
     
-    public GameObject() {
-    
+    public GameObject(String input) throws IOException {
+    	image = ImageIO.read(new File (input) );
     }
     
     public int getX() {
@@ -25,4 +33,11 @@ public class GameObject extends Observable {
         this.y = y;
     }
     
+    public int getHeight() {
+    	return 0;
+    }
+    
+    public int getWidth() {
+    	return 0;
+    }
 }
