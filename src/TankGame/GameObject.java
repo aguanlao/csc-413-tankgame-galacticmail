@@ -12,11 +12,10 @@ public class GameObject extends Observable {
 
     protected int x, y;
     protected Sprite sprite;
-    private BufferedImage image;
     
-    public GameObject(String input) throws IOException {
-    	image = ImageIO.read(new File (input) );
-        sprite = new Sprite(image);
+    public GameObject(String fileName) throws IOException {
+
+        sprite = new Sprite(fileName);
     }
     
     public int getX() {
@@ -48,6 +47,6 @@ public class GameObject extends Observable {
     }
     
     public void repaint(Graphics graphics) {
-        graphics.drawImage(sprite.getImage(), x, y, null);
+        graphics.drawImage(sprite.getImage(0), x, y, null);
     }
 }

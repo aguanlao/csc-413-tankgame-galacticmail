@@ -8,8 +8,7 @@ import javax.imageio.ImageIO;
 
 public class GamePanel extends JPanel implements Runnable {
     private static final String BACKGROUND_IMAGE = "resources" + File.separator + "background_tile.png";
-    private static final String TANK_IMAGE = "resources" + File.separator + "Tank_grey_basic.png";
-    private static final long serialVersionUID = 1L;
+    private static final String TANK_IMAGE = "resources" + File.separator + "Tank_blue_heavy_strip60.png";
 
     private BufferedImage background;
     private Tank tank;
@@ -25,7 +24,7 @@ public class GamePanel extends JPanel implements Runnable {
         }        
         try {
             tank = new Tank(30, 30, TANK_IMAGE);
-            shot = new Shot(new Point(50,50), 0);
+            shot = new Shot(new Point(50,400), 0);
         }
         catch (IOException exception) {
             System.err.println("Failed to create tank or shot.");

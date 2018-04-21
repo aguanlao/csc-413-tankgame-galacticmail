@@ -2,6 +2,7 @@ package TankGame;
 
 import java.math.*;
 import java.io.IOException;
+import java.awt.Graphics;
 
 /*  Direction defined as an angle within range of [0-359]
     inclusive. 0 degrees begins facing directly RIGHT and
@@ -29,5 +30,11 @@ public class Tank extends CollidableObject {
         if(health <= 0) {
             isLive = false;
         }
+    }
+    
+    @Override
+    public void repaint(Graphics graphics) {
+        graphics.drawImage(sprite.getImage((int)direction), this.x++, this.y, null);
+        direction = (direction + 1) % sprite.totalFrames;
     }
 }
