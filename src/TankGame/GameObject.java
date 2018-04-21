@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Observable;
+import java.awt.Graphics;
 
 import javax.imageio.ImageIO;
 
@@ -44,5 +45,9 @@ public class GameObject extends Observable {
     
     public Sprite getSprite() {
         return sprite;
+    }
+    
+    public void repaint(Graphics graphics) {
+        graphics.drawImage(sprite.getImage(), x, y, null);
     }
 }

@@ -1,7 +1,7 @@
 package TankGame;
 
 import java.io.IOException;
-import java.awt.Rectangle;
+import java.awt.*;
 
 public abstract class CollidableObject extends GameObject{
     
@@ -10,6 +10,7 @@ public abstract class CollidableObject extends GameObject{
     }
     
     protected boolean isLive;
+        //TODO: Replace with Polygon?
     protected Rectangle hitbox;
     
     public boolean collides (CollidableObject object) {
