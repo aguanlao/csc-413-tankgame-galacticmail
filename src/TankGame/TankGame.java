@@ -12,7 +12,7 @@ public class TankGame {
     public static void main(String[] args) {
         final GameWorld world = new GameWorld();
         final GameClock clock = new GameClock();
-        final Window window = new Window();
+        final Window window = new Window(world);
         /*Create sound manager*/
         /*Create actual game window for rendering*/
         

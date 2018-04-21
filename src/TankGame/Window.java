@@ -15,10 +15,12 @@ public class Window extends JFrame implements Observer {
 //    private static final long serialVersionUID = 1L;
     private static final int WINDOW_WIDTH = 1200;
     private static final int WINDOW_HEIGHT = 800;
+    
+    private final GameWorld world;
 
-
-    public Window() {
+    public Window(GameWorld world) {
         initializeFrame();
+        this.world = world;
     }
     
     private void initializeFrame() {
