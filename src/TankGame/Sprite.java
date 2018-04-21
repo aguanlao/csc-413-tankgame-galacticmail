@@ -10,7 +10,7 @@ import java.io.IOException;
 public class Sprite {
 
 	public int columns = 60; // sprite sheet has 60 frames
-	private String spritesFile;
+	private BufferedImage spritesFile;
 	
 	// store each sprite frame here
 	//private BufferedImage[] spritesArray;
@@ -20,7 +20,8 @@ public class Sprite {
 	
 	//spritesArray = new BufferedImage[columns];
 	
-	public Sprite() {
+	public Sprite(BufferedImage imageFile) {
+            spritesFile = imageFile;
 	//	for (int i = 0; i < columns; i++)
 	//		spritesArray[i] = spritesSheet.getSubimage(2,2,2,2);
 	}
