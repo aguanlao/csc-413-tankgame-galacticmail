@@ -4,17 +4,18 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Observable;
+import java.awt.Graphics;
 
 import javax.imageio.ImageIO;
 
 public class GameObject extends Observable {
-    protected int x;
-	protected int y;
-    private Sprite sprite;
-    private BufferedImage image;
+
+    protected int x, y;
+    protected Sprite sprite;
     
-    public GameObject(String input) throws IOException {
-    	image = ImageIO.read(new File (input) );
+    public GameObject(String fileName) throws IOException {
+
+        sprite = new Sprite(fileName);
     }
     
     public int getX() {
@@ -39,5 +40,13 @@ public class GameObject extends Observable {
     
     public int getWidth() {
     	return 0;
+    }
+    
+    public Sprite getSprite() {
+        return sprite;
+    }
+    
+    public void repaint(Graphics graphics) {
+        graphics.drawImage(sprite.getImage(0), x, y, null);
     }
 }

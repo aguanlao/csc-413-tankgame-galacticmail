@@ -1,12 +1,23 @@
 package TankGame;
 
-public class CollidableObject extends GameObject{
-    public CollidableObject() {
-    	
+import java.io.IOException;
+import java.awt.*;
+
+public abstract class CollidableObject extends GameObject{
+    
+    public CollidableObject(String image) throws IOException {
+        super(image);
     }
     
-    public boolean collides (GameObject object) {
-        //If object intersects with this, return true
-        return false;
+    protected boolean isLive;
+        //TODO: Replace with Polygon?
+    protected Rectangle hitbox;
+    
+    public boolean collides (CollidableObject object) {
+        return hitbox.intersects(object.hitbox);
+    }
+    
+    public boolean isLiveNow() {
+        return isLive;
     }
 }
