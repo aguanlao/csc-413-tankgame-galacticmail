@@ -1,14 +1,7 @@
 package TankGame;
 
 import java.util.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.io.File;
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 
 public class Window extends JFrame implements Observer {
 
@@ -42,6 +35,4 @@ public class Window extends JFrame implements Observer {
         //System.out.println("Window saw clock tick.");
         repaint();
     }
-
-
 }
