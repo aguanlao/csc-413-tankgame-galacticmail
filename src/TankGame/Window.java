@@ -17,14 +17,14 @@ public class Window extends JFrame implements Observer {
     private static final int WINDOW_HEIGHT = 800;
     
     private final GameWorld world;
-
+    public GamePanel panel;
     public Window(GameWorld world) {
         initializeFrame();
         this.world = world;
     }
     
     private void initializeFrame() {
-        GamePanel panel;
+        
         setTitle("Tanks");
     	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);

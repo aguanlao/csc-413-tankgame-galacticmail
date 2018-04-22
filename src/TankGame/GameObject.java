@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 
 public class GameObject extends Observable {
 
-    protected int x, y;
+    protected int x, y, direction;
     protected Sprite sprite;
     
     public GameObject(String fileName) throws IOException {

@@ -9,9 +9,11 @@ import javax.imageio.ImageIO;
 public class GamePanel extends JPanel implements Runnable {
     private static final String BACKGROUND_IMAGE = "resources" + File.separator + "background_tile.png";
     private static final String TANK_IMAGE = "resources" + File.separator + "Tank_blue_heavy_strip60.png";
-
+    private static final String TANK_IMAGE2 = "resources" + File.separator + "Tank_red_base_strip60.png";
     private BufferedImage background;
-    private Tank tank;
+    protected static Tank tankOne;
+    protected static Tank tankTwo;
+    
     private Shot shot;
     public GamePanel() {
         File imageFile = new File(BACKGROUND_IMAGE);
@@ -23,12 +25,14 @@ public class GamePanel extends JPanel implements Runnable {
             System.err.println("Error reading background file.");
         }        
         try {
-            tank = new Tank(30, 30, TANK_IMAGE);
+            tankOne = new Tank(30, 30, TANK_IMAGE);
+            tankTwo = new Tank(1100, 700, TANK_IMAGE2);
             shot = new Shot(new Point(50,400), 0);
         }
         catch (IOException exception) {
             System.err.println("Failed to create tank or shot.");
         }
+        setFocusable(true);
     }
 
     @Override
@@ -37,7 +41,6 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void paintComponent(Graphics graphics) {
-        System.out.println("Painting GamePanel!");
         super.paintComponent(graphics);
         Graphics2D makeBackground = (Graphics2D) graphics.create();
         int w = background.getWidth();
@@ -48,7 +51,8 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
         
-        tank.repaint(graphics);
+        tankOne.repaint(graphics);
+        tankTwo.repaint(graphics);
         shot.repaint(graphics);
     }
 
