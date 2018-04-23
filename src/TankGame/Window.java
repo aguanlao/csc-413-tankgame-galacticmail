@@ -5,7 +5,10 @@ import javax.swing.*;
 
 public class Window extends JFrame implements Observer {
 
-//    private static final long serialVersionUID = 1L;
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
     private static final int WINDOW_WIDTH = 1200;
     private static final int WINDOW_HEIGHT = 800;
     

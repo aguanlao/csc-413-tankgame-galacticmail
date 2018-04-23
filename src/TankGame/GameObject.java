@@ -19,16 +19,20 @@ public class GameObject extends Observable {
         return x;
     }
     
-    public void setX(int x) {
+    public void addX(double x) {
         this.x = x;
+        if (this.x > 800)
+        	this.x = 800;
     }
     
     public double getY() {
         return y;
     }
     
-    public void setY(int y) {
+    public void addY(double y) {
         this.y = y;
+        if (this.y > 1200)
+        	this.y = 1200;
     }
     
     public double getDir() {
@@ -41,7 +45,7 @@ public class GameObject extends Observable {
     
     public void setAngle(double a) {
     // prevents out of bounds, allow complete 360 turns
-    	if(a < 0) {
+    	if (a < 0) {
     		a += 360;
     	}
     	this.angle = a % 360;
@@ -51,7 +55,7 @@ public class GameObject extends Observable {
     	return angle;
     }
     
-    public void setSpeed(int s) {
+    public void setSpeed(double s) {
     	this.speed = s;
     }
     

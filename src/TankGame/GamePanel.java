@@ -7,7 +7,8 @@ import javax.swing.*;
 import javax.imageio.ImageIO;
 
 public class GamePanel extends JPanel implements Runnable {
-    private static final String BACKGROUND_IMAGE = "resources" + File.separator + "background_tile.png";
+	private static final long serialVersionUID = 1L;
+	private static final String BACKGROUND_IMAGE = "resources" + File.separator + "background_tile.png";
     private static final String TANK_IMAGE = "resources" + File.separator + "Tank_blue_heavy_strip60.png";
     private static final String TANK_IMAGE2 = "resources" + File.separator + "Tank_red_base_strip60.png";
     private BufferedImage background;
@@ -16,6 +17,7 @@ public class GamePanel extends JPanel implements Runnable {
     protected static Tank tankTwo;
     
     private Shot shot;
+    
     public GamePanel() {
         File imageFile = new File(BACKGROUND_IMAGE);
         System.out.println("CWD: " + System.getProperty("user.dir"));
@@ -38,6 +40,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
+    	
     }
 
     @Override
@@ -53,8 +56,8 @@ public class GamePanel extends JPanel implements Runnable {
         }
         
     	tankOne.repaint(graphics);
-    	tankTwo.repaint(graphics);
-        shot.repaint(graphics);
+    	//tankTwo.repaint(graphics);
+        //shot.repaint(graphics);
     }
 
 }
