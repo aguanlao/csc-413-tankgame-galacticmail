@@ -35,6 +35,5 @@ public class Tank extends CollidableObject {
     @Override
     public void repaint(Graphics graphics) {
         graphics.drawImage(sprite.getImage((int) angle/6), (int) this.x, (int) this.y, null);
-        //this.direction = (this.direction + 1) % sprite.totalFrames;
     }
 }

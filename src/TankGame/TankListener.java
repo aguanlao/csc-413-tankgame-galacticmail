@@ -11,13 +11,15 @@ public class TankListener extends GamePanel implements KeyListener {
 	
 	@Override
 	public synchronized void keyPressed(KeyEvent e) {
-		double rads;
-		double dx;
-		double dy;
+		double rads, dx, dy;
+		double rads2, dx2, dy2;
 		
 		switch ( e.getKeyCode() )
 		{
 		// Tank One Controls
+		// W moves the tank towards the direction it is facing
+		// S backwards
+		// A/D to steer left/right
 		case KeyEvent.VK_W:
 			rads = Math.toRadians(GamePanel.tankOne.angle);
 			dx = Math.cos(rads) * 4;
@@ -45,25 +47,33 @@ public class TankListener extends GamePanel implements KeyListener {
 			break;
 			
 		// Tank Two Controls
+		// I moves the tank towards the direction it is facing
+		// K backwards
+		// J/L to steer left/right
 		case KeyEvent.VK_I:
-			GamePanel.tankTwo.y -= GamePanel.tankTwo.speed;
-			GamePanel.tankTwo.direction = (GamePanel.tankTwo.direction + 1) % 60;
-			System.out.println("I");
+			rads2 = Math.toRadians(GamePanel.tankTwo.angle);
+			dx2 = Math.cos(rads2) * 4;
+			dy2 = Math.sin(rads2) * 4;
+			
+			GamePanel.tankTwo.x += dx2;
+			GamePanel.tankTwo.y -= dy2;		
 			break;
+			
 		case KeyEvent.VK_J:
-			GamePanel.tankTwo.x -= GamePanel.tankTwo.speed;
-			GamePanel.tankTwo.direction = (GamePanel.tankTwo.direction + 1) % 60;
-			System.out.println("J");
+			GamePanel.tankTwo.setAngle(GamePanel.tankTwo.angle + 3);
 			break;
+			
 		case KeyEvent.VK_K:
-			GamePanel.tankTwo.y += GamePanel.tankTwo.speed;
-			GamePanel.tankTwo.direction = (GamePanel.tankTwo.direction + 1) % 60;
-			System.out.println("K");
+			rads2 = Math.toRadians(GamePanel.tankTwo.angle);
+			dx2 = Math.cos(rads2) * 4;
+			dy2 = Math.sin(rads2) * 4;
+			
+			GamePanel.tankTwo.x -= dx2;
+			GamePanel.tankTwo.y += dy2;		
 			break;
+			
 		case KeyEvent.VK_L:
-			GamePanel.tankTwo.x += GamePanel.tankTwo.speed;
-			GamePanel.tankTwo.direction = (GamePanel.tankTwo.direction + 1) % 60;
-			System.out.println("L");
+			GamePanel.tankTwo.setAngle(GamePanel.tankTwo.angle - 3);
 			break;
 			
 		default:

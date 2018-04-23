@@ -11,6 +11,7 @@ public class GamePanel extends JPanel implements Runnable {
     private static final String TANK_IMAGE = "resources" + File.separator + "Tank_blue_heavy_strip60.png";
     private static final String TANK_IMAGE2 = "resources" + File.separator + "Tank_red_base_strip60.png";
     private BufferedImage background;
+    private BufferedImage minimap = background;	
     protected static Tank tankOne;
     protected static Tank tankTwo;
     

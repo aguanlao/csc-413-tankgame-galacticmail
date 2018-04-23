@@ -40,6 +40,7 @@ public class GameObject extends Observable {
     }
     
     public void setAngle(double a) {
+    // prevents out of bounds, allow complete 360 turns
     	if(a < 0) {
     		a += 360;
     	}
