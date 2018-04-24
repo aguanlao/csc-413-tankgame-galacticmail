@@ -25,6 +25,15 @@ public class Tank extends CollidableObject {
         direction = 0;
     }
     
+    public void addAngle(double a) {
+    // prevents out of bounds, allow complete 360 turns
+    	if (a < 0) {
+    		a += 360;
+    	}
+    	
+    	this.angle = (this.angle + a) % 360;
+    }
+    
     public void takeDamage(int damage) {
         health -= damage;
         if(health <= 0) {
@@ -48,29 +57,23 @@ public class Tank extends CollidableObject {
     	if (this.isForward)
     	{
     		this.x += dx;
-    		System.out.println("X: " + this.x);
     		this.y -= dy;
-    		System.out.println("Y: " + this.y);
     	}
     	
     	else if (this.isBackwards)
     	{
     		this.x -= dx;
-    		System.out.println("X: " + this.x);
     		this.y += dy;
-    		System.out.println("Y: " + this.y);
     	}
     	
     	if (this.isLeft)
     	{
-    		this.setAngle(this.angle + .25);
-    		System.out.println("Angle: " + this.angle);
+    		this.addAngle(this.speed);
     	}
     	
     	else if (this.isRight)
     	{
-    		this.setAngle(this.angle - .25);
-    		System.out.println("Angle: " + this.angle);
+    		this.addAngle(-this.speed);
     	}
     	
     	if (this.isReset)

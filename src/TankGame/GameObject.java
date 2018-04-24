@@ -15,54 +15,6 @@ public class GameObject extends Observable {
         sprite = new Sprite(fileName);
     }
     
-    public double getX() {
-        return x;
-    }
-    
-    public void addX(double x) {
-        this.x = x;
-        if (this.x > 800)
-        	this.x = 800;
-    }
-    
-    public double getY() {
-        return y;
-    }
-    
-    public void addY(double y) {
-        this.y = y;
-        if (this.y > 1200)
-        	this.y = 1200;
-    }
-    
-    public double getDir() {
-        return direction;
-    }
-    
-    public void setDir(double d) {
-        this.direction = d;
-    }
-    
-    public void setAngle(double a) {
-    // prevents out of bounds, allow complete 360 turns
-    	if (a < 0) {
-    		a += 360;
-    	}
-    	this.angle = a % 360;
-    }
-    
-    public double getAngle() {
-    	return angle;
-    }
-    
-    public void setSpeed(double s) {
-    	this.speed = s;
-    }
-    
-    public double getSpeed() {
-    	return speed;
-    }
-    
     public int getHeight() {
     	return 0;
     }
