@@ -56,7 +56,7 @@ public class GamePanel extends JPanel implements Runnable {
         }
         
     	tankOne.repaint(graphics);
-    	//tankTwo.repaint(graphics);
+    	tankTwo.repaint(graphics);
         //shot.repaint(graphics);
     }
 
