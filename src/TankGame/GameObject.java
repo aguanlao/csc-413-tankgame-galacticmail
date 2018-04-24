@@ -10,36 +10,39 @@ import javax.imageio.ImageIO;
 
 public class GameObject extends Observable {
 
-    protected int x, y, direction;
+    protected double x, y;
     protected Sprite sprite;
     
     public GameObject(String fileName) {
-
         sprite = new Sprite(fileName);
     }
     
-    public int getX() {
+    public GameObject(String fileName, int frameCount) {
+        sprite = new Sprite(fileName, frameCount);
+    }
+    
+    public double getX() {
         return x;
     }
     
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
     
-    public int getY() {
+    public double getY() {
         return y;
     }
     
-    public void setY(int y) {
+    public void setY(double y) {
         this.y = y;
     }
     
     public int getHeight() {
-    	return 0;
+    	return sprite.getHeight();
     }
     
     public int getWidth() {
-    	return 0;
+    	return sprite.getWidth();
     }
     
     public Sprite getSprite() {
@@ -47,6 +50,6 @@ public class GameObject extends Observable {
     }
     
     public void repaint(Graphics graphics) {
-        graphics.drawImage(sprite.getImage(0), x, y, null);
+        graphics.drawImage(sprite.getImage(0), (int)x, (int)y, null);
     }
 }

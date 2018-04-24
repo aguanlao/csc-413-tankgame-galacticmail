@@ -53,4 +53,12 @@ public class Sprite {
         dimensions.height = frameHeight;
         return dimensions;        
     }
+    
+    public int getWidth() {
+        return frameWidth;
+    }
+    
+    public int getHeight() {
+        return frameHeight;
+    }
 }
