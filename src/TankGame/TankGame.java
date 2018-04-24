@@ -13,9 +13,9 @@ public class TankGame {
         final GameWorld world = new GameWorld();
         final GameClock clock = new GameClock();
         final Window window = new Window(world);
-        final TankListener listener = new TankListener();
+        final TankListener keys = new TankListener();
         //TODO: Create sound manager
-        //window.addKeyListener(listener);
+        window.addKeyListener(keys);
         clock.addObserver(world);
         clock.addObserver(window);
         while(!isGameOver) {

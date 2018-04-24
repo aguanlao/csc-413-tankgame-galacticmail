@@ -10,8 +10,9 @@ import javax.imageio.ImageIO;
 public class GamePanel extends JPanel implements Runnable {
     private static final String BACKGROUND_IMAGE = "resources" + File.separator + "background_tile.png";
     private BufferedImage background;
+    private BufferedImage minimap = background;	
     private ArrayList<GameObject> worldObjects;
-    
+
     public GamePanel() {
         File imageFile = new File(BACKGROUND_IMAGE);
         System.out.println("CWD: " + System.getProperty("user.dir"));
@@ -20,15 +21,8 @@ public class GamePanel extends JPanel implements Runnable {
         }
         catch (IOException exception) {
             System.err.println("Error reading background file.");
-        }        
-//        try {
-//            tankOne = new Tank(30, 30, TANK_IMAGE);
-//            tankTwo = new Tank(1100, 700, TANK_IMAGE2);
-//            shot = new Shot(new Point(50,400), 0);
-//        }
-//        catch (IOException exception) {
-//            System.err.println("Failed to create tank or shot.");
-//        }
+        }
+        
         setFocusable(true);
     }
     
@@ -38,6 +32,7 @@ public class GamePanel extends JPanel implements Runnable {
  
     @Override
     public void run() {
+    	
     }
 
     @Override
@@ -51,7 +46,7 @@ public class GamePanel extends JPanel implements Runnable {
                 makeBackground.drawImage(background, x, y, this);
             }
         }
-        
+      
         for (int i = 0; i < worldObjects.size(); i++) {
             worldObjects.get(i).repaint(graphics);
         }
