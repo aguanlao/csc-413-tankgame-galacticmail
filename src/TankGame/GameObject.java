@@ -13,7 +13,7 @@ public class GameObject extends Observable {
     protected int x, y, direction;
     protected Sprite sprite;
     
-    public GameObject(String fileName) throws IOException {
+    public GameObject(String fileName) {
 
         sprite = new Sprite(fileName);
     }

@@ -15,7 +15,7 @@ public class Tank extends CollidableObject {
     private static final int TANK_HEALTH = 100;
     private int health;
     
-    public Tank(int x, int y, String image) throws IOException{
+    public Tank(int x, int y, String image) {
         super(image);
         
         this.x = x;

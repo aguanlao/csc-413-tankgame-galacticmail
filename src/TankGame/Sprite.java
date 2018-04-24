@@ -1,6 +1,7 @@
 package TankGame;
 
 import java.awt.Graphics;
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -9,7 +10,7 @@ import javax.imageio.ImageIO;
 public class Sprite {
 
     private static final int FRAMES = 60;
-    protected int totalFrames;
+    protected int totalFrames, frameWidth, frameHeight;
     private BufferedImage[] images;
     
     public Sprite(String imageFile) {
@@ -27,7 +28,6 @@ public class Sprite {
     }
     
     private void loadImages(String file, int framesCount) throws IOException{
-        int frameWidth, frameHeight;
         BufferedImage spriteFile = ImageIO.read(new File(file));
         images = new BufferedImage[framesCount];
         
@@ -45,5 +45,12 @@ public class Sprite {
     
     public BufferedImage getImage(int index) {
         return images[index];
+    }
+    
+    public Dimension getImageDimensions() {
+        Dimension dimensions = new Dimension();
+        dimensions.width = frameWidth;
+        dimensions.height = frameHeight;
+        return dimensions;        
     }
 }

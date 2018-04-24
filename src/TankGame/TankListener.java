@@ -7,13 +7,12 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
 
-public class TankListener extends GamePanel implements KeyListener {
+public class TankListener implements KeyListener {
 	
 	private Set<Character> keysBeingPressed = new HashSet<Character>();
 	
 	@Override
 	public synchronized void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
 		keysBeingPressed.add(e.getKeyChar());
 
 		switch ( e.getKeyCode() )
@@ -57,12 +56,10 @@ public class TankListener extends GamePanel implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
 		keysBeingPressed.remove(e.getKeyChar());
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
 	}
 }
