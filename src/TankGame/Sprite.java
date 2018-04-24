@@ -36,7 +36,6 @@ public class Sprite {
         for(int i = 0; i < images.length; i++) {
             images[i] = spriteFile.getSubimage(i * frameWidth, 0, frameWidth, frameHeight);
         }
-
     }
 
     public void draw(Graphics g, int i) {
