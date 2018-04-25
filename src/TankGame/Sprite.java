@@ -1,7 +1,6 @@
 package TankGame;
 
 import java.awt.Graphics;
-import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -37,20 +36,9 @@ public class Sprite {
             images[i] = spriteFile.getSubimage(i * frameWidth, 0, frameWidth, frameHeight);
         }
     }
-
-    public void draw(Graphics g, int i) {
-        //g.drawImage(spritesArray[i], 10, 10, 0);
-    }
     
     public BufferedImage getImage(int index) {
         return images[index];
-    }
-    
-    public Dimension getImageDimensions() {
-        Dimension dimensions = new Dimension();
-        dimensions.width = frameWidth;
-        dimensions.height = frameHeight;
-        return dimensions;        
     }
     
     public int getWidth() {

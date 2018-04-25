@@ -10,10 +10,10 @@ public class TankGame {
     }
 
     public static void main(String[] args) {
-        final GameWorld world = new GameWorld();
         final GameClock clock = new GameClock();
-        final Window window = new Window(world);
         final TankListener keys = new TankListener();
+        final GameWorld world = new GameWorld(keys);
+        final Window window = new Window(world);
         //TODO: Create sound manager
         window.addKeyListener(keys);
         clock.addObserver(world);

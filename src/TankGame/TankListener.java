@@ -3,10 +3,17 @@ package TankGame;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class TankListener extends GamePanel implements KeyListener {
+public class TankListener implements KeyListener {
 
     private static final long serialVersionUID = 1L;
 
+    private Tank tankOne, tankTwo;
+    
+    public void addTanks(Tank tankOne, Tank tankTwo) {
+        this.tankOne = tankOne;
+        this.tankTwo = tankTwo;
+    }
+    
     @Override
     public synchronized void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
@@ -15,19 +22,19 @@ public class TankListener extends GamePanel implements KeyListener {
             // S backwards
             // A/D to steer left/right
             case KeyEvent.VK_W:
-                GamePanel.tankOne.isForward = true;
+                tankOne.setForward(true);
                 break;
 
             case KeyEvent.VK_A:
-                GamePanel.tankOne.isLeft = true;
+                tankOne.setLeft(true);
                 break;
 
             case KeyEvent.VK_S:
-                GamePanel.tankOne.isBackwards = true;
+                tankOne.setBackwards(true);
                 break;
 
             case KeyEvent.VK_D:
-                GamePanel.tankOne.isRight = true;
+                tankOne.setRight(true);
                 break;
 
             // Tank Two Controls
@@ -35,62 +42,62 @@ public class TankListener extends GamePanel implements KeyListener {
             // K backwards
             // J/L to steer left/right
             case KeyEvent.VK_I:
-                GamePanel.tankTwo.isForward = true;
+                tankTwo.setForward(true);
                 break;
 
             case KeyEvent.VK_J:
-                GamePanel.tankTwo.isLeft = true;
+                tankTwo.setLeft(true);
                 break;
 
             case KeyEvent.VK_K:
-                GamePanel.tankTwo.isBackwards = true;
+                tankTwo.setBackwards(true);
                 break;
 
             case KeyEvent.VK_L:
-                GamePanel.tankTwo.isRight = true;
+                tankTwo.setRight(true);
                 break;
 
             case KeyEvent.VK_SPACE:
-                GamePanel.tankOne.isReset = true;
-                GamePanel.tankTwo.isReset = true;
+                tankOne.resetPosition();
+                tankTwo.resetPosition();
             default:
                 break;
-        } // end switch
+        }
     }
 
     @Override
     public synchronized void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_W:
-                GamePanel.tankOne.isForward = false;
+                tankOne.setForward(false);
                 break;
 
             case KeyEvent.VK_A:
-                GamePanel.tankOne.isLeft = false;
+                tankOne.setLeft(false);
                 break;
 
             case KeyEvent.VK_S:
-                GamePanel.tankOne.isBackwards = false;
+                tankOne.setBackwards(false);
                 break;
 
             case KeyEvent.VK_D:
-                GamePanel.tankOne.isRight = false;
+                tankOne.setRight(false);
                 break;
 
             case KeyEvent.VK_I:
-                GamePanel.tankTwo.isForward = false;
+                tankTwo.setForward(false);
                 break;
 
             case KeyEvent.VK_J:
-                GamePanel.tankTwo.isLeft = false;
+                tankTwo.setLeft(false);
                 break;
 
             case KeyEvent.VK_K:
-                GamePanel.tankTwo.isBackwards = false;
+                tankTwo.setBackwards(false);
                 break;
 
             case KeyEvent.VK_L:
-                GamePanel.tankTwo.isRight = false;
+                tankTwo.setRight(false);
                 break;
 
             default:
