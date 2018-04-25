@@ -8,8 +8,8 @@ public class DestructibleWall extends CollidableObject{
     private static final int BASE_HITPOINTS = 50;
     private int hitpoints;
     
-    public DestructibleWall() {
-        super(WALL_IMAGE, 1);
+    public DestructibleWall(int x, int y) {
+        super(x, y, WALL_IMAGE, 1);
         hitpoints = BASE_HITPOINTS;
         isLive = true;
     }

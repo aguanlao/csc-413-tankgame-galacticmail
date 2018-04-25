@@ -1,28 +1,32 @@
 package TankGame;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Color;
+import java.awt.geom.AffineTransform;
 
 public class Tank extends CollidableObject {
     private static final int TANK_HEALTH = 100;
-    private static final double BASE_SPEED = 1.0;
+    private static final double BASE_SPEED = 10;
     
     private int health;    
-    double startX, startY, speed, direction;
+    double startX, startY, speed;
+    int direction;
     boolean isForward, isBackwards, isLeft, isRight;
     
     public Tank(int x, int y, String image) {
-        this(x, y, 0, image);
+        this(x, y, 270, image);
     } 
     
     public Tank(int x, int y, int direction, String image) {
 
-        super(image);
+        super(x, y, image);
         
         this.startX = x;
         this.startY = y;
         
-        this.x = x;
-        this.y = y;
+//        this.x = x;
+//        this.y = y;
         this.direction = direction % 360;
         health = TANK_HEALTH;
         speed = BASE_SPEED;
@@ -30,13 +34,13 @@ public class Tank extends CollidableObject {
         direction = 0;
     }
     
-    public void addAngle(double a) {
+    public void addAngle(double angle) {
         // prevents out of bounds, allow complete 360 turns
-        if (a < 0) {
-            a += 360;
+        if (angle < 0) {
+            angle += 360;
         }
 
-        this.direction = (this.direction + a) % 360;
+        this.direction = (this.direction + (int)angle) % 360;
     }
 
     public void takeDamage(int damage) {
@@ -58,12 +62,19 @@ public class Tank extends CollidableObject {
         dx = Math.cos(rads) * this.speed;
         dy = Math.sin(rads) * this.speed;
 
+        System.out.println("(" + (int)dx + ", " + (int)dy + ")");
         if (this.isForward && !this.isBackwards) {
             this.x += dx;
             this.y -= dy;
+            hitbox.translate((int)dx, (int)-dy);
+            for(int i = 0; i < 4; i++) {
+                xPoints[i] += dx;
+                yPoints[i] -= dy;
+            }
         } else if (this.isBackwards && !this.isForward) {
             this.x -= dx;
             this.y += dy;
+            hitbox.translate((int)-dx, (int)dy);
         }
 
         if (this.isLeft && !this.isRight) {
@@ -93,5 +104,16 @@ public class Tank extends CollidableObject {
     public void repaint(Graphics graphics) {
         checkPosition();
         graphics.drawImage(sprite.getImage((int)direction/6), (int) this.x, (int) this.y, null);
+        
+        Graphics2D g2D = (Graphics2D) graphics.create();
+        AffineTransform transform = new AffineTransform();
+        //hitbox.setLocation((int)this.x, (int)this.y);
+        
+        
+        g2D.setColor(Color.BLUE);
+        //g2D.draw(hitbox);
+        g2D.drawPolygon(hitbox);
+        
+        g2D.dispose();
     }
 }

@@ -30,7 +30,6 @@ public class GameWorld implements Observer{
     }
     
     private void buildLevel() {
-        //TODO: Create indestructible walls of border, level
         int wallX, wallY, wallWidth, wallHeight;
         wallX = wallY = 0;
         IndestructibleWall wall = new IndestructibleWall(wallX, wallY);
@@ -55,7 +54,10 @@ public class GameWorld implements Observer{
     
     @Override
     public void update(Observable observed, Object arg) {
-        
+        //On clock tick, check collisions, firing
+        if(playerOne.collides(playerTwo)) {
+//            System.out.println("Tank 1 colliding with Tank 2");
+        }
     }
 
     public ArrayList<GameObject> getObjects() {

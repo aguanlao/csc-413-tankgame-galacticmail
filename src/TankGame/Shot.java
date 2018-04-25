@@ -21,9 +21,7 @@ public class Shot extends CollidableObject{
     }
     
     public Shot(Point position, float vector, float velocity, int damage) throws IOException{
-        super(SHOT_IMAGE);
-        this.x = position.x;
-        this.y = position.y;
+        super(position.x, position.y, SHOT_IMAGE);
         this.vector = vector;
         this.velocity = velocity;
         this.damage = damage;

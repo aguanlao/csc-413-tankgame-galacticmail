@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 
 public class Sprite {
 
-    private static final int FRAMES = 60;
+    protected static final int FRAMES = 60;
     protected int totalFrames, frameWidth, frameHeight;
     private BufferedImage[] images;
     
