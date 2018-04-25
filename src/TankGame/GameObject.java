@@ -6,21 +6,39 @@ import java.awt.Graphics;
 
 public class GameObject extends Observable {
 
-    protected double x, y, speed, angle;
-    protected double direction;
+    protected double x, y;
     protected Sprite sprite;
     
-    public GameObject(String fileName) throws IOException {
-
+    public GameObject(String fileName) {
         sprite = new Sprite(fileName);
     }
     
+    public GameObject(String fileName, int frameCount) {
+        sprite = new Sprite(fileName, frameCount);
+    }
+    
+    public double getX() {
+        return x;
+    }
+    
+    public void setX(double x) {
+        this.x = x;
+    }
+    
+    public double getY() {
+        return y;
+    }
+    
+    public void setY(double y) {
+        this.y = y;
+    }
+    
     public int getHeight() {
-    	return 0;
+    	return sprite.getHeight();
     }
     
     public int getWidth() {
-    	return 0;
+    	return sprite.getWidth();
     }
     
     public Sprite getSprite() {

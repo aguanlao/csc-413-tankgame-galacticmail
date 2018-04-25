@@ -5,7 +5,11 @@ import java.awt.*;
 
 public abstract class CollidableObject extends GameObject{
     
-    public CollidableObject(String image) throws IOException {
+    public CollidableObject(String image, int frameCount) {
+        super(image, frameCount);
+    }
+    
+    public CollidableObject(String image) {
         super(image);
     }
     
