@@ -56,7 +56,7 @@ public class GameWorld implements Observer{
     public void update(Observable observed, Object arg) {
         //On clock tick, check collisions, firing
         if(playerOne.collides(playerTwo)) {
-//            System.out.println("Tank 1 colliding with Tank 2");
+            System.out.println("Tank 1 colliding with Tank 2");
         }
     }
 

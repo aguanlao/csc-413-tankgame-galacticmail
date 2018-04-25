@@ -7,7 +7,7 @@ import java.awt.geom.AffineTransform;
 
 public class Tank extends CollidableObject {
     private static final int TANK_HEALTH = 100;
-    private static final double BASE_SPEED = 10;
+    private static final double BASE_SPEED = 1.0;
     
     private int health;    
     double startX, startY, speed;
@@ -57,16 +57,19 @@ public class Tank extends CollidableObject {
     }
 
     public void checkPosition() {
+        int oldX, oldY;
         double rads, dx, dy;
         rads = Math.toRadians(this.direction);
         dx = Math.cos(rads) * this.speed;
-        dy = Math.sin(rads) * this.speed;
+        dy = Math.sin(rads) * this.speed;            
+        oldX = (int)this.x;
+        oldY = (int)this.y;
 
-        System.out.println("(" + (int)dx + ", " + (int)dy + ")");
         if (this.isForward && !this.isBackwards) {
+
             this.x += dx;
             this.y -= dy;
-            hitbox.translate((int)dx, (int)-dy);
+            hitbox.translate(((int)this.x - oldX), ((int)this.y - oldY));
             for(int i = 0; i < 4; i++) {
                 xPoints[i] += dx;
                 yPoints[i] -= dy;
@@ -74,7 +77,7 @@ public class Tank extends CollidableObject {
         } else if (this.isBackwards && !this.isForward) {
             this.x -= dx;
             this.y += dy;
-            hitbox.translate((int)-dx, (int)dy);
+            hitbox.translate(((int)this.x - oldX), ((int)this.y - oldY));
         }
 
         if (this.isLeft && !this.isRight) {
@@ -105,14 +108,16 @@ public class Tank extends CollidableObject {
         checkPosition();
         graphics.drawImage(sprite.getImage((int)direction/6), (int) this.x, (int) this.y, null);
         
-        Graphics2D g2D = (Graphics2D) graphics.create();
-        AffineTransform transform = new AffineTransform();
-        //hitbox.setLocation((int)this.x, (int)this.y);
+        AffineTransform transform = new AffineTransform();        
         
         
-        g2D.setColor(Color.BLUE);
-        //g2D.draw(hitbox);
-        g2D.drawPolygon(hitbox);
+        drawHitbox(graphics);
+        
+        Graphics g2D = (Graphics2D) graphics.create();
+        
+        g2D.setColor(Color.RED);
+        g2D.drawOval((int)this.x, (int)this.y, 3, 3);
+        
         
         g2D.dispose();
     }

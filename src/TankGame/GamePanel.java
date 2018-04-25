@@ -51,11 +51,6 @@ public class GamePanel extends JPanel implements Runnable {
             worldObjects.get(i).repaint(graphics);
         }
         
-        int[] xs = {100,150,150,100};
-        int[] ys = {100,100,150,150};
-        Polygon poly = new Polygon(xs, ys, 4);
-        makeBackground.drawPolygon(poly);
-        
         makeBackground.dispose();
     }
 

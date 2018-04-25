@@ -8,17 +8,15 @@ public abstract class CollidableObject extends GameObject{
     protected boolean isLive;
     protected Polygon hitbox;
     protected int xPoints[], yPoints[];
+        
+    public CollidableObject(int x, int y, String image) {
+        super(x, y, image);
+        buildHitbox();
+    }
     
     public CollidableObject(int x, int y, String image, int frameCount) {
         super(x, y, image, frameCount);
         buildHitbox();
-//        hitbox = new Rectangle((int)this.x, (int)this.y, this.sprite.getWidth(), this.sprite.getHeight());
-    }
-    
-    public CollidableObject(int x, int y, String image) {
-        super(x, y, image);
-        buildHitbox();
-//        hitbox = new Rectangle((int)this.x, (int)this.y, this.sprite.getWidth(), this.sprite.getHeight());
     }
     
     private void buildHitbox() {
@@ -41,5 +39,20 @@ public abstract class CollidableObject extends GameObject{
     
     public boolean isLiveNow() {
         return isLive;
+    }
+    
+    @Override
+    public void repaint(Graphics graphics) {
+        graphics.drawImage(sprite.getImage(0), (int)x, (int)y, null);
+        drawHitbox(graphics);
+    }
+    
+    public void drawHitbox(Graphics graphics) {
+        Graphics2D g2D = (Graphics2D)graphics.create();
+                
+        g2D.setColor(Color.BLUE);
+        g2D.drawPolygon(hitbox);
+        
+        g2D.dispose();    
     }
 }
