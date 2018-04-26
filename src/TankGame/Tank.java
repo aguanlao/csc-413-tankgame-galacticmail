@@ -13,7 +13,7 @@ public class Tank extends CollidableObject {
     private int health;    
     double startX, startY, speed;
     int direction;
-    boolean isForward, isBackwards, isLeft, isRight;
+    boolean isForward, isBackwards, isLeft, isRight, isColliding;
     
     public Tank(int x, int y, String image) {
         this(x, y, 0, image);
@@ -78,23 +78,41 @@ public class Tank extends CollidableObject {
         oldX = this.x;
         oldY = this.y;
 
-        if (this.isForward && !this.isBackwards) {
+        if (this.isForward && !this.isBackwards && !this.isColliding) {
             this.x += dx;
             this.y -= dy;
             hitbox.translate(((int)this.x - (int)oldX), ((int)this.y - (int)oldY));
-
-        } else if (this.isBackwards && !this.isForward) {
+        } 
+        
+        else if (this.isForward && !this.isBackwards && this.isColliding) {
+            this.x -= dx;
+            this.y += dy;
+            hitbox.translate(((int)this.x - (int)oldX), ((int)this.y - (int)oldY));
+            this.isColliding = false;
+        } 
+        
+        if (this.isBackwards && !this.isForward && !this.isColliding) {
             this.x -= dx;
             this.y += dy;
             hitbox.translate(((int)this.x - (int)oldX), ((int)this.y - (int)oldY));
         }
 
+        else if (this.isBackwards && !this.isForward && this.isColliding) {
+            this.x += dx;
+            this.y -= dy;
+            hitbox.translate(((int)this.x - (int)oldX), ((int)this.y - (int)oldY));
+            this.isColliding = false;
+        } 
+        
         if (this.isLeft && !this.isRight) {
             this.addAngle(this.speed);
             hitbox.rotate(this.direction);
-        } else if (this.isRight && !this.isLeft) {
+        }
+        
+        else if (this.isRight && !this.isLeft) {
             this.addAngle(-this.speed);
             hitbox.rotate(this.direction);
+            this.isColliding = false;
         }
     }
     
