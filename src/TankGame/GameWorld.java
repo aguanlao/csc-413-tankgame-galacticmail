@@ -4,8 +4,8 @@ import java.io.*;
 import java.util.*; 
 
 public class GameWorld implements Observer{
-    private static final int WORLD_WIDTH = 1600;
-    private static final int WORLD_HEIGHT = 1600;
+    private static final int WORLD_WIDTH = 800;
+    private static final int WORLD_HEIGHT = 800;
     private static final int TANK1_START_X = 200;
     private static final int TANK1_START_Y = 200;
     private static final int TANK2_START_X = 500;

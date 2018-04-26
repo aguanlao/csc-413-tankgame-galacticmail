@@ -4,7 +4,7 @@ import java.awt.Graphics;
 
 public class Tank extends CollidableObject {
     private static final int TANK_HEALTH = 100;
-    private static final double BASE_SPEED = 1.0;
+    private static final double BASE_SPEED = .25;
     
     private int health;    
     double startX, startY, speed, direction;
