@@ -7,7 +7,8 @@ import java.awt.Color;
 public class Tank extends CollidableObject {
     private static final int HITBOX_TRIM = 10;
     private static final int TANK_HEALTH = 100;
-    private static final double BASE_SPEED = 1;
+
+    private static final double BASE_SPEED = 1.0;
     
     private int health;    
     double startX, startY, speed;
@@ -31,9 +32,6 @@ public class Tank extends CollidableObject {
         direction = 0;
         
         trimHitbox();
-        
-        
-        isForward = isLeft = true;
     }
     
     private void trimHitbox() {
@@ -55,7 +53,6 @@ public class Tank extends CollidableObject {
         if (angle < 0) {
             angle += 360;
         }
-
         this.direction = (this.direction + (int)angle) % 360;
     }
 
@@ -95,11 +92,9 @@ public class Tank extends CollidableObject {
         if (this.isLeft && !this.isRight) {
             this.addAngle(this.speed);
             hitbox.rotate(this.direction);
-            System.out.println("===" + direction + " " + (-direction + 360));
         } else if (this.isRight && !this.isLeft) {
             this.addAngle(-this.speed);
             hitbox.rotate(this.direction);
-            System.out.println("===" + direction);
         }
     }
     
