@@ -11,7 +11,7 @@ public class GameWorld implements Observer{
     private static final int TANK2_START_X = 500;
     private static final int TANK2_START_Y = 500;    
     private static final String TANK_IMAGE1 = "resources" + File.separator + "Tank_blue_heavy_strip60.png";
-    private static final String TANK_IMAGE2 = "resources" + File.separator + "Tank_red_base_strip60.png";
+    private static final String TANK_IMAGE2 = "resources" + File.separator + "Tank_red_heavy_strip60.png";
     
     private final TankListener keyListener;
     private final Tank playerOne, playerTwo;
@@ -55,8 +55,12 @@ public class GameWorld implements Observer{
     @Override
     public void update(Observable observed, Object arg) {
         //On clock tick, check collisions, firing
-        if(playerOne.collides(playerTwo)) {
-            System.out.println("Tank 1 colliding with Tank 2");
+        for(int i = 0; i < objects.size(); i++) {
+            if(objects.get(i) instanceof CollidableObject && objects.get(i) != playerOne) {
+                if(playerOne.collides((CollidableObject)objects.get(i))) {
+                    System.out.println("Collided with " + objects.get(i).toString());
+                }
+            }
         }
     }
 

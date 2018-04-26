@@ -6,8 +6,8 @@ import java.awt.geom.Area;
 public abstract class CollidableObject extends GameObject{
         
     protected boolean isLive;
-    protected Polygon hitbox;
-    protected int xPoints[], yPoints[];
+    protected RotatablePolygon hitbox;
+//    protected int xPoints[], yPoints[];
         
     public CollidableObject(int x, int y, String image) {
         super(x, y, image);
@@ -20,12 +20,16 @@ public abstract class CollidableObject extends GameObject{
     }
     
     private void buildHitbox() {
+        
+        
+        int xPoints[], yPoints[];
+        
         int x2, y2;
         x2 = (int)this.x + sprite.getWidth();
         y2 = (int)this.y + sprite.getHeight();
         xPoints = new int[]{(int)this.x, x2, x2, (int)this.x};
         yPoints = new int[]{(int)this.y, (int)this.y, y2, y2};
-        hitbox = new Polygon(xPoints, yPoints, 4);
+        hitbox = new RotatablePolygon(xPoints, yPoints, 4);
     }
 
     public boolean collides (CollidableObject object) {
@@ -47,11 +51,16 @@ public abstract class CollidableObject extends GameObject{
         drawHitbox(graphics);
     }
     
+    //Function to render hitbox for debugging
     public void drawHitbox(Graphics graphics) {
         Graphics2D g2D = (Graphics2D)graphics.create();
                 
         g2D.setColor(Color.BLUE);
         g2D.drawPolygon(hitbox);
+        
+        g2D.setColor(Color.RED);
+        g2D.drawOval(hitbox.getCenter().x, hitbox.getCenter().y, 3, 3);
+        
         
         g2D.dispose();    
     }
