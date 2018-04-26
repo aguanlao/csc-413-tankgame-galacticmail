@@ -68,15 +68,13 @@ public class RotatablePolygon extends Polygon {
 
     public void rotate(double angle) {
         for (int i = 0; i < npoints; i++) { 
-            Point2D.Double rotated = rotatePoint(xPrecise[i], yPrecise[i], angle);
-            xPrecise[i] = rotated.x;
-            yPrecise[i] = rotated.y;
-            xpoints[i] = (int)rotated.x;
-            ypoints[i] = (int)rotated.y;
+            Point rotated = rotatePoint(xPrecise[i], yPrecise[i], angle);
+            xpoints[i] = rotated.x;
+            ypoints[i] = rotated.y;
         }
     }
 
-    public Point2D.Double rotatePoint(double x, double y, double angle) {
+    public Point rotatePoint(double x, double y, double angle) {
         double rads = Math.toRadians(angle);
         double x1 = x - center.x;
         double y1 = y - center.y;
@@ -85,7 +83,7 @@ public class RotatablePolygon extends Polygon {
         double rotatedY = x1 * Math.sin(rads) + y1 * Math.cos(rads);
         
         double newX = rotatedX + center.x;
-        double newY = rotatedY + center.y;
-        return new Point2D.Double(newX, newY);
+        double newY = -rotatedY + center.y;
+        return new Point((int)newX, (int)newY);
     }
 }

@@ -3,7 +3,6 @@ package TankGame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
-import java.awt.geom.AffineTransform;
 
 public class Tank extends CollidableObject {
     private static final int HITBOX_TRIM = 10;
@@ -32,6 +31,9 @@ public class Tank extends CollidableObject {
         direction = 0;
         
         trimHitbox();
+        
+        
+        isForward = isLeft = true;
     }
     
     private void trimHitbox() {
@@ -79,8 +81,6 @@ public class Tank extends CollidableObject {
         oldX = this.x;
         oldY = this.y;
 
-//        System.out.println("===\nHitbox: [" + hitbox.xpoints[0] + " " + hitbox.xpoints[1] + " " + hitbox.xpoints[2] + " " + hitbox.xpoints[3] + "]");
-//        System.out.println("Object: [" + xPoints[0] + " " + xPoints[1] + " " + xPoints[2] + " " + xPoints[3] + "]");
         if (this.isForward && !this.isBackwards) {
             this.x += dx;
             this.y -= dy;
@@ -94,11 +94,11 @@ public class Tank extends CollidableObject {
 
         if (this.isLeft && !this.isRight) {
             this.addAngle(this.speed);
-            hitbox.rotate(-this.speed);
+            hitbox.rotate(this.direction);
             System.out.println("===" + direction + " " + (-direction + 360));
         } else if (this.isRight && !this.isLeft) {
             this.addAngle(-this.speed);
-            hitbox.rotate(this.speed);
+            hitbox.rotate(this.direction);
             System.out.println("===" + direction);
         }
     }
