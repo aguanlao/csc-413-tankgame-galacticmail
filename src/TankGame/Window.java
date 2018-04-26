@@ -6,8 +6,8 @@ import javax.swing.*;
 public class Window extends JFrame implements Observer {
 
     private static final long serialVersionUID = 1L;
-    private static final int WINDOW_WIDTH = 1200;
-    private static final int WINDOW_HEIGHT = 800;
+    private static final int WINDOW_WIDTH = 1210;
+    private static final int WINDOW_HEIGHT = 830;
     
     private final GameWorld world;
     public GamePanel panel;

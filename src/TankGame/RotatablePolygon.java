@@ -19,7 +19,7 @@ public class RotatablePolygon extends Polygon {
         center = new Point();
         calculateCenter();
     }
-
+    
     public double[] getXPoints() {
         return xPrecise;
     }
