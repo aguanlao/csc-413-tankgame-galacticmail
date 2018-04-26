@@ -10,15 +10,14 @@ public class TankGame {
     }
 
     public static void main(String[] args) {
-        final GameWorld world = new GameWorld();
         final GameClock clock = new GameClock();
+        final TankListener keys = new TankListener();
+        final GameWorld world = new GameWorld(keys);
         final Window window = new Window(world);
-        /*Create sound manager*/
-        /*Create actual game window for rendering*/
-        
+        //TODO: Create sound manager
+        window.addKeyListener(keys);
         clock.addObserver(world);
         clock.addObserver(window);
-        
         while(!isGameOver) {
             clock.tickClock();
         }

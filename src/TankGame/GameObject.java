@@ -1,45 +1,49 @@
 package TankGame;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.Observable;
 import java.awt.Graphics;
 
-import javax.imageio.ImageIO;
-
 public class GameObject extends Observable {
 
-    protected int x, y;
+    protected double x, y;
     protected Sprite sprite;
     
-    public GameObject(String fileName) throws IOException {
-
-        sprite = new Sprite(fileName);
+    public GameObject(int x, int y, String fileName) {
+//        this.x = x;
+//        this.y = y;
+//        sprite = new Sprite(fileName);
+        this(x, y, fileName, Sprite.FRAMES);
     }
     
-    public int getX() {
+    public GameObject(int x, int y, String fileName, int frameCount) {
+        this.x = x;
+        this.y = y;
+        sprite = new Sprite(fileName, frameCount);
+    }
+    
+    public double getX() {
         return x;
     }
     
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
     
-    public int getY() {
+    public double getY() {
         return y;
     }
     
-    public void setY(int y) {
+    public void setY(double y) {
         this.y = y;
     }
     
     public int getHeight() {
-    	return 0;
+    	return sprite.getHeight();
     }
     
     public int getWidth() {
-    	return 0;
+    	return sprite.getWidth();
     }
     
     public Sprite getSprite() {
@@ -47,6 +51,6 @@ public class GameObject extends Observable {
     }
     
     public void repaint(Graphics graphics) {
-        graphics.drawImage(sprite.getImage(0), x, y, null);
+        graphics.drawImage(sprite.getImage(0), (int) x, (int) y, null);
     }
 }

@@ -3,16 +3,16 @@ package TankGame;
 import java.io.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.imageio.ImageIO;
 
 public class GamePanel extends JPanel implements Runnable {
     private static final String BACKGROUND_IMAGE = "resources" + File.separator + "background_tile.png";
-    private static final String TANK_IMAGE = "resources" + File.separator + "Tank_blue_heavy_strip60.png";
-
     private BufferedImage background;
-    private Tank tank;
-    private Shot shot;
+    private BufferedImage minimap = background;	
+    private ArrayList<GameObject> worldObjects;
+
     public GamePanel() {
         File imageFile = new File(BACKGROUND_IMAGE);
         System.out.println("CWD: " + System.getProperty("user.dir"));
@@ -21,23 +21,22 @@ public class GamePanel extends JPanel implements Runnable {
         }
         catch (IOException exception) {
             System.err.println("Error reading background file.");
-        }        
-        try {
-            tank = new Tank(30, 30, TANK_IMAGE);
-            shot = new Shot(new Point(50,400), 0);
         }
-        catch (IOException exception) {
-            System.err.println("Failed to create tank or shot.");
-        }
+        
+        setFocusable(true);
     }
-
+    
+    public void updateObjects(ArrayList<GameObject> objects) {
+        worldObjects = objects;
+    }
+ 
     @Override
     public void run() {
+    	
     }
 
     @Override
     public void paintComponent(Graphics graphics) {
-        System.out.println("Painting GamePanel!");
         super.paintComponent(graphics);
         Graphics2D makeBackground = (Graphics2D) graphics.create();
         int w = background.getWidth();
@@ -47,9 +46,12 @@ public class GamePanel extends JPanel implements Runnable {
                 makeBackground.drawImage(background, x, y, this);
             }
         }
+      
+        for (int i = 0; i < worldObjects.size(); i++) {
+            worldObjects.get(i).repaint(graphics);
+        }
         
-        tank.repaint(graphics);
-        shot.repaint(graphics);
+        makeBackground.dispose();
     }
 
 }

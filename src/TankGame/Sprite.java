@@ -8,8 +8,8 @@ import javax.imageio.ImageIO;
 
 public class Sprite {
 
-    private static final int FRAMES = 60;
-    protected int totalFrames;
+    protected static final int FRAMES = 60;
+    protected int totalFrames, frameWidth, frameHeight;
     private BufferedImage[] images;
     
     public Sprite(String imageFile) {
@@ -27,7 +27,6 @@ public class Sprite {
     }
     
     private void loadImages(String file, int framesCount) throws IOException{
-        int frameWidth, frameHeight;
         BufferedImage spriteFile = ImageIO.read(new File(file));
         images = new BufferedImage[framesCount];
         
@@ -36,14 +35,17 @@ public class Sprite {
         for(int i = 0; i < images.length; i++) {
             images[i] = spriteFile.getSubimage(i * frameWidth, 0, frameWidth, frameHeight);
         }
-
-    }
-
-    public void draw(Graphics g, int i) {
-        //g.drawImage(spritesArray[i], 10, 10, 0);
     }
     
     public BufferedImage getImage(int index) {
         return images[index];
+    }
+    
+    public int getWidth() {
+        return frameWidth;
+    }
+    
+    public int getHeight() {
+        return frameHeight;
     }
 }
