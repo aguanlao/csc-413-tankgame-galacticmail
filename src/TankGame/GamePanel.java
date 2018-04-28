@@ -13,6 +13,8 @@ public class GamePanel extends JPanel {
     private static final int MINIMAP_HEIGHT = 250;
     private static final int VIEW_WIDTH = 400;
     private static final int VIEW_HEIGHT = 400;
+    private static final int BAR_MARGIN = 50;
+    private static final int BAR_LENGTH = 200;
     
     private BufferedImage backgroundTile, worldImage, background, playerOneView, playerTwoView;
     private ArrayList<GameObject> worldObjects;
@@ -73,6 +75,21 @@ public class GamePanel extends JPanel {
       
     }
     
+    private void drawHealthbars(Graphics2D graphics) {
+        Rectangle healthBarOne, healthBarTwo, barOutlineOne, barOutlineTwo;
+        healthBarOne = new Rectangle(BAR_MARGIN, this.getHeight() - BAR_MARGIN, 200, 25);
+        healthBarTwo = new Rectangle(this.getWidth() - BAR_MARGIN - 200, this.getHeight() - BAR_MARGIN, 200, 25);
+        barOutlineOne = healthBarOne;
+        barOutlineTwo = healthBarTwo;
+        
+        graphics.setColor(Color.GREEN);
+        graphics.fill(healthBarOne);
+        graphics.fill(healthBarTwo);
+        graphics.setColor(Color.BLACK);
+        graphics.draw(barOutlineOne);
+        graphics.draw(barOutlineTwo);
+    }
+    
     @Override
     public void paintComponent(Graphics graphics) {
         Graphics2D g2D = (Graphics2D) graphics.create();
@@ -88,7 +105,7 @@ public class GamePanel extends JPanel {
         g2D.drawRect(this.getWidth()/2 - MINIMAP_WIDTH/2, this.getHeight() * 2/3, 
                 MINIMAP_WIDTH, MINIMAP_HEIGHT);
         
-        //Draw tank healthbars
+        drawHealthbars(g2D);
 
         g2D.dispose();
     }
