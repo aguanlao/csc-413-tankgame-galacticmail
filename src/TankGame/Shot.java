@@ -25,6 +25,8 @@ public class Shot extends CollidableObject{
     
     public Shot(Point position, int vector, float velocity, int damage) throws IOException{
         super(position.x, position.y, SHOT_IMAGE);
+        this.x = position.x;
+        this.y = position.y;
         this.vector = vector;
         this.velocity = velocity;
         this.damage = damage;
@@ -54,8 +56,22 @@ public class Shot extends CollidableObject{
         damage = newDamage;
     }
     
+    private void makeMove() {
+        double oldX, oldY;
+        double rads, dx, dy;
+        rads = Math.toRadians(this.vector);
+        oldX = this.x;
+        oldY = this.y;
+        dx = Math.cos(rads) * this.velocity;
+        dy = Math.sin(rads) * this.velocity;
+        this.x += dx;
+        this.y -= dy;
+        hitbox.translate(((int)this.x - (int)oldX), ((int)this.y - (int)oldY));
+    }
+    
     @Override
     public void repaint(Graphics graphics) {
+    	makeMove();
         graphics.drawImage(sprite.getImage((int)vector/6), (int) this.x, (int) this.y, null);        
         
         drawHitbox(graphics);
