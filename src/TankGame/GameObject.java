@@ -1,6 +1,5 @@
 package TankGame;
 
-import java.io.IOException;
 import java.util.Observable;
 import java.awt.Graphics;
 
@@ -10,9 +9,6 @@ public class GameObject extends Observable {
     protected Sprite sprite;
     
     public GameObject(int x, int y, String fileName) {
-//        this.x = x;
-//        this.y = y;
-//        sprite = new Sprite(fileName);
         this(x, y, fileName, Sprite.FRAMES);
     }
     

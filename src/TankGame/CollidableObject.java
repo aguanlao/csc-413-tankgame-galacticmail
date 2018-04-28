@@ -1,6 +1,8 @@
 package TankGame;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.geom.Area;
 
 public abstract class CollidableObject extends GameObject{

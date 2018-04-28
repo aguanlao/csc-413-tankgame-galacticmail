@@ -29,8 +29,8 @@ public class Tank extends CollidableObject {
         this.direction = direction % 360;
         health = TANK_HEALTH;
         speed = BASE_SPEED;
+        turnSpeed = TURN_SPEED;
         isLive = true;
-        direction = 0;
         
         trimHitbox();
     }
@@ -89,20 +89,18 @@ public class Tank extends CollidableObject {
                 this.y -= 1.2*dy;
                 hitbox.translate(((int)this.x - (int)oldX), ((int)this.y - (int)oldY));
             } 
-
-            if (this.isBackwards && !this.isForward) {
+            else if (this.isBackwards && !this.isForward) {
                 this.x -= 1.2*dx;
                 this.y += 1.2*dy;
                 hitbox.translate(((int)this.x - (int)oldX), ((int)this.y - (int)oldY));
             }
 
             if (this.isLeft && !this.isRight) {
-                this.addAngle(this.TURN_SPEED);
+                this.addAngle(this.turnSpeed);
                 hitbox.rotate(this.direction);
             }
-
             else if (this.isRight && !this.isLeft) {
-                this.addAngle(-this.TURN_SPEED);
+                this.addAngle(-this.turnSpeed);
                 hitbox.rotate(this.direction);
             }
         }

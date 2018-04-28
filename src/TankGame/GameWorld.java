@@ -19,7 +19,7 @@ public class GameWorld implements Observer{
     private final Tank playerOne, playerTwo;
     private ArrayList<GameObject> objects;
     private ArrayList<Shot> shotsFired;
-    
+
     public GameWorld(TankListener listener) {
         objects = new ArrayList<GameObject>();
         playerOne = new Tank(TANK1_START_X, TANK1_START_Y, TANK_IMAGE1);
@@ -75,6 +75,11 @@ public class GameWorld implements Observer{
                     playerTwo.setColliding(true);
                 }
                 
+            }
+            else if(objects.get(i) instanceof Explosion) {
+                if(((Explosion)objects.get(i)).isFinished()) {
+                    objects.remove(i);
+                }
             }
             
             
