@@ -57,17 +57,20 @@ public class GameWorld implements Observer{
     public void update(Observable observed, Object arg) {
         //On clock tick, check collisions, firing
         for(int i = 0; i < objects.size(); i++) {
-            if(objects.get(i) instanceof CollidableObject && objects.get(i) != playerOne) {
-                if(playerOne.collides((CollidableObject)objects.get(i))) {
+            if(objects.get(i) instanceof CollidableObject) {
+                if(objects.get(i) != playerOne && playerOne.collides((CollidableObject)objects.get(i))) {      
                     System.out.println("Collided with " + objects.get(i).toString());
-                    tanksAreColliding();
+                    playerOne.setColliding(true);
                 }
+                
+                if(objects.get(i) != playerTwo && playerTwo.collides((CollidableObject)objects.get(i))) {
+                    playerTwo.setColliding(true);
+                }
+                
             }
+            
+            
         }
-    }
-
-    public void tanksAreColliding() {
-    	playerOne.isColliding = true;
     }
     
     public ArrayList<GameObject> getObjects() {
