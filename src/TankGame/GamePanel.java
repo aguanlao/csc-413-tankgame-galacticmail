@@ -60,6 +60,10 @@ public class GamePanel extends JPanel {
         for (int i = 0; i < worldObjects.size(); i++) {
             worldObjects.get(i).repaint(graphics);
         }
+                
+        for (int i = 0; i < allShots.size(); i++) {
+        	allShots.get(i).repaint(graphics);
+        }
         graphics.dispose();
       
     }
@@ -74,12 +78,10 @@ public class GamePanel extends JPanel {
         g2D.drawImage(playerTwoView, this.getWidth()/2, 0, this.getWidth()/2, this.getHeight(), null);
         g2D.setColor(Color.BLACK);
         g2D.drawLine(this.getWidth()/2, 0, this.getWidth()/2, this.getHeight());
-        g2D.drawImage(worldImage, this.getWidth()/2 - MINIMAP_WIDTH/2, this.getHeight() * 2 / 3, 
+        g2D.drawImage(worldImage, this.getWidth()/2 - MINIMAP_WIDTH/2, this.getHeight() * 2/3, 
                 MINIMAP_WIDTH, MINIMAP_HEIGHT, null);
-        
-        for (int i = 0; i < allShots.size(); i++) {
-        	allShots.get(i).repaint(graphics);
-        }
+        g2D.drawRect(this.getWidth()/2 - MINIMAP_WIDTH/2, this.getHeight() * 2/3, 
+                MINIMAP_WIDTH, MINIMAP_HEIGHT);
 
         g2D.dispose();
     }

@@ -18,9 +18,9 @@ public class TankGame {
         window.addKeyListener(keys);
         clock.addObserver(world);
         clock.addObserver(window);
-        while(!isGameOver) {
-            clock.tickClock();
-        }
+        
+        Thread clockThread = new Thread(clock);
+        clockThread.start();
         
     }
     

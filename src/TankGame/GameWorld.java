@@ -11,7 +11,9 @@ public class GameWorld implements Observer, Runnable{
     private static final int TANK1_START_X = 200;
     private static final int TANK1_START_Y = 200;
     private static final int TANK2_START_X = 500;
-    private static final int TANK2_START_Y = 500;    
+    private static final int TANK2_START_Y = 500;   
+    private static final int FIRING_DELAY = 1000;
+    private static final int NEAR_DISTANCE = 100;
     private static final String TANK_IMAGE1 = "resources" + File.separator + "Tank_blue_heavy_strip60.png";
     private static final String TANK_IMAGE2 = "resources" + File.separator + "Tank_red_heavy_strip60.png";
     
@@ -33,11 +35,10 @@ public class GameWorld implements Observer, Runnable{
         buildLevel();
     }
     
-    public void createShot(Tank tankThatShot) throws IOException {
-    	Point tanksCoord = new Point((int)tankThatShot.getX(), (int)tankThatShot.getY());
-    	Shot newShot = new Shot(tanksCoord, tankThatShot.getDirection());
+    public void createShot(Tank tankThatShot) {
+    	Shot newShot = new Shot(tankThatShot);
     	shotsFired.add(newShot);
-    	tankThatShot.setShooting(false);
+//    	tankThatShot.setShooting(false);
     }
     
     private void buildLevel() {
@@ -63,6 +64,10 @@ public class GameWorld implements Observer, Runnable{
         }
     }
     
+    private boolean isNear(GameObject one, GameObject two) {
+        return (one.calculateDistance(two) < NEAR_DISTANCE);
+    }
+    
     //TODO: Might need to create thread for running collision checks to improve performance
     @Override
     public void run() {
@@ -72,15 +77,34 @@ public class GameWorld implements Observer, Runnable{
     @Override
     public void update(Observable observed, Object arg) {
         //On clock tick, check collisions, firing
+        
+        if (((GameClock)observed).getFrame() % FIRING_DELAY == 0) {
+            if (playerOne.getShootState()) {
+                createShot(playerOne);
+            }
+            if(playerTwo.getShootState()) {
+                createShot(playerTwo);
+            }
+        }
         for (int i = 0; i < objects.size(); i++) {
             if (objects.get(i) instanceof CollidableObject) {
-                if (objects.get(i) != playerOne && playerOne.collides((CollidableObject)objects.get(i))) {      
-                    //System.out.println("Collided with " + objects.get(i).toString());
+                CollidableObject collider = (CollidableObject)objects.get(i);
+                if (isNear(collider, playerOne) && collider != playerOne && playerOne.collides(collider)) {
                     playerOne.setColliding(true);
                 }
                 
-                if(objects.get(i) != playerTwo && playerTwo.collides((CollidableObject)objects.get(i))) {
+                if(isNear(collider, playerTwo) && collider != playerTwo && playerTwo.collides(collider)) {
                     playerTwo.setColliding(true);
+                }
+                
+                for(int j = 0; j < shotsFired.size(); j++) {
+                    Shot thisShot = shotsFired.get(j);
+                    if(isNear(collider, thisShot) && thisShot.getSource() != collider && thisShot.collides(collider)){
+                        Explosion newBoom = new Explosion((int)thisShot.getX(), (int)thisShot.getY());
+                        objects.add(newBoom);
+                        shotsFired.remove(thisShot);
+                        System.out.println("A shot collided with something!");
+                    }
                 }
                 
             }
@@ -91,20 +115,6 @@ public class GameWorld implements Observer, Runnable{
             }
             
 
-        }
-        
-        if (playerOne.getShootState()) {
-        	try {
-				createShot(playerOne);
-			} catch (IOException e) {
-			}
-        }
-        
-        for (int i = 0; i <shotsFired.size(); i++)
-        {
-           if (shotsFired.get(i) instanceof CollidableObject) {
-            	//System.out.println("Collided with " + shotsFired.get(i).toString());
-            }
         }
     }
     

@@ -3,6 +3,7 @@ package TankGame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
+import java.awt.Point;
 
 public class Tank extends CollidableObject {
     private static final int HITBOX_TRIM = 10;
@@ -23,8 +24,8 @@ public class Tank extends CollidableObject {
     public Tank(int x, int y, int direction, String image) {
         super(x, y, image);
         
-        this.startX = x;
-        this.startY = y;
+//        this.startX = x;
+//        this.startY = y;
         
         this.direction = direction % 360;
         health = TANK_HEALTH;
@@ -144,6 +145,10 @@ public class Tank extends CollidableObject {
     
     public int getDirection() {
     	return this.direction;
+    }
+    
+    public Point getHitboxCenter() {
+        return hitbox.getCenter();
     }
     
     @Override

@@ -46,6 +46,10 @@ public class GameObject extends Observable {
         return sprite;
     }
     
+    public double calculateDistance(GameObject other) {
+        return Math.hypot(this.x - other.x, this.y - other.y);
+    }
+    
     public void repaint(Graphics graphics) {
         graphics.drawImage(sprite.getImage(0), (int) x, (int) y, null);
     }

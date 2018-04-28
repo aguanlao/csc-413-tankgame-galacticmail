@@ -90,7 +90,7 @@ public class TankListener implements KeyListener {
                 break;
 
             case KeyEvent.VK_SPACE:
-            	tankOne.setShooting(true);
+            	tankOne.setShooting(false);
             	break;
             	
             case KeyEvent.VK_I:
@@ -110,7 +110,7 @@ public class TankListener implements KeyListener {
                 break;
 
             case KeyEvent.VK_ENTER:
-            	tankTwo.setShooting(true);
+            	tankTwo.setShooting(false);
                 break;
                 
             default:
