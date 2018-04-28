@@ -8,13 +8,13 @@ public class Tank extends CollidableObject {
     private static final int HITBOX_TRIM = 10;
     private static final int TANK_HEALTH = 100;
 
-    private static final double BASE_SPEED = 1.0;
-    private static final double TURN_SPEED = 1.0;
+    private static final double BASE_SPEED = .25;
+    private static final double TURN_SPEED = 1;
     
     private int health;    
-    double startX, startY, speed, lastX, lastY;
+    double startX, startY, speed, lastX, lastY, turnSpeed;
     int direction, lastDirection;
-    boolean isForward, isBackwards, isLeft, isRight, isColliding;
+    boolean isForward, isBackwards, isLeft, isRight, isColliding, isShooting;
     
     public Tank(int x, int y, String image) {
         this(x, y, 0, image);
@@ -69,7 +69,7 @@ public class Tank extends CollidableObject {
         this.y = this.startY;
         this.direction = 0;
     }
-
+    
     public void checkPosition() {
         double oldX, oldY;
         double rads, dx, dy;
@@ -85,24 +85,24 @@ public class Tank extends CollidableObject {
             lastDirection = this.direction;
             
             if (this.isForward && !this.isBackwards) {
-                this.x += dx;
-                this.y -= dy;
+                this.x += 1.2*dx;
+                this.y -= 1.2*dy;
                 hitbox.translate(((int)this.x - (int)oldX), ((int)this.y - (int)oldY));
             } 
 
             if (this.isBackwards && !this.isForward) {
-                this.x -= dx;
-                this.y += dy;
+                this.x -= 1.2*dx;
+                this.y += 1.2*dy;
                 hitbox.translate(((int)this.x - (int)oldX), ((int)this.y - (int)oldY));
             }
 
             if (this.isLeft && !this.isRight) {
-                this.addAngle(this.speed);
+                this.addAngle(this.TURN_SPEED);
                 hitbox.rotate(this.direction);
             }
 
             else if (this.isRight && !this.isLeft) {
-                this.addAngle(-this.speed);
+                this.addAngle(-this.TURN_SPEED);
                 hitbox.rotate(this.direction);
             }
         }
@@ -134,6 +134,14 @@ public class Tank extends CollidableObject {
     
     public void setColliding(boolean flag) {
         isColliding = flag;
+    }
+    
+    public void setShooting(boolean flag) {
+    	isShooting = flag;
+    }
+    
+    public int getDirection() {
+    	return this.direction;
     }
     
     @Override

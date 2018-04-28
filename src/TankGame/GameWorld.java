@@ -1,7 +1,8 @@
 package TankGame;
 
 import java.io.*;
-import java.util.*; 
+import java.util.*;
+import java.awt.Point;
 
 public class GameWorld implements Observer{
 
@@ -17,6 +18,7 @@ public class GameWorld implements Observer{
     private final TankListener keyListener;
     private final Tank playerOne, playerTwo;
     private ArrayList<GameObject> objects;
+    private ArrayList<Shot> shotsFired;
     
     public GameWorld(TankListener listener) {
         objects = new ArrayList<GameObject>();
@@ -28,6 +30,12 @@ public class GameWorld implements Observer{
         objects.add(playerOne);
         objects.add(playerTwo);
         buildLevel();
+    }
+    
+    public void createShot(Tank tankThatShot) throws IOException {
+    	Point tanksCoord = new Point((int)tankThatShot.getX(), (int)tankThatShot.getY());
+    	Shot newShot = new Shot(tanksCoord, tankThatShot.getDirection());
+    	shotsFired.add(newShot);
     }
     
     private void buildLevel() {

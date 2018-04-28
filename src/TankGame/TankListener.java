@@ -37,6 +37,10 @@ public class TankListener implements KeyListener {
                 tankOne.setRight(true);
                 break;
 
+            case KeyEvent.VK_SPACE:
+            	tankOne.setShooting(true);
+            	break;
+            	
             // Tank Two Controls
             // I moves the tank towards the direction it is facing
             // K backwards
@@ -57,9 +61,10 @@ public class TankListener implements KeyListener {
                 tankTwo.setRight(true);
                 break;
 
-            case KeyEvent.VK_SPACE:
-                tankOne.resetPosition();
-                tankTwo.resetPosition();
+            case KeyEvent.VK_ENTER:
+            	tankTwo.setShooting(true);
+                break;
+                
             default:
                 break;
         }
@@ -84,6 +89,10 @@ public class TankListener implements KeyListener {
                 tankOne.setRight(false);
                 break;
 
+            case KeyEvent.VK_SPACE:
+            	tankOne.setShooting(true);
+            	break;
+            	
             case KeyEvent.VK_I:
                 tankTwo.setForward(false);
                 break;
@@ -100,6 +109,10 @@ public class TankListener implements KeyListener {
                 tankTwo.setRight(false);
                 break;
 
+            case KeyEvent.VK_ENTER:
+            	tankTwo.setShooting(true);
+                break;
+                
             default:
                 break;
         }
