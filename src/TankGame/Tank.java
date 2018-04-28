@@ -138,6 +138,10 @@ public class Tank extends CollidableObject {
     	isShooting = flag;
     }
     
+    public boolean getShootState() {
+    	return isShooting;
+    }
+    
     public int getDirection() {
     	return this.direction;
     }

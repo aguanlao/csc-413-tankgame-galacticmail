@@ -22,6 +22,7 @@ public class GameWorld implements Observer, Runnable{
 
     public GameWorld(TankListener listener) {
         objects = new ArrayList<GameObject>();
+        shotsFired = new ArrayList<Shot>();
         playerOne = new Tank(TANK1_START_X, TANK1_START_Y, TANK_IMAGE1);
         playerTwo = new Tank(TANK2_START_X, TANK2_START_Y, TANK_IMAGE2);
         keyListener = listener;
@@ -36,6 +37,7 @@ public class GameWorld implements Observer, Runnable{
     	Point tanksCoord = new Point((int)tankThatShot.getX(), (int)tankThatShot.getY());
     	Shot newShot = new Shot(tanksCoord, tankThatShot.getDirection());
     	shotsFired.add(newShot);
+    	tankThatShot.setShooting(false);
     }
     
     private void buildLevel() {
@@ -70,10 +72,10 @@ public class GameWorld implements Observer, Runnable{
     @Override
     public void update(Observable observed, Object arg) {
         //On clock tick, check collisions, firing
-        for(int i = 0; i < objects.size(); i++) {
-            if(objects.get(i) instanceof CollidableObject) {
-                if(objects.get(i) != playerOne && playerOne.collides((CollidableObject)objects.get(i))) {      
-                    System.out.println("Collided with " + objects.get(i).toString());
+        for (int i = 0; i < objects.size(); i++) {
+            if (objects.get(i) instanceof CollidableObject) {
+                if (objects.get(i) != playerOne && playerOne.collides((CollidableObject)objects.get(i))) {      
+                    //System.out.println("Collided with " + objects.get(i).toString());
                     playerOne.setColliding(true);
                 }
                 
@@ -88,11 +90,29 @@ public class GameWorld implements Observer, Runnable{
                 }
             }
             
-            
+
+        }
+        
+        if (playerOne.getShootState()) {
+        	try {
+				createShot(playerOne);
+			} catch (IOException e) {
+			}
+        }
+        
+        for (int i = 0; i <shotsFired.size(); i++)
+        {
+           if (shotsFired.get(i) instanceof CollidableObject) {
+            	//System.out.println("Collided with " + shotsFired.get(i).toString());
+            }
         }
     }
     
     public ArrayList<GameObject> getObjects() {
         return objects;
+    }
+    
+    public ArrayList<Shot> getShots() {
+    	return shotsFired;
     }
 }

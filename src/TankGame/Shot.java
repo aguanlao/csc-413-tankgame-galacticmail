@@ -2,6 +2,9 @@ package TankGame;
 
 import java.io.File;
 import java.io.IOException;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 
 public class Shot extends CollidableObject{
@@ -12,7 +15,7 @@ public class Shot extends CollidableObject{
     private float velocity;
     private int damage;
     
-    public Shot(Point position, int vector) throws IOException{
+    public Shot(Point position, int vector) throws IOException {
         this(position, vector, BASE_SPEED);
     }
     
@@ -22,6 +25,8 @@ public class Shot extends CollidableObject{
     
     public Shot(Point position, int vector, float velocity, int damage) throws IOException{
         super(position.x, position.y, SHOT_IMAGE);
+        this.x = position.x;
+        this.y = position.y;
         this.vector = vector;
         this.velocity = velocity;
         this.damage = damage;
@@ -51,4 +56,32 @@ public class Shot extends CollidableObject{
         damage = newDamage;
     }
     
+    private void makeMove() {
+        double oldX, oldY;
+        double rads, dx, dy;
+        rads = Math.toRadians(this.vector);
+        oldX = this.x;
+        oldY = this.y;
+        dx = Math.cos(rads) * this.velocity;
+        dy = Math.sin(rads) * this.velocity;
+        this.x += dx;
+        this.y -= dy;
+        hitbox.translate(((int)this.x - (int)oldX), ((int)this.y - (int)oldY));
+    }
+    
+    @Override
+    public void repaint(Graphics graphics) {
+    	makeMove();
+        graphics.drawImage(sprite.getImage((int)vector/6), (int) this.x, (int) this.y, null);        
+        
+        drawHitbox(graphics);
+        
+        Graphics g2D = (Graphics2D) graphics.create();
+        
+        g2D.setColor(Color.RED);
+        g2D.drawOval((int)this.x, (int)this.y, 3, 3);
+        
+        
+        g2D.dispose();
+    }
 }
