@@ -37,6 +37,7 @@ public class GameWorld implements Observer{
     	Point tanksCoord = new Point((int)tankThatShot.getX(), (int)tankThatShot.getY());
     	Shot newShot = new Shot(tanksCoord, tankThatShot.getDirection());
     	shotsFired.add(newShot);
+    	tankThatShot.setShooting(false);
     }
     
     private void buildLevel() {
@@ -68,7 +69,7 @@ public class GameWorld implements Observer{
         for (int i = 0; i < objects.size(); i++) {
             if (objects.get(i) instanceof CollidableObject) {
                 if (objects.get(i) != playerOne && playerOne.collides((CollidableObject)objects.get(i))) {      
-                    System.out.println("Collided with " + objects.get(i).toString());
+                    //System.out.println("Collided with " + objects.get(i).toString());
                     playerOne.setColliding(true);
                 }
                 
@@ -78,8 +79,20 @@ public class GameWorld implements Observer{
                 
             }
             
-            if (shotsFired.get(i) instanceof CollidableObject) {
-            	System.out.println("Collided with " + shotsFired.get(i).toString());
+
+        }
+        
+        if (playerOne.getShootState()) {
+        	try {
+				createShot(playerOne);
+			} catch (IOException e) {
+			}
+        }
+        
+        for (int i = 0; i <shotsFired.size(); i++)
+        {
+           if (shotsFired.get(i) instanceof CollidableObject) {
+            	//System.out.println("Collided with " + shotsFired.get(i).toString());
             }
         }
     }
