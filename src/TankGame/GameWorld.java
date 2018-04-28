@@ -4,10 +4,10 @@ import java.io.*;
 import java.util.*;
 import java.awt.Point;
 
-public class GameWorld implements Observer{
+public class GameWorld implements Observer, Runnable{
 
-    private static final int WORLD_WIDTH = 1200;
-    private static final int WORLD_HEIGHT = 800;
+    public static final int WORLD_WIDTH = 900;
+    public static final int WORLD_HEIGHT = 900;
     private static final int TANK1_START_X = 200;
     private static final int TANK1_START_Y = 200;
     private static final int TANK2_START_X = 500;
@@ -17,7 +17,7 @@ public class GameWorld implements Observer{
     
     private final TankListener keyListener;
     private final Tank playerOne, playerTwo;
-    private ArrayList<GameObject> objects;
+    private final ArrayList<GameObject> objects;
     private ArrayList<Shot> shotsFired;
 
     public GameWorld(TankListener listener) {
@@ -59,6 +59,12 @@ public class GameWorld implements Observer{
             wall = new IndestructibleWall(WORLD_WIDTH - wallWidth, wallY);
             objects.add(wall);
         }
+    }
+    
+    //TODO: Might need to create thread for running collision checks to improve performance
+    @Override
+    public void run() {
+        
     }
     
     @Override
