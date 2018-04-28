@@ -4,6 +4,7 @@ import java.io.File;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 
 public class Shot extends CollidableObject{
     private static final String SHOT_IMAGE = "resources" + File.separator + "Shell_basic_strip60.png";
@@ -29,6 +30,21 @@ public class Shot extends CollidableObject{
         this.vector = source.getDirection();
         this.velocity = velocity;
         this.damage = damage;
+        adjustShot();
+    }
+    
+    private void adjustShot() {
+        double shiftX, shiftY;
+        Point sourceCenter = source.getHitboxCenter();
+        Point myCenter = this.hitbox.getCenter();
+        
+        shiftX = sourceCenter.x - myCenter.x;
+        shiftY = sourceCenter.y - myCenter.y;
+        
+        this.x += shiftX;
+        this.y += shiftY;
+        this.hitbox.translate((int)shiftX, (int)shiftY);
+        
     }
 
     public float getVector() {

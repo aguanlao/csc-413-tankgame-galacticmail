@@ -102,8 +102,11 @@ public class GameWorld implements Observer, Runnable{
                     if(isNear(collider, thisShot) && thisShot.getSource() != collider && thisShot.collides(collider)){
                         Explosion newBoom = new Explosion((int)thisShot.getX(), (int)thisShot.getY());
                         objects.add(newBoom);
+                        
+                        //If collider is tank or destructible wall, collider takes damage
+                        
+                        
                         shotsFired.remove(thisShot);
-                        System.out.println("A shot collided with something!");
                     }
                 }
                 

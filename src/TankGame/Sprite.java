@@ -22,6 +22,7 @@ public class Sprite {
         }
         catch (IOException exception) {
             System.err.println("Failed to load sprite " + imageFile);
+            exception.printStackTrace();
         }
     }
     

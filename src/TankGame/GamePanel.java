@@ -36,6 +36,7 @@ public class GamePanel extends JPanel {
         }
         catch (IOException exception) {
             System.err.println("Error reading background file.");
+            exception.printStackTrace();
         }
         
         Graphics2D graphics = background.createGraphics();
@@ -49,6 +50,7 @@ public class GamePanel extends JPanel {
         graphics.dispose();
     }
     
+    //TODO: Change how objects transferred to panel
     public void updateObjects(ArrayList<GameObject> objects, ArrayList<Shot> shotsFired) {
         worldObjects = objects;
         allShots = shotsFired;
@@ -56,14 +58,17 @@ public class GamePanel extends JPanel {
 
     public void redrawWorldImage() {
         Graphics2D graphics = worldImage.createGraphics();
-        graphics.drawImage(background, 0, 0, null);
+        graphics.drawImage(background, 0, 0, null);        
+        
+        
+        for (int i = 0; i < allShots.size(); i++) {
+        	allShots.get(i).repaint(graphics);
+        }
         for (int i = 0; i < worldObjects.size(); i++) {
             worldObjects.get(i).repaint(graphics);
         }
                 
-        for (int i = 0; i < allShots.size(); i++) {
-        	allShots.get(i).repaint(graphics);
-        }
+
         graphics.dispose();
       
     }
@@ -82,6 +87,8 @@ public class GamePanel extends JPanel {
                 MINIMAP_WIDTH, MINIMAP_HEIGHT, null);
         g2D.drawRect(this.getWidth()/2 - MINIMAP_WIDTH/2, this.getHeight() * 2/3, 
                 MINIMAP_WIDTH, MINIMAP_HEIGHT);
+        
+        //Draw tank healthbars
 
         g2D.dispose();
     }

@@ -9,7 +9,6 @@ public abstract class CollidableObject extends GameObject{
         
     protected boolean isLive;
     protected RotatablePolygon hitbox;
-//    protected int xPoints[], yPoints[];
         
     public CollidableObject(int x, int y, String image) {
         super(x, y, image);
@@ -22,8 +21,6 @@ public abstract class CollidableObject extends GameObject{
     }
     
     private void buildHitbox() {
-        
-        
         int xPoints[], yPoints[];
         
         int x2, y2;
