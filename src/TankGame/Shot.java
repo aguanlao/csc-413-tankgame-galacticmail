@@ -10,6 +10,8 @@ public class Shot extends CollidableObject{
     private static final String SHOT_IMAGE = "resources" + File.separator + "Shell_basic_strip60.png";
     private static final int BASE_SPEED = 1;
     private static final int BASE_DAMAGE = 10;
+    private static final int TRIM_X = 3;
+    private static final int TRIM_Y = 7;
     
     private Tank source;
     private int vector;
@@ -31,6 +33,7 @@ public class Shot extends CollidableObject{
         this.velocity = velocity;
         this.damage = damage;
         adjustShot();
+        trimHitbox(TRIM_X, -TRIM_X, TRIM_Y, -TRIM_Y);
     }
     
     private void adjustShot() {

@@ -30,6 +30,20 @@ public abstract class CollidableObject extends GameObject{
         yPoints = new int[]{(int)this.y, (int)this.y, y2, y2};
         hitbox = new RotatablePolygon(xPoints, yPoints, 4);
     }
+    
+    protected void trimHitbox(int trimX1, int trimX2, int trimY1, int trimY2) {
+        hitbox.getXPoints()[0] += trimX1;
+        hitbox.getXPoints()[1] += trimX2;
+        hitbox.getXPoints()[2] += trimX2;
+        hitbox.getXPoints()[3] += trimX1;
+        
+        hitbox.getYPoints()[0] += trimY1;
+        hitbox.getYPoints()[1] += trimY1;
+        hitbox.getYPoints()[2] += trimY2;
+        hitbox.getYPoints()[3] += trimY2;
+        
+        hitbox.updatePoints();      
+    }
 
     public boolean collides (CollidableObject object) {
         Area myArea, otherArea;

@@ -33,21 +33,7 @@ public class Tank extends CollidableObject {
         turnSpeed = TURN_SPEED;
         isLive = true;
         
-        trimHitbox();
-    }
-    
-    private void trimHitbox() {
-        hitbox.getXPoints()[0] += HITBOX_TRIM;
-        hitbox.getXPoints()[1] -= HITBOX_TRIM;
-        hitbox.getXPoints()[2] -= HITBOX_TRIM;
-        hitbox.getXPoints()[3] += HITBOX_TRIM;
-        
-        hitbox.getYPoints()[0] += HITBOX_TRIM;
-        hitbox.getYPoints()[1] += HITBOX_TRIM;
-        hitbox.getYPoints()[2] -= HITBOX_TRIM;
-        hitbox.getYPoints()[3] -= HITBOX_TRIM;
-        
-        hitbox.updatePoints();
+        trimHitbox(HITBOX_TRIM, -HITBOX_TRIM+2, HITBOX_TRIM, -HITBOX_TRIM-1);
     }
     
     public void addAngle(double angle) {
