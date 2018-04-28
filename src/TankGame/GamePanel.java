@@ -12,7 +12,8 @@ public class GamePanel extends JPanel implements Runnable {
     private BufferedImage background;
     private BufferedImage minimap = background;	
     private ArrayList<GameObject> worldObjects;
-
+    private ArrayList<Shot> allShots;
+    
     public GamePanel() {
         File imageFile = new File(BACKGROUND_IMAGE);
         System.out.println("CWD: " + System.getProperty("user.dir"));
@@ -26,8 +27,9 @@ public class GamePanel extends JPanel implements Runnable {
         setFocusable(true);
     }
     
-    public void updateObjects(ArrayList<GameObject> objects) {
+    public void updateObjects(ArrayList<GameObject> objects, ArrayList<Shot> shotsFired) {
         worldObjects = objects;
+        allShots = shotsFired;
     }
  
     @Override
@@ -49,6 +51,10 @@ public class GamePanel extends JPanel implements Runnable {
       
         for (int i = 0; i < worldObjects.size(); i++) {
             worldObjects.get(i).repaint(graphics);
+        }
+        
+        for (int i = 0; i < allShots.size(); i++) {
+        	allShots.get(i).repaint(graphics);
         }
         
         makeBackground.dispose();

@@ -12,7 +12,7 @@ public class Shot extends CollidableObject{
     private float velocity;
     private int damage;
     
-    public Shot(Point position, int vector) throws IOException{
+    public Shot(Point position, int vector) throws IOException {
         this(position, vector, BASE_SPEED);
     }
     

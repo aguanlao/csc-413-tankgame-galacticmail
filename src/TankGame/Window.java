@@ -32,7 +32,7 @@ public class Window extends JFrame implements Observer {
     @Override
     public void update(Observable observed, Object arg) {
         //On clock tick, update list of objects, redraw screen
-        panel.updateObjects(world.getObjects());
+        panel.updateObjects(world.getObjects(), world.getShots());
         repaint();
     }
 }

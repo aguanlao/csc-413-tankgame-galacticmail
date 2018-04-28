@@ -22,6 +22,7 @@ public class GameWorld implements Observer{
     
     public GameWorld(TankListener listener) {
         objects = new ArrayList<GameObject>();
+        shotsFired = new ArrayList<Shot>();
         playerOne = new Tank(TANK1_START_X, TANK1_START_Y, TANK_IMAGE1);
         playerTwo = new Tank(TANK2_START_X, TANK2_START_Y, TANK_IMAGE2);
         keyListener = listener;
@@ -64,9 +65,9 @@ public class GameWorld implements Observer{
     @Override
     public void update(Observable observed, Object arg) {
         //On clock tick, check collisions, firing
-        for(int i = 0; i < objects.size(); i++) {
-            if(objects.get(i) instanceof CollidableObject) {
-                if(objects.get(i) != playerOne && playerOne.collides((CollidableObject)objects.get(i))) {      
+        for (int i = 0; i < objects.size(); i++) {
+            if (objects.get(i) instanceof CollidableObject) {
+                if (objects.get(i) != playerOne && playerOne.collides((CollidableObject)objects.get(i))) {      
                     System.out.println("Collided with " + objects.get(i).toString());
                     playerOne.setColliding(true);
                 }
@@ -77,11 +78,17 @@ public class GameWorld implements Observer{
                 
             }
             
-            
+            if (shotsFired.get(i) instanceof CollidableObject) {
+            	System.out.println("Collided with " + shotsFired.get(i).toString());
+            }
         }
     }
     
     public ArrayList<GameObject> getObjects() {
         return objects;
+    }
+    
+    public ArrayList<Shot> getShots() {
+    	return shotsFired;
     }
 }
