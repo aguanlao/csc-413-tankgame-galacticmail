@@ -3,7 +3,7 @@ package TankGame;
 import java.io.*;
 import java.util.*;
 
-public class GameWorld implements Observer, Runnable {
+public class GameWorld implements Observer {
     public static final int WORLD_WIDTH = 960;
     public static final int WORLD_HEIGHT = 960;
     private static final int TANK1_START_X = 200;
@@ -68,7 +68,7 @@ public class GameWorld implements Observer, Runnable {
                 }
             }
         }
-//        buildDestructibles();
+        buildDestructibles();
     }
 
     public void buildDestructibles() {
@@ -93,12 +93,6 @@ public class GameWorld implements Observer, Runnable {
 
     private boolean isNear(GameObject one, GameObject two) {
         return (one.calculateDistance(two) < NEAR_DISTANCE);
-    }
-
-    //TODO: Might need to create thread for running collision checks to improve performance
-    @Override
-    public void run() {
-
     }
 
     @Override
