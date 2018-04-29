@@ -15,11 +15,17 @@ public class DestructibleWall extends CollidableObject{
         isLive = true;
     }
     
-    public void takeDamage(int damage) {
+    public void tookDamage(int damage) {
         hitpoints -= damage;
         if(hitpoints <= 0) {
             isLive = false;
         }
     }
     
+    public int getHP() {
+        if(isLive) {
+            return hitpoints;
+        }
+        return 0;
+    }    
 }

@@ -57,7 +57,7 @@ public abstract class CollidableObject extends GameObject{
     public boolean isLiveNow() {
         return isLive;
     }
-    
+
     @Override
     public void repaint(Graphics graphics) {
         graphics.drawImage(sprite.getImage(0), (int)x, (int)y, null);

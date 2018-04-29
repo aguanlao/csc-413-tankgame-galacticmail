@@ -114,6 +114,10 @@ public class GameWorld implements Observer, Runnable {
             }
         }
         for (int i = 0; i < objects.size(); i++) {
+        	if (!playerOne.isLiveNow()) {
+        		playerOne.respawn();
+        	}
+        	
             if (objects.get(i) instanceof CollidableObject) {
                 CollidableObject collider = (CollidableObject) objects.get(i);
                 if (isNear(collider, playerOne) && collider != playerOne && playerOne.collides(collider)) {
@@ -129,8 +133,13 @@ public class GameWorld implements Observer, Runnable {
                     if (isNear(collider, thisShot) && thisShot.getSource() != collider && thisShot.collides(collider)) {
                         Explosion newBoom = new Explosion((int) thisShot.getX(), (int) thisShot.getY());
                         objects.add(newBoom);
-
-                        //If collider is tank or destructible wall, collider takes damage
+                        
+                        if(collider instanceof Tank) {
+                            ((Tank)collider).tookDamage(thisShot.getDamage());
+                        }
+                        else if (collider instanceof DestructibleWall) {
+                            ((DestructibleWall)collider).tookDamage(thisShot.getDamage());
+                        }
                         shotsFired.remove(thisShot);
                     }
                 }

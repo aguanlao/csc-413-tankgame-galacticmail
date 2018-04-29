@@ -8,13 +8,13 @@ import java.awt.Point;
 public class Tank extends CollidableObject {
     private static final int HITBOX_TRIM = 9;
     private static final int TANK_HEALTH = 100;
+    private static final int TANK_LIVES = 3;
 
     private static final double BASE_SPEED = .25;
     private static final double TURN_SPEED = 1;
-    
-    private int health;    
+      
     double startX, startY, speed, lastX, lastY, turnSpeed;
-    int direction, lastDirection;
+    int direction, lastDirection, livesLeft, health;
     boolean isForward, isBackwards, isLeft, isRight, isColliding, isShooting;
     
     public Tank(int x, int y, String image) {
@@ -32,6 +32,7 @@ public class Tank extends CollidableObject {
         speed = BASE_SPEED;
         turnSpeed = TURN_SPEED;
         isLive = true;
+        livesLeft = TANK_LIVES;
         
         trimHitbox(HITBOX_TRIM, -HITBOX_TRIM+2, HITBOX_TRIM, -HITBOX_TRIM-1);
     }
@@ -44,7 +45,7 @@ public class Tank extends CollidableObject {
         this.direction = (this.direction + (int)angle) % 360;
     }
 
-    public void takeDamage(int damage) {
+    public void tookDamage(int damage) {
         health -= damage;
         if (health <= 0) {
             isLive = false;
@@ -57,7 +58,6 @@ public class Tank extends CollidableObject {
         }
         return 0;
     }
-
     public void resetPosition() {
         this.x = this.startX;
         this.y = this.startY;
@@ -103,7 +103,6 @@ public class Tank extends CollidableObject {
             this.y = lastY;
             this.direction = lastDirection;
             hitbox.translate(((int)this.x - (int)oldX), ((int)this.y - (int)oldY));
-            hitbox.rotate(this.direction);
             setColliding(false);
         }
     }
@@ -142,6 +141,20 @@ public class Tank extends CollidableObject {
     
     public Point getHitboxCenter() {
         return hitbox.getCenter();
+    }
+    
+    public void respawn() {
+    	livesLeft--;
+    	System.out.println(livesLeft);
+    	if (livesLeft > 0) {
+    		System.out.println("translated");
+    		hitbox.translate(((int)this.startX - (int)this.x), ((int)this.startY - (int)this.y));
+	        this.x = this.startX;
+	        this.y = this.startY;
+	        
+	        health = TANK_HEALTH;
+	        isLive = true;
+    	}
     }
     
     @Override
