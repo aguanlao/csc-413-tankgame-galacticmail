@@ -24,8 +24,8 @@ public class Tank extends CollidableObject {
     public Tank(int x, int y, int direction, String image) {
         super(x, y, image);
         
-//        this.startX = x;
-//        this.startY = y;
+        this.startX = x;
+        this.startY = y;
         
         this.direction = direction % 360;
         health = TANK_HEALTH;
@@ -49,6 +49,13 @@ public class Tank extends CollidableObject {
         if (health <= 0) {
             isLive = false;
         }
+    }
+    
+    public int getHealth() {
+        if(isLive) {
+            return health;
+        }
+        return 0;
     }
 
     public void resetPosition() {

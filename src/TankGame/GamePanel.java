@@ -15,10 +15,13 @@ public class GamePanel extends JPanel {
     private static final int VIEW_HEIGHT = 400;
     private static final int BAR_MARGIN = 50;
     private static final int BAR_LENGTH = 200;
+    private static final int BAR_HEIGHT = 25;
     
     private BufferedImage backgroundTile, worldImage, background, playerOneView, playerTwoView;
     private ArrayList<GameObject> worldObjects;
     private ArrayList<Shot> allShots;
+    private ArrayList<Tank> players;
+    private Rectangle barOutlineOne, barOutlineTwo;
     
     public GamePanel() {
         int width = GameWorld.WORLD_WIDTH;
@@ -27,6 +30,7 @@ public class GamePanel extends JPanel {
         background = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);        
         worldImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);        
         createBackground();
+        
         setFocusable(true);
     }
     
@@ -53,9 +57,10 @@ public class GamePanel extends JPanel {
     }
     
     //TODO: Change how objects transferred to panel
-    public void updateObjects(ArrayList<GameObject> objects, ArrayList<Shot> shotsFired) {
+    public void updateObjects(ArrayList<GameObject> objects, ArrayList<Shot> shotsFired, ArrayList<Tank> tanks) {
         worldObjects = objects;
         allShots = shotsFired;
+        players = tanks;
     }
 
     public void redrawWorldImage() {
@@ -64,7 +69,7 @@ public class GamePanel extends JPanel {
         
         
         for (int i = 0; i < allShots.size(); i++) {
-        	allShots.get(i).repaint(graphics);
+            allShots.get(i).repaint(graphics);
         }
         for (int i = 0; i < worldObjects.size(); i++) {
             worldObjects.get(i).repaint(graphics);
@@ -76,18 +81,20 @@ public class GamePanel extends JPanel {
     }
     
     private void drawHealthbars(Graphics2D graphics) {
-        Rectangle healthBarOne, healthBarTwo, barOutlineOne, barOutlineTwo;
-        healthBarOne = new Rectangle(BAR_MARGIN, this.getHeight() - BAR_MARGIN, 200, 25);
-        healthBarTwo = new Rectangle(this.getWidth() - BAR_MARGIN - 200, this.getHeight() - BAR_MARGIN, 200, 25);
-        barOutlineOne = healthBarOne;
-        barOutlineTwo = healthBarTwo;
+        Rectangle healthBarOne, healthBarTwo;
+        healthBarOne = new Rectangle(BAR_MARGIN, this.getHeight() - BAR_MARGIN, 
+                players.get(0).getHealth() * 2, BAR_HEIGHT);
+        healthBarTwo = new Rectangle(this.getWidth() - BAR_MARGIN - BAR_LENGTH, 
+                this.getHeight() - BAR_MARGIN, players.get(1).getHealth() * 2, BAR_HEIGHT);
         
         graphics.setColor(Color.GREEN);
         graphics.fill(healthBarOne);
         graphics.fill(healthBarTwo);
         graphics.setColor(Color.BLACK);
-        graphics.draw(barOutlineOne);
-        graphics.draw(barOutlineTwo);
+        graphics.drawRect(BAR_MARGIN, this.getHeight() - BAR_MARGIN,
+                BAR_LENGTH, BAR_HEIGHT);        
+        graphics.drawRect(this.getWidth() - BAR_MARGIN - BAR_LENGTH,
+                this.getHeight() - BAR_MARGIN, BAR_LENGTH, BAR_HEIGHT);
     }
     
     @Override

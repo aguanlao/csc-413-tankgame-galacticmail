@@ -8,7 +8,7 @@ public class Window extends JFrame implements Observer {
     private static final long serialVersionUID = 1L;
     public static final int WINDOW_WIDTH = 1210;
     public static final int WINDOW_HEIGHT = 830;
-    private static final int REFRESH_DELAY = 10;
+    private static final int REFRESH_DELAY = 30;
     
     private final GameWorld world;
     public GamePanel panel;
@@ -34,7 +34,7 @@ public class Window extends JFrame implements Observer {
     @Override
     public void update(Observable observed, Object arg) {
         //On clock tick, update list of objects, redraw screen
-        panel.updateObjects(world.getObjects(), world.getShots());
+        panel.updateObjects((ArrayList)world.getObjects(), (ArrayList)world.getShots(), (ArrayList)world.getTanks());
         
         if(((GameClock)observed).getFrame() % REFRESH_DELAY == 0) {
             panel.redrawWorldImage();

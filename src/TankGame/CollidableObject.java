@@ -61,7 +61,7 @@ public abstract class CollidableObject extends GameObject{
     @Override
     public void repaint(Graphics graphics) {
         graphics.drawImage(sprite.getImage(0), (int)x, (int)y, null);
-        drawHitbox(graphics);
+//        drawHitbox(graphics);
     }
     
     //Function to render hitbox for debugging
