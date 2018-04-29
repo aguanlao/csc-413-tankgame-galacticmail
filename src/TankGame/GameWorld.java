@@ -6,7 +6,7 @@ import java.util.*;
 
 public class GameWorld implements Observer, Runnable {
 	
-	static boolean isGameOver, player1Won, player2Won, endScreen;
+	public static boolean isGameOver, player1Won, player2Won, endScreen;
 	
     public static final int WORLD_WIDTH = 960;
     public static final int WORLD_HEIGHT = 960;
@@ -119,8 +119,10 @@ public class GameWorld implements Observer, Runnable {
     		player1Won = true;
     	}
     	
-    	
-    	if (!isGameOver) {
+    	if (isGameOver)
+    		GamePanel.displayWinnerScreen();
+    			
+    	else if (!isGameOver) {
 	
 	        if (((GameClock) observed).getFrame() % FIRING_DELAY == 0) {
 	            if (playerOne.getShootState()) {
@@ -133,6 +135,10 @@ public class GameWorld implements Observer, Runnable {
 	        for (int i = 0; i < objects.size(); i++) {
 	        	if (!playerOne.isLiveNow()) {
 	        		playerOne.respawn();
+	        	}
+	        	
+	        	if (!playerTwo.isLiveNow()) {
+	        		playerTwo.respawn();
 	        	}
 	        	
 	            if (objects.get(i) instanceof CollidableObject) {

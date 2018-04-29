@@ -167,7 +167,16 @@ public class GamePanel extends JPanel {
     }
 
     
-    public void displayWinnerScreen (Graphics graphics) {
+    public static void displayWinnerScreen () {
+    	String winner = "";
+    	if (GameWorld.player1Won)
+    		winner = "Player 1";
     	
+    	else if (GameWorld.player2Won)
+    		winner = "Player 2";
+    	
+    	JLabel winScreen = new JLabel("The winner is... " + winner);
+    	winScreen.setVerticalTextPosition(JLabel.BOTTOM);
+    	winScreen.setHorizontalTextPosition(JLabel.CENTER);
     }
 }
