@@ -58,6 +58,11 @@ public class Tank extends CollidableObject {
         }
         return 0;
     }
+    
+    public int getLivesLeft() {
+    	return livesLeft;
+    }
+    
     public void resetPosition() {
         this.x = this.startX;
         this.y = this.startY;
@@ -103,6 +108,7 @@ public class Tank extends CollidableObject {
             this.y = lastY;
             this.direction = lastDirection;
             hitbox.translate(((int)this.x - (int)oldX), ((int)this.y - (int)oldY));
+            hitbox.rotate(this.direction);
             setColliding(false);
         }
     }

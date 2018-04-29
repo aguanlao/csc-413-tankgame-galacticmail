@@ -1,9 +1,13 @@
 package TankGame;
 
+import java.awt.Graphics;
 import java.io.*;
 import java.util.*;
 
 public class GameWorld implements Observer, Runnable {
+	
+	static boolean isGameOver, player1Won, player2Won, endScreen;
+	
     public static final int WORLD_WIDTH = 960;
     public static final int WORLD_HEIGHT = 960;
     private static final int TANK1_START_X = 200;
@@ -68,7 +72,7 @@ public class GameWorld implements Observer, Runnable {
                 }
             }
         }
-//        buildDestructibles();
+        buildDestructibles();
     }
 
     public void buildDestructibles() {
@@ -105,52 +109,70 @@ public class GameWorld implements Observer, Runnable {
     public void update(Observable observed, Object arg) {
         //On clock tick, check collisions, firing
 
-        if (((GameClock) observed).getFrame() % FIRING_DELAY == 0) {
-            if (playerOne.getShootState()) {
-                createShot(playerOne);
-            }
-            if (playerTwo.getShootState()) {
-                createShot(playerTwo);
-            }
-        }
-        for (int i = 0; i < objects.size(); i++) {
-        	if (!playerOne.isLiveNow()) {
-        		playerOne.respawn();
-        	}
-        	
-            if (objects.get(i) instanceof CollidableObject) {
-                CollidableObject collider = (CollidableObject) objects.get(i);
-                if (isNear(collider, playerOne) && collider != playerOne && playerOne.collides(collider)) {
-                    playerOne.setColliding(true);
-                }
-
-                if (isNear(collider, playerTwo) && collider != playerTwo && playerTwo.collides(collider)) {
-                    playerTwo.setColliding(true);
-                }
-
-                for (int j = 0; j < shotsFired.size(); j++) {
-                    Shot thisShot = shotsFired.get(j);
-                    if (isNear(collider, thisShot) && thisShot.getSource() != collider && thisShot.collides(collider)) {
-                        Explosion newBoom = new Explosion((int) thisShot.getX(), (int) thisShot.getY());
-                        objects.add(newBoom);
-                        
-                        if(collider instanceof Tank) {
-                            ((Tank)collider).tookDamage(thisShot.getDamage());
-                        }
-                        else if (collider instanceof DestructibleWall) {
-                            ((DestructibleWall)collider).tookDamage(thisShot.getDamage());
-                        }
-                        shotsFired.remove(thisShot);
-                    }
-                }
-
-            } else if (objects.get(i) instanceof Explosion) {
-                if (((Explosion) objects.get(i)).isFinished()) {
-                    objects.remove(i);
-                }
-            }
-
-        }
+    	if (playerOne.getLivesLeft() <= 0) {
+    		isGameOver = true;
+    		player2Won = true;
+    	}
+    	
+    	else if (playerTwo.getLivesLeft() <= 0) {
+    		isGameOver = true;
+    		player1Won = true;
+    	}
+    	
+    	
+    	if (!isGameOver) {
+	
+	        if (((GameClock) observed).getFrame() % FIRING_DELAY == 0) {
+	            if (playerOne.getShootState()) {
+	                createShot(playerOne);
+	            }
+	            if (playerTwo.getShootState()) {
+	                createShot(playerTwo);
+	            }
+	        }
+	        for (int i = 0; i < objects.size(); i++) {
+	        	if (!playerOne.isLiveNow()) {
+	        		playerOne.respawn();
+	        	}
+	        	
+	            if (objects.get(i) instanceof CollidableObject) {
+	                CollidableObject collider = (CollidableObject) objects.get(i);
+	                if (isNear(collider, playerOne) && collider != playerOne && playerOne.collides(collider)) {
+	                    playerOne.setColliding(true);
+	                }
+	
+	                if (isNear(collider, playerTwo) && collider != playerTwo && playerTwo.collides(collider)) {
+	                    playerTwo.setColliding(true);
+	                }
+	
+	                for (int j = 0; j < shotsFired.size(); j++) {
+	                    Shot thisShot = shotsFired.get(j);
+	                    if (isNear(collider, thisShot) && thisShot.getSource() != collider && thisShot.collides(collider)) {
+	                        Explosion newBoom = new Explosion((int) thisShot.getX(), (int) thisShot.getY());
+	                        objects.add(newBoom);
+	                        
+	                        if (collider instanceof Tank) {
+	                            ((Tank)collider).tookDamage(thisShot.getDamage());
+	                        }
+	                        
+	                        else if (collider instanceof DestructibleWall) {
+	                            ((DestructibleWall)collider).tookDamage(thisShot.getDamage());
+	                            if (! ( (DestructibleWall)collider).isAlive() ) {
+	                            	objects.remove(i);
+	                            }
+	                        }
+	                        shotsFired.remove(thisShot);
+	                    }
+	                }
+	
+	            } else if (objects.get(i) instanceof Explosion) {
+	                if (((Explosion) objects.get(i)).isFinished()) {
+	                    objects.remove(i);
+	                }
+	            }
+	
+	        }
+    	} // end of if (isGameOver)
     }
 
     public List<GameObject> getObjects() {

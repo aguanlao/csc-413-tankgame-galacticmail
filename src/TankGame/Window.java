@@ -8,7 +8,7 @@ public class Window extends JFrame implements Observer {
     private static final long serialVersionUID = 1L;
     public static final int WINDOW_WIDTH = 1210;
     public static final int WINDOW_HEIGHT = 830;
-    private static final int REFRESH_DELAY = 20;
+    private static final int REFRESH_DELAY = 15;
     
     private final GameWorld world;
     public GamePanel panel;

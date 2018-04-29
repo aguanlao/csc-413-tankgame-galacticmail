@@ -1,12 +1,7 @@
 package TankGame;
 
 public class TankGame {
-    private static boolean isWon, isGameOver, isFinished;
-    
     public TankGame() {
-        isWon = false;
-        isGameOver = false;
-        isFinished = false;
     }
 
     public static void main(String[] args) {

@@ -11,8 +11,8 @@ public class GamePanel extends JPanel {
     private static final String BACKGROUND_IMAGE = "resources" + File.separator + "background_tile.png";
     private static final int MINIMAP_WIDTH = 200;
     private static final int MINIMAP_HEIGHT = 200;
-    private static final int VIEW_WIDTH = 400;
-    private static final int VIEW_HEIGHT = 400;
+    private static final int VIEW_WIDTH = 800;
+    private static final int VIEW_HEIGHT = 800;
     private static final int BAR_MARGIN = 50;
     private static final int BAR_LENGTH = 200;
     private static final int BAR_HEIGHT = 25;
@@ -166,4 +166,8 @@ public class GamePanel extends JPanel {
         g2D.dispose();
     }
 
+    
+    public void displayWinnerScreen (Graphics graphics) {
+    	
+    }
 }
