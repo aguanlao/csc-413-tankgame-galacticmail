@@ -8,25 +8,19 @@ import java.awt.geom.Area;
 public abstract class CollidableObject extends GameObject{
         
     protected boolean isLive;
-    protected int health;
     protected RotatablePolygon hitbox;
-//    protected int xPoints[], yPoints[];
         
     public CollidableObject(int x, int y, String image) {
         super(x, y, image);
-        health = 100;
         buildHitbox();
     }
     
     public CollidableObject(int x, int y, String image, int frameCount) {
         super(x, y, image, frameCount);
-        health = 100;
         buildHitbox();
     }
     
     private void buildHitbox() {
-        
-        
         int xPoints[], yPoints[];
         
         int x2, y2;
@@ -35,6 +29,20 @@ public abstract class CollidableObject extends GameObject{
         xPoints = new int[]{(int)this.x, x2, x2, (int)this.x};
         yPoints = new int[]{(int)this.y, (int)this.y, y2, y2};
         hitbox = new RotatablePolygon(xPoints, yPoints, 4);
+    }
+    
+    protected void trimHitbox(int trimX1, int trimX2, int trimY1, int trimY2) {
+        hitbox.getXPoints()[0] += trimX1;
+        hitbox.getXPoints()[1] += trimX2;
+        hitbox.getXPoints()[2] += trimX2;
+        hitbox.getXPoints()[3] += trimX1;
+        
+        hitbox.getYPoints()[0] += trimY1;
+        hitbox.getYPoints()[1] += trimY1;
+        hitbox.getYPoints()[2] += trimY2;
+        hitbox.getYPoints()[3] += trimY2;
+        
+        hitbox.updatePoints();      
     }
 
     public boolean collides (CollidableObject object) {
@@ -49,22 +57,11 @@ public abstract class CollidableObject extends GameObject{
     public boolean isLiveNow() {
         return isLive;
     }
-    
-    public void tookDamage(int damage) {
-    	health -= damage;
-        if (health <= 0) {
-            isLive = false;
-        }
-    }
-    
-    public int getHp() {
-    	return health;
-    }
-    
+
     @Override
     public void repaint(Graphics graphics) {
         graphics.drawImage(sprite.getImage(0), (int)x, (int)y, null);
-        drawHitbox(graphics);
+//        drawHitbox(graphics);
     }
     
     //Function to render hitbox for debugging

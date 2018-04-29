@@ -6,14 +6,15 @@ import java.awt.Color;
 import java.awt.Point;
 
 public class Tank extends CollidableObject {
-    private static final int HITBOX_TRIM = 10;
+    private static final int HITBOX_TRIM = 9;
     private static final int TANK_HEALTH = 100;
+    private static final int TANK_LIVES = 3;
 
-    private static final double BASE_SPEED = .25;
+    private static final double BASE_SPEED = 0.25;
     private static final double TURN_SPEED = 1;
       
     double startX, startY, speed, lastX, lastY, turnSpeed;
-    int direction, lastDirection, livesLeft;
+    int direction, lastDirection, livesLeft, health;
     boolean isForward, isBackwards, isLeft, isRight, isColliding, isShooting;
     
     public Tank(int x, int y, String image) {
@@ -31,23 +32,9 @@ public class Tank extends CollidableObject {
         speed = BASE_SPEED;
         turnSpeed = TURN_SPEED;
         isLive = true;
-        livesLeft = 3;
+        livesLeft = TANK_LIVES;
         
-        trimHitbox();
-    }
-    
-    private void trimHitbox() {
-        hitbox.getXPoints()[0] += HITBOX_TRIM;
-        hitbox.getXPoints()[1] -= HITBOX_TRIM;
-        hitbox.getXPoints()[2] -= HITBOX_TRIM;
-        hitbox.getXPoints()[3] += HITBOX_TRIM;
-        
-        hitbox.getYPoints()[0] += HITBOX_TRIM;
-        hitbox.getYPoints()[1] += HITBOX_TRIM;
-        hitbox.getYPoints()[2] -= HITBOX_TRIM;
-        hitbox.getYPoints()[3] -= HITBOX_TRIM;
-        
-        hitbox.updatePoints();
+        trimHitbox(HITBOX_TRIM, -HITBOX_TRIM+2, HITBOX_TRIM, -HITBOX_TRIM-1);
     }
     
     public void addAngle(double angle) {
@@ -58,6 +45,19 @@ public class Tank extends CollidableObject {
         this.direction = (this.direction + (int)angle) % 360;
     }
 
+    public void tookDamage(int damage) {
+        health -= damage;
+        if (health <= 0) {
+            isLive = false;
+        }
+    }
+    
+    public int getHealth() {
+        if(isLive) {
+            return health;
+        }
+        return 0;
+    }
     public void resetPosition() {
         this.x = this.startX;
         this.y = this.startY;
@@ -155,16 +155,6 @@ public class Tank extends CollidableObject {
 	        health = TANK_HEALTH;
 	        isLive = true;
     	}
-    }
-    
-    @Override
-    public void tookDamage(int damage) {
-    	health -= damage;
-        if (health <= 0) {
-            isLive = false;
-            respawn();
-        }
-        
     }
     
     @Override

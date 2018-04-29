@@ -34,7 +34,7 @@ public class Window extends JFrame implements Observer {
     @Override
     public void update(Observable observed, Object arg) {
         //On clock tick, update list of objects, redraw screen
-        panel.updateObjects(world.getObjects(), world.getShots());
+        panel.updateObjects((ArrayList)world.getObjects(), (ArrayList)world.getShots(), (ArrayList)world.getTanks());
         
         if(((GameClock)observed).getFrame() % REFRESH_DELAY == 0) {
             panel.redrawWorldImage();

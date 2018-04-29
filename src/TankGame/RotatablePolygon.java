@@ -1,12 +1,11 @@
 package TankGame;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
 
 public class RotatablePolygon extends Polygon {
 
-    private double[] xPrecise, yPrecise;
-    private Point center;
+    private final double[] xPrecise, yPrecise;
+    private final Point center;
 
     public RotatablePolygon(int[] xPoints, int[] yPoints, int numPoints) {
         super(xPoints, yPoints, numPoints);
@@ -33,6 +32,7 @@ public class RotatablePolygon extends Polygon {
             xpoints[i] = (int) xPrecise[i];
             ypoints[i] = (int) yPrecise[i];
         }
+        calculateCenter();
     }
 
     public void calculateCenter() {
