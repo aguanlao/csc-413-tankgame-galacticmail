@@ -176,11 +176,16 @@ public class GamePanel extends JPanel {
     	else if (GameWorld.player2Won)
     		winner = "Player 2";
     	
-    	JLabel winScreen = new JLabel("The winner is... " + winner);
-    	winScreen.setVerticalTextPosition(JLabel.BOTTOM);
+    	JLabel winScreen = new JLabel(winner + " wins!");
+    	winScreen.setVerticalTextPosition(JLabel.CENTER);
     	winScreen.setHorizontalTextPosition(JLabel.CENTER);
+        winScreen.setFont(new java.awt.Font("Arial", Font.BOLD, 72));
+    	winScreen.setSize(Window.WINDOW_WIDTH, Window.WINDOW_HEIGHT);
+        winScreen.setOpaque(true);
+        winScreen.setBackground(Color.BLACK);
+        winScreen.setForeground(Color.WHITE);
+        winScreen.setHorizontalAlignment(JLabel.CENTER);
     	winScreen.setVisible(true);
-    	winScreen.setSize(200, 360);
     	this.add(winScreen);
     	
     }

@@ -1,13 +1,14 @@
 package TankGame;
 
+import static TankGame.GameWorld.isGameOver;
 import java.util.*;
 import javax.swing.*;
 
 public class Window extends JFrame implements Observer {
 
     private static final long serialVersionUID = 1L;
-    public static final int WINDOW_WIDTH = 1210;
-    public static final int WINDOW_HEIGHT = 830;
+    public static final int WINDOW_WIDTH = 1200;
+    public static final int WINDOW_HEIGHT = 800;
     private static final int REFRESH_DELAY = 15;
     
     private final GameWorld world;
@@ -39,6 +40,10 @@ public class Window extends JFrame implements Observer {
         if(((GameClock)observed).getFrame() % REFRESH_DELAY == 0) {
             panel.redrawWorldImage();
             panel.repaint();
+        }
+        
+        if (isGameOver) {
+            panel.displayWinnerScreen();
         }
     }
 }
