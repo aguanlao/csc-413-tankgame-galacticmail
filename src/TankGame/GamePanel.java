@@ -21,7 +21,6 @@ public class GamePanel extends JPanel {
     private ArrayList<GameObject> worldObjects;
     private ArrayList<Shot> allShots;
     private ArrayList<Tank> players;
-    private Rectangle barOutlineOne, barOutlineTwo;
     
     public GamePanel() {
         int width = GameWorld.WORLD_WIDTH;
@@ -36,7 +35,6 @@ public class GamePanel extends JPanel {
     
     private void createBackground() {
         File imageFile = new File(BACKGROUND_IMAGE);
-        System.out.println("CWD: " + System.getProperty("user.dir"));
         try {
             backgroundTile = ImageIO.read(imageFile);
         }
@@ -56,7 +54,6 @@ public class GamePanel extends JPanel {
         graphics.dispose();
     }
     
-    //TODO: Change how objects transferred to panel
     public void updateObjects(ArrayList<GameObject> objects, ArrayList<Shot> shotsFired, ArrayList<Tank> tanks) {
         worldObjects = objects;
         allShots = shotsFired;
@@ -65,19 +62,16 @@ public class GamePanel extends JPanel {
 
     public void redrawWorldImage() {
         Graphics2D graphics = worldImage.createGraphics();
-        graphics.drawImage(background, 0, 0, null);        
-        
+        graphics.drawImage(background, 0, 0, null);                
         
         for (int i = 0; i < allShots.size(); i++) {
             allShots.get(i).repaint(graphics);
         }
         for (int i = 0; i < worldObjects.size(); i++) {
             worldObjects.get(i).repaint(graphics);
-        }
-                
+        }                
 
-        graphics.dispose();
-      
+        graphics.dispose();      
     }
     
     void drawPlayerViews() {
@@ -123,8 +117,7 @@ public class GamePanel extends JPanel {
         }
         else {
             viewTwoY = (int)playerTwo.getY() - VIEW_HEIGHT/2;
-        }
-               
+        }               
 
         playerOneView = worldImage.getSubimage(viewOneX, viewOneY, VIEW_WIDTH, VIEW_HEIGHT);
         playerTwoView = worldImage.getSubimage(viewTwoX, viewTwoY, VIEW_WIDTH, VIEW_HEIGHT);
@@ -165,16 +158,16 @@ public class GamePanel extends JPanel {
 
         g2D.dispose();
     }
-
     
     public void displayWinnerScreen () {
     	
     	String winner = "";
-    	if (GameWorld.player1Won)
+    	if (GameWorld.player1Won) {
     		winner = "Player 1";
-    	
-    	else if (GameWorld.player2Won)
+        }    	
+    	else if (GameWorld.player2Won) {
     		winner = "Player 2";
+        }
     	
     	JLabel winScreen = new JLabel(winner + " wins!");
     	winScreen.setVerticalTextPosition(JLabel.CENTER);
@@ -186,7 +179,6 @@ public class GamePanel extends JPanel {
         winScreen.setForeground(Color.WHITE);
         winScreen.setHorizontalAlignment(JLabel.CENTER);
     	winScreen.setVisible(true);
-    	this.add(winScreen);
-    	
+    	this.add(winScreen);    	
     }
 }

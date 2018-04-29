@@ -61,10 +61,8 @@ public abstract class CollidableObject extends GameObject{
     @Override
     public void repaint(Graphics graphics) {
         graphics.drawImage(sprite.getImage(0), (int)x, (int)y, null);
-//        drawHitbox(graphics);
     }
     
-    //Function to render hitbox for debugging
     public void drawHitbox(Graphics graphics) {
         Graphics2D g2D = (Graphics2D)graphics.create();
                 
@@ -72,8 +70,7 @@ public abstract class CollidableObject extends GameObject{
         g2D.drawPolygon(hitbox);
         
         g2D.setColor(Color.RED);
-        g2D.drawOval(hitbox.getCenter().x, hitbox.getCenter().y, 3, 3);
-        
+        g2D.drawOval(hitbox.getCenter().x, hitbox.getCenter().y, 3, 3);        
         
         g2D.dispose();    
     }

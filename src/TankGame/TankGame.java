@@ -9,14 +9,12 @@ public class TankGame {
         final TankListener keys = new TankListener();
         final GameWorld world = new GameWorld(keys);
         final Window window = new Window(world);
-        //TODO: Create sound manager
         window.addKeyListener(keys);
         clock.addObserver(world);
         clock.addObserver(window);
         
         Thread clockThread = new Thread(clock);
-        clockThread.start();
-        
+        clockThread.start();        
     }
     
 }

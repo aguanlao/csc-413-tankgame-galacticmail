@@ -1,9 +1,7 @@
 package TankGame;
 
 import java.io.File;
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Point;
 
 public class Shot extends CollidableObject{
@@ -46,8 +44,7 @@ public class Shot extends CollidableObject{
         
         this.x += shiftX;
         this.y += shiftY;
-        this.hitbox.translate((int)shiftX, (int)shiftY);
-        
+        this.hitbox.translate((int)shiftX, (int)shiftY);        
     }
 
     public float getVector() {
@@ -95,16 +92,6 @@ public class Shot extends CollidableObject{
     @Override
     public void repaint(Graphics graphics) {
     	makeMove();
-        graphics.drawImage(sprite.getImage((int)vector/6), (int) this.x, (int) this.y, null);        
-        
-        drawHitbox(graphics);
-        
-        Graphics g2D = (Graphics2D) graphics.create();
-        
-        g2D.setColor(Color.RED);
-        g2D.drawOval((int)this.x, (int)this.y, 3, 3);
-        
-        
-        g2D.dispose();
+        graphics.drawImage(sprite.getImage((int)vector/6), (int) this.x, (int) this.y, null);
     }
 }

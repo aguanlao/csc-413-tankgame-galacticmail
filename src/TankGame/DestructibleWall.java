@@ -25,8 +25,4 @@ public class DestructibleWall extends CollidableObject{
     public int getHealth() {
     	return health;
     }
-    
-    public boolean isAlive() {
-    	return isLive;
-    }
 }
