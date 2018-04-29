@@ -85,7 +85,6 @@ public class GamePanel extends JPanel {
         Tank playerOne = players.get(0);
         Tank playerTwo = players.get(1);
         
-        System.out.println("Coords: " + playerOne.getX() + ", " + (GameWorld.WORLD_WIDTH - VIEW_WIDTH/2));
         if(playerOne.getX() <= VIEW_WIDTH/2) {
             viewOneX = 0;
         }
