@@ -103,6 +103,7 @@ public class Tank extends CollidableObject {
             this.y = lastY;
             this.direction = lastDirection;
             hitbox.translate(((int)this.x - (int)oldX), ((int)this.y - (int)oldY));
+            hitbox.rotate(this.direction);
             setColliding(false);
         }
     }
