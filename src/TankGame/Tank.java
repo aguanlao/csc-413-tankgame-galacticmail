@@ -12,7 +12,7 @@ public class Tank extends CollidableObject {
     private static final double TURN_SPEED = 1;
       
     private double startX, startY, speed, lastX, lastY, turnSpeed;
-    private int direction, lastDirection, livesLeft, health;
+    private int startDirection, direction, lastDirection, livesLeft, health;
     private boolean isForward, isBackwards, isLeft, isRight, isColliding, isShooting;
     
     public Tank(int x, int y, String image) {
@@ -26,6 +26,7 @@ public class Tank extends CollidableObject {
         this.startY = y;
         
         this.direction = direction % 360;
+        startDirection = this.direction;
         health = TANK_HEALTH;
         speed = BASE_SPEED;
         turnSpeed = TURN_SPEED;
@@ -56,6 +57,11 @@ public class Tank extends CollidableObject {
         }
         return 0;
     }
+    
+    public int getLivesLeft() {
+    	return livesLeft;
+    }
+    
     public void resetPosition() {
         this.x = this.startX;
         this.y = this.startY;
@@ -144,11 +150,11 @@ public class Tank extends CollidableObject {
     
     public void respawn() {
     	livesLeft--;
-    	System.out.println(livesLeft);
     	if (livesLeft > 0) {
     		hitbox.translate(((int)this.startX - (int)this.x), ((int)this.startY - (int)this.y));
 	        this.x = this.startX;
 	        this.y = this.startY;
+                this.direction = this.startDirection;
 	        
 	        health = TANK_HEALTH;
 	        isLive = true;

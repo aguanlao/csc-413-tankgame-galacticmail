@@ -4,6 +4,9 @@ import java.io.*;
 import java.util.*;
 
 public class GameWorld implements Observer {
+
+    static boolean isGameOver, player1Won, player2Won, endScreen;
+
     public static final int WORLD_WIDTH = 960;
     public static final int WORLD_HEIGHT = 960;
     private static final int TANK1_START_X = 200;
@@ -16,7 +19,7 @@ public class GameWorld implements Observer {
     private static final String TANK_IMAGE1 = "resources" + File.separator + "Tank_blue_heavy_strip60.png";
     private static final String TANK_IMAGE2 = "resources" + File.separator + "Tank_red_heavy_strip60.png";
     private static final String LEVEL_FILE = "resources" + File.separator + "Level30x30.txt";
-    
+
     private final TankListener keyListener;
     private final Tank playerOne, playerTwo;
     private final List<GameObject> objects;
@@ -44,7 +47,7 @@ public class GameWorld implements Observer {
         Shot newShot = new Shot(tankThatShot);
         shotsFired.add(newShot);
     }
-    
+
     private void readLevel() {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(LEVEL_FILE));
@@ -95,57 +98,80 @@ public class GameWorld implements Observer {
     private boolean isNear(GameObject one, GameObject two) {
         return (one.calculateDistance(two) < NEAR_DISTANCE);
     }
+    
+    private void worldReset() {
+        buildDestructibles();
+        shotsFired.clear();
+        playerOne.respawn();
+        playerTwo.respawn();
+    }
 
     @Override
     public void update(Observable observed, Object arg) {
         //On clock tick, check collisions, firing
 
-        if (((GameClock) observed).getFrame() % FIRING_DELAY == 0) {
-            if (playerOne.getShootState()) {
-                createShot(playerOne);
-            }
-            if (playerTwo.getShootState()) {
-                createShot(playerTwo);
-            }
+        if (playerOne.getLivesLeft() <= 0) {
+            isGameOver = true;
+            player2Won = true;
+        } else if (playerTwo.getLivesLeft() <= 0) {
+            isGameOver = true;
+            player1Won = true;
         }
-        for (int i = 0; i < objects.size(); i++) {
-        	if (!playerOne.isLiveNow()) {
-        		playerOne.respawn();
-        	}
-        	
-            if (objects.get(i) instanceof CollidableObject) {
-                CollidableObject collider = (CollidableObject) objects.get(i);
-                if (isNear(collider, playerOne) && collider != playerOne && playerOne.collides(collider)) {
-                    playerOne.setColliding(true);
-                }
 
-                if (isNear(collider, playerTwo) && collider != playerTwo && playerTwo.collides(collider)) {
-                    playerTwo.setColliding(true);
-                }
+        if (!isGameOver) {
 
-                for (int j = 0; j < shotsFired.size(); j++) {
-                    Shot thisShot = shotsFired.get(j);
-                    if (isNear(collider, thisShot) && thisShot.getSource() != collider && thisShot.collides(collider)) {
-                        Explosion newBoom = new Explosion((int) thisShot.getX(), (int) thisShot.getY());
-                        objects.add(newBoom);
-                        
-                        if(collider instanceof Tank) {
-                            ((Tank)collider).tookDamage(thisShot.getDamage());
+            if (((GameClock) observed).getFrame() % FIRING_DELAY == 0) {
+                if (playerOne.getShootState()) {
+                    createShot(playerOne);
+                }
+                if (playerTwo.getShootState()) {
+                    createShot(playerTwo);
+                }
+            }
+            
+            if (!playerOne.isLiveNow() || !playerTwo.isLiveNow()) {
+                worldReset();
+            }
+
+            
+            for (int i = 0; i < objects.size(); i++) {
+
+                if (objects.get(i) instanceof CollidableObject) {
+                    CollidableObject collider = (CollidableObject) objects.get(i);
+                    if (isNear(collider, playerOne) && collider != playerOne && playerOne.collides(collider)) {
+                        playerOne.setColliding(true);
+                    }
+
+                    if (isNear(collider, playerTwo) && collider != playerTwo && playerTwo.collides(collider)) {
+                        playerTwo.setColliding(true);
+                    }
+
+                    for (int j = 0; j < shotsFired.size(); j++) {
+                        Shot thisShot = shotsFired.get(j);
+                        if (isNear(collider, thisShot) && thisShot.getSource() != collider && thisShot.collides(collider)) {
+                            Explosion newBoom = new Explosion((int) thisShot.getX(), (int) thisShot.getY());
+                            objects.add(newBoom);
+
+                            if (collider instanceof Tank) {
+                                ((Tank) collider).tookDamage(thisShot.getDamage());
+                            } else if (collider instanceof DestructibleWall) {
+                                ((DestructibleWall) collider).tookDamage(thisShot.getDamage());
+                                if (!((DestructibleWall) collider).isLiveNow()) {
+                                    objects.remove(i);
+                                }
+                            }
+                            shotsFired.remove(thisShot);
                         }
-                        else if (collider instanceof DestructibleWall) {
-                            ((DestructibleWall)collider).tookDamage(thisShot.getDamage());
-                        }
-                        shotsFired.remove(thisShot);
+                    }
+
+                } else if (objects.get(i) instanceof Explosion) {
+                    if (((Explosion) objects.get(i)).isFinished()) {
+                        objects.remove(i);
                     }
                 }
 
-            } else if (objects.get(i) instanceof Explosion) {
-                if (((Explosion) objects.get(i)).isFinished()) {
-                    objects.remove(i);
-                }
             }
-
-        }
+        } // end of if (isGameOver)
     }
 
     public List<GameObject> getObjects() {

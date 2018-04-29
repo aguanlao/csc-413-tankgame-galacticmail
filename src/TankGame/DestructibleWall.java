@@ -7,25 +7,22 @@ public class DestructibleWall extends CollidableObject{
     public static final int IMAGE_LENGTH = 32;
     private static final int BASE_HITPOINTS = 50;
     
-    private int hitpoints;
+    protected int health;
     
     public DestructibleWall(int x, int y) {
         super(x, y, WALL_IMAGE, 1);
-        hitpoints = BASE_HITPOINTS;
+        health = BASE_HITPOINTS;
         isLive = true;
     }
     
     public void tookDamage(int damage) {
-        hitpoints -= damage;
-        if(hitpoints <= 0) {
+        health -= damage;
+        if(health <= 0) {
             isLive = false;
         }
     }
-    
-    public int getHP() {
-        if(isLive) {
-            return hitpoints;
-        }
-        return 0;
-    }    
+
+    public int getHealth() {
+    	return health;
+    }
 }
