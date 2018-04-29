@@ -1,5 +1,6 @@
 package TankGame;
 
+import static TankGame.GameWorld.isGameOver;
 import java.util.*;
 import javax.swing.*;
 
@@ -39,6 +40,10 @@ public class Window extends JFrame implements Observer {
         if(((GameClock)observed).getFrame() % REFRESH_DELAY == 0) {
             panel.redrawWorldImage();
             panel.repaint();
+        }
+        
+        if(isGameOver) {
+            panel.displayWinnerScreen();
         }
     }
 }

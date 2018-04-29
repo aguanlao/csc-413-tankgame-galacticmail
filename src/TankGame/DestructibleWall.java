@@ -5,7 +5,7 @@ import java.io.File;
 public class DestructibleWall extends CollidableObject{
     private static final String WALL_IMAGE = "resources" + File.separator + "wall.png"; 
     public static final int IMAGE_LENGTH = 32;
-    private static final int BASE_HITPOINTS = 50;
+    private static final int BASE_HITPOINTS = 10;
     
     protected int health;
     
