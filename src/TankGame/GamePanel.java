@@ -7,51 +7,83 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.imageio.ImageIO;
 
-public class GamePanel extends JPanel implements Runnable {
+public class GamePanel extends JPanel {
     private static final String BACKGROUND_IMAGE = "resources" + File.separator + "background_tile.png";
-    private BufferedImage background;
-    private BufferedImage minimap = background;	
+    private static final int MINIMAP_WIDTH = 250;
+    private static final int MINIMAP_HEIGHT = 250;
+    private static final int VIEW_WIDTH = 400;
+    private static final int VIEW_HEIGHT = 400;
+    
+    private BufferedImage backgroundTile, worldImage, background, playerOneView, playerTwoView;
     private ArrayList<GameObject> worldObjects;
-
+    private ArrayList<Shot> allShots;
+    
     public GamePanel() {
+        int width = GameWorld.WORLD_WIDTH;
+        int height = GameWorld.WORLD_HEIGHT;
+
+        background = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);        
+        worldImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);        
+        createBackground();
+        setFocusable(true);
+    }
+    
+    private void createBackground() {
         File imageFile = new File(BACKGROUND_IMAGE);
         System.out.println("CWD: " + System.getProperty("user.dir"));
         try {
-            background = ImageIO.read(imageFile);
+            backgroundTile = ImageIO.read(imageFile);
         }
         catch (IOException exception) {
             System.err.println("Error reading background file.");
         }
         
-        setFocusable(true);
-    }
-    
-    public void updateObjects(ArrayList<GameObject> objects) {
-        worldObjects = objects;
-    }
- 
-    @Override
-    public void run() {
-    	
-    }
-
-    @Override
-    public void paintComponent(Graphics graphics) {
-        super.paintComponent(graphics);
-        Graphics2D makeBackground = (Graphics2D) graphics.create();
-        int w = background.getWidth();
-        int h = background.getHeight();
-        for (int y = 0; y < getHeight(); y += h) {
-            for (int x = 0; x < getWidth(); x += w) {
-                makeBackground.drawImage(background, x, y, this);
+        Graphics2D graphics = background.createGraphics();
+        int w = backgroundTile.getWidth();
+        int h = backgroundTile.getHeight();
+        for (int y = 0; y < background.getWidth(); y += h) {
+            for (int x = 0; x < background.getHeight(); x += w) {
+                graphics.drawImage(backgroundTile, x, y, this);
             }
         }
-      
+        graphics.dispose();
+    }
+    
+    public void updateObjects(ArrayList<GameObject> objects, ArrayList<Shot> shotsFired) {
+        worldObjects = objects;
+        allShots = shotsFired;
+    }
+
+    public void redrawWorldImage() {
+        Graphics2D graphics = worldImage.createGraphics();
+        graphics.drawImage(background, 0, 0, null);
         for (int i = 0; i < worldObjects.size(); i++) {
             worldObjects.get(i).repaint(graphics);
         }
-        
-        makeBackground.dispose();
+                
+        for (int i = 0; i < allShots.size(); i++) {
+        	allShots.get(i).repaint(graphics);
+        }
+        graphics.dispose();
+      
+    }
+    
+    @Override
+    public void paintComponent(Graphics graphics) {
+        Graphics2D g2D = (Graphics2D) graphics.create();
+
+        playerOneView = worldImage.getSubimage(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
+        playerTwoView = worldImage.getSubimage(500, 500, VIEW_WIDTH, VIEW_HEIGHT);
+        g2D.drawImage(playerOneView, 0, 0, this.getWidth()/2, this.getHeight(), null);
+        g2D.drawImage(playerTwoView, this.getWidth()/2, 0, this.getWidth()/2, this.getHeight(), null);
+        g2D.setColor(Color.BLACK);
+        g2D.drawLine(this.getWidth()/2, 0, this.getWidth()/2, this.getHeight());
+        g2D.drawImage(worldImage, this.getWidth()/2 - MINIMAP_WIDTH/2, this.getHeight() * 2/3, 
+                MINIMAP_WIDTH, MINIMAP_HEIGHT, null);
+        g2D.drawRect(this.getWidth()/2 - MINIMAP_WIDTH/2, this.getHeight() * 2/3, 
+                MINIMAP_WIDTH, MINIMAP_HEIGHT);
+
+        g2D.dispose();
     }
 
 }

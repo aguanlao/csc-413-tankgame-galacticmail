@@ -3,16 +3,19 @@ package TankGame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
+import java.awt.Point;
 
 public class Tank extends CollidableObject {
     private static final int HITBOX_TRIM = 10;
     private static final int TANK_HEALTH = 100;
-    private static final double BASE_SPEED = 1;
+
+    private static final double BASE_SPEED = .25;
+    private static final double TURN_SPEED = 1;
     
     private int health;    
-    double startX, startY, speed;
-    int direction;
-    boolean isForward, isBackwards, isLeft, isRight, isColliding;
+    double startX, startY, speed, lastX, lastY, turnSpeed;
+    int direction, lastDirection;
+    boolean isForward, isBackwards, isLeft, isRight, isColliding, isShooting;
     
     public Tank(int x, int y, String image) {
         this(x, y, 0, image);
@@ -21,19 +24,16 @@ public class Tank extends CollidableObject {
     public Tank(int x, int y, int direction, String image) {
         super(x, y, image);
         
-        this.startX = x;
-        this.startY = y;
+//        this.startX = x;
+//        this.startY = y;
         
         this.direction = direction % 360;
         health = TANK_HEALTH;
         speed = BASE_SPEED;
+        turnSpeed = TURN_SPEED;
         isLive = true;
-        direction = 0;
         
         trimHitbox();
-        
-        
-        //isForward = isLeft = true;
     }
     
     private void trimHitbox() {
@@ -55,7 +55,6 @@ public class Tank extends CollidableObject {
         if (angle < 0) {
             angle += 360;
         }
-
         this.direction = (this.direction + (int)angle) % 360;
     }
 
@@ -71,7 +70,7 @@ public class Tank extends CollidableObject {
         this.y = this.startY;
         this.direction = 0;
     }
-
+    
     public void checkPosition() {
         double oldX, oldY;
         double rads, dx, dy;
@@ -80,44 +79,39 @@ public class Tank extends CollidableObject {
         dy = Math.sin(rads) * this.speed;            
         oldX = this.x;
         oldY = this.y;
+        
+        if(!this.isColliding) {
+            lastX = this.x;
+            lastY = this.y;
+            lastDirection = this.direction;
+            
+            if (this.isForward && !this.isBackwards) {
+                this.x += 1.2*dx;
+                this.y -= 1.2*dy;
+                hitbox.translate(((int)this.x - (int)oldX), ((int)this.y - (int)oldY));
+            } 
+            else if (this.isBackwards && !this.isForward) {
+                this.x -= 1.2*dx;
+                this.y += 1.2*dy;
+                hitbox.translate(((int)this.x - (int)oldX), ((int)this.y - (int)oldY));
+            }
 
-        if (this.isForward && !this.isBackwards && !this.isColliding) {
-            this.x += dx;
-            this.y -= dy;
-            hitbox.translate(((int)this.x - (int)oldX), ((int)this.y - (int)oldY));
-        } 
-        
-        else if (this.isForward && !this.isBackwards && this.isColliding) {
-            this.x -= dx;
-            this.y += dy;
-            hitbox.translate(((int)this.x - (int)oldX), ((int)this.y - (int)oldY));
-            this.isColliding = false;
-        } 
-        
-        if (this.isBackwards && !this.isForward && !this.isColliding) {
-            this.x -= dx;
-            this.y += dy;
-            hitbox.translate(((int)this.x - (int)oldX), ((int)this.y - (int)oldY));
+            if (this.isLeft && !this.isRight) {
+                this.addAngle(this.turnSpeed);
+                hitbox.rotate(this.direction);
+            }
+            else if (this.isRight && !this.isLeft) {
+                this.addAngle(-this.turnSpeed);
+                hitbox.rotate(this.direction);
+            }
         }
-
-        else if (this.isBackwards && !this.isForward && this.isColliding) {
-            this.x += dx;
-            this.y -= dy;
+        else {
+            this.x = lastX;
+            this.y = lastY;
+            this.direction = lastDirection;
             hitbox.translate(((int)this.x - (int)oldX), ((int)this.y - (int)oldY));
-            this.isColliding = false;
-        } 
-        
-        if (this.isLeft && !this.isRight) {
-            this.addAngle(this.speed);
             hitbox.rotate(this.direction);
-            System.out.println("===" + direction + " " + (-direction + 360));
-        }
-        
-        else if (this.isRight && !this.isLeft) {
-            this.addAngle(-this.speed);
-            hitbox.rotate(this.direction);
-            System.out.println("===" + direction);
-            this.isColliding = false;
+            setColliding(false);
         }
     }
     
@@ -135,6 +129,26 @@ public class Tank extends CollidableObject {
     
     public void setRight(boolean flag) {
         isRight = flag;
+    }
+    
+    public void setColliding(boolean flag) {
+        isColliding = flag;
+    }
+    
+    public void setShooting(boolean flag) {
+    	isShooting = flag;
+    }
+    
+    public boolean getShootState() {
+    	return isShooting;
+    }
+    
+    public int getDirection() {
+    	return this.direction;
+    }
+    
+    public Point getHitboxCenter() {
+        return hitbox.getCenter();
     }
     
     @Override

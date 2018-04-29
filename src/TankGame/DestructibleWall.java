@@ -1,7 +1,6 @@
 package TankGame;
 
 import java.io.File;
-import java.io.IOException;
 
 public class DestructibleWall extends CollidableObject{
     private static final String WALL_IMAGE = "resources" + File.separator + "wall.png";
