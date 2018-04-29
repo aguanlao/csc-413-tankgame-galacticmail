@@ -10,8 +10,8 @@ public class GameWorld implements Observer, Runnable{
     public static final int WORLD_HEIGHT = 900;
     private static final int TANK1_START_X = 200;
     private static final int TANK1_START_Y = 200;
-    private static final int TANK2_START_X = 500;
-    private static final int TANK2_START_Y = 500;   
+    private static final int TANK2_START_X = 200;
+    private static final int TANK2_START_Y = 300;   
     private static final int FIRING_DELAY = 1000;
     private static final int NEAR_DISTANCE = 100;
     private static final String TANK_IMAGE1 = "resources" + File.separator + "Tank_blue_heavy_strip60.png";
@@ -87,6 +87,10 @@ public class GameWorld implements Observer, Runnable{
             }
         }
         for (int i = 0; i < objects.size(); i++) {
+        	if (!playerOne.isLiveNow()) {
+        		playerOne.respawn();
+        	}
+        	
             if (objects.get(i) instanceof CollidableObject) {
                 CollidableObject collider = (CollidableObject)objects.get(i);
                 if (isNear(collider, playerOne) && collider != playerOne && playerOne.collides(collider)) {
@@ -103,7 +107,9 @@ public class GameWorld implements Observer, Runnable{
                         Explosion newBoom = new Explosion((int)thisShot.getX(), (int)thisShot.getY());
                         objects.add(newBoom);
                         shotsFired.remove(thisShot);
+                        collider.tookDamage(20);
                         System.out.println("A shot collided with something!");
+                        System.out.println("HP: " + collider.getHp());
                     }
                 }
                 

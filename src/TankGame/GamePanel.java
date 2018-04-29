@@ -9,8 +9,8 @@ import javax.imageio.ImageIO;
 
 public class GamePanel extends JPanel {
     private static final String BACKGROUND_IMAGE = "resources" + File.separator + "background_tile.png";
-    private static final int MINIMAP_WIDTH = 250;
-    private static final int MINIMAP_HEIGHT = 250;
+    private static final int MINIMAP_WIDTH = 200;
+    private static final int MINIMAP_HEIGHT = 200;
     private static final int VIEW_WIDTH = 400;
     private static final int VIEW_HEIGHT = 400;
     
@@ -78,9 +78,9 @@ public class GamePanel extends JPanel {
         g2D.drawImage(playerTwoView, this.getWidth()/2, 0, this.getWidth()/2, this.getHeight(), null);
         g2D.setColor(Color.BLACK);
         g2D.drawLine(this.getWidth()/2, 0, this.getWidth()/2, this.getHeight());
-        g2D.drawImage(worldImage, this.getWidth()/2 - MINIMAP_WIDTH/2, this.getHeight() * 2/3, 
+        g2D.drawImage(worldImage, this.getWidth()/2 - MINIMAP_WIDTH/2, this.getHeight() * 1/2, 
                 MINIMAP_WIDTH, MINIMAP_HEIGHT, null);
-        g2D.drawRect(this.getWidth()/2 - MINIMAP_WIDTH/2, this.getHeight() * 2/3, 
+        g2D.drawRect(this.getWidth()/2 - MINIMAP_WIDTH/2, this.getHeight() * 1/2, 
                 MINIMAP_WIDTH, MINIMAP_HEIGHT);
 
         g2D.dispose();

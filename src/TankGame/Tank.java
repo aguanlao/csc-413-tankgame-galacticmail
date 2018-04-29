@@ -11,10 +11,9 @@ public class Tank extends CollidableObject {
 
     private static final double BASE_SPEED = .25;
     private static final double TURN_SPEED = 1;
-    
-    private int health;    
+      
     double startX, startY, speed, lastX, lastY, turnSpeed;
-    int direction, lastDirection;
+    int direction, lastDirection, livesLeft;
     boolean isForward, isBackwards, isLeft, isRight, isColliding, isShooting;
     
     public Tank(int x, int y, String image) {
@@ -24,14 +23,15 @@ public class Tank extends CollidableObject {
     public Tank(int x, int y, int direction, String image) {
         super(x, y, image);
         
-//        this.startX = x;
-//        this.startY = y;
+        this.startX = x;
+        this.startY = y;
         
         this.direction = direction % 360;
         health = TANK_HEALTH;
         speed = BASE_SPEED;
         turnSpeed = TURN_SPEED;
         isLive = true;
+        livesLeft = 3;
         
         trimHitbox();
     }
@@ -56,13 +56,6 @@ public class Tank extends CollidableObject {
             angle += 360;
         }
         this.direction = (this.direction + (int)angle) % 360;
-    }
-
-    public void takeDamage(int damage) {
-        health -= damage;
-        if (health <= 0) {
-            isLive = false;
-        }
     }
 
     public void resetPosition() {
@@ -110,7 +103,6 @@ public class Tank extends CollidableObject {
             this.y = lastY;
             this.direction = lastDirection;
             hitbox.translate(((int)this.x - (int)oldX), ((int)this.y - (int)oldY));
-            hitbox.rotate(this.direction);
             setColliding(false);
         }
     }
@@ -149,6 +141,30 @@ public class Tank extends CollidableObject {
     
     public Point getHitboxCenter() {
         return hitbox.getCenter();
+    }
+    
+    public void respawn() {
+    	livesLeft--;
+    	System.out.println(livesLeft);
+    	if (livesLeft > 0) {
+    		System.out.println("translated");
+    		hitbox.translate(((int)this.startX - (int)this.x), ((int)this.startY - (int)this.y));
+	        this.x = this.startX;
+	        this.y = this.startY;
+	        
+	        health = TANK_HEALTH;
+	        isLive = true;
+    	}
+    }
+    
+    @Override
+    public void tookDamage(int damage) {
+    	health -= damage;
+        if (health <= 0) {
+            isLive = false;
+            respawn();
+        }
+        
     }
     
     @Override

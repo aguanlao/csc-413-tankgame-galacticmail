@@ -8,16 +8,19 @@ import java.awt.geom.Area;
 public abstract class CollidableObject extends GameObject{
         
     protected boolean isLive;
+    protected int health;
     protected RotatablePolygon hitbox;
 //    protected int xPoints[], yPoints[];
         
     public CollidableObject(int x, int y, String image) {
         super(x, y, image);
+        health = 100;
         buildHitbox();
     }
     
     public CollidableObject(int x, int y, String image, int frameCount) {
         super(x, y, image, frameCount);
+        health = 100;
         buildHitbox();
     }
     
@@ -45,6 +48,17 @@ public abstract class CollidableObject extends GameObject{
     
     public boolean isLiveNow() {
         return isLive;
+    }
+    
+    public void tookDamage(int damage) {
+    	health -= damage;
+        if (health <= 0) {
+            isLive = false;
+        }
+    }
+    
+    public int getHp() {
+    	return health;
     }
     
     @Override
