@@ -72,7 +72,7 @@ public class GameWorld implements Observer, Runnable {
                 }
             }
         }
-        buildDestructibles();
+        //buildDestructibles();
     }
 
     public void buildDestructibles() {

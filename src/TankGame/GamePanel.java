@@ -167,7 +167,8 @@ public class GamePanel extends JPanel {
     }
 
     
-    public static void displayWinnerScreen () {
+    public void displayWinnerScreen () {
+    	
     	String winner = "";
     	if (GameWorld.player1Won)
     		winner = "Player 1";
@@ -178,5 +179,9 @@ public class GamePanel extends JPanel {
     	JLabel winScreen = new JLabel("The winner is... " + winner);
     	winScreen.setVerticalTextPosition(JLabel.BOTTOM);
     	winScreen.setHorizontalTextPosition(JLabel.CENTER);
+    	winScreen.setVisible(true);
+    	winScreen.setSize(200, 360);
+    	this.add(winScreen);
+    	
     }
 }
