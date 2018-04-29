@@ -68,7 +68,7 @@ public class GameWorld implements Observer, Runnable {
                 }
             }
         }
-        buildDestructibles();
+//        buildDestructibles();
     }
 
     public void buildDestructibles() {
@@ -166,50 +166,5 @@ public class GameWorld implements Observer, Runnable {
         tanks.add(playerOne);
         tanks.add(playerTwo);
         return tanks;
-    }
-
-    private void buildWallsHorizontal(int xStart, int yStart, int numWalls, String wallType) {
-        int xCell, yCell, length;
-
-        if (wallType.equals("Indestructible")) {
-            length = IndestructibleWall.IMAGE_LENGTH;
-        } else {
-            length = DestructibleWall.IMAGE_LENGTH;
-        }
-        xCell = xStart * length;
-        yCell = yStart * length;
-
-        for (int i = 0; i < numWalls; i++) {
-            if (wallType.equals("Indestructible")) {
-                IndestructibleWall newWall = new IndestructibleWall(xCell + (i * length), yCell);
-                objects.add(newWall);
-            } else {
-                DestructibleWall newWall = new DestructibleWall(xCell + (i * length), yCell);
-                objects.add(newWall);
-            }
-        }
-
-    }
-
-    private void buildWallsVertical(int xStart, int yStart, int numWalls, String wallType) {
-        int xCell, yCell, length;
-
-        if (wallType.equals("Indestructible")) {
-            length = IndestructibleWall.IMAGE_LENGTH;
-        } else {
-            length = DestructibleWall.IMAGE_LENGTH;
-        }
-        xCell = xStart * length;
-        yCell = yStart * length;
-
-        for (int i = 0; i < numWalls; i++) {
-            if (wallType.equals("Indestructible")) {
-                IndestructibleWall newWall = new IndestructibleWall(xCell, yCell + (i * length));
-                objects.add(newWall);
-            } else {
-                DestructibleWall newWall = new DestructibleWall(xCell, yCell + (i * length));
-                objects.add(newWall);
-            }
-        }
     }
 }

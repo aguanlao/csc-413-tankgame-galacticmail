@@ -80,6 +80,57 @@ public class GamePanel extends JPanel {
       
     }
     
+    void drawPlayerViews() {
+        int viewOneX, viewOneY, viewTwoX, viewTwoY;
+        Tank playerOne = players.get(0);
+        Tank playerTwo = players.get(1);
+        
+        System.out.println("Coords: " + playerOne.getX() + ", " + (GameWorld.WORLD_WIDTH - VIEW_WIDTH/2));
+        if(playerOne.getX() <= VIEW_WIDTH/2) {
+            viewOneX = 0;
+        }
+        else if(playerOne.getX() >= GameWorld.WORLD_WIDTH - VIEW_WIDTH/2) {
+            viewOneX = GameWorld.WORLD_WIDTH - VIEW_WIDTH;
+        }
+        else {
+            viewOneX = (int)playerOne.getX() - VIEW_WIDTH/2;
+        }
+        
+        if(playerOne.getY() <= VIEW_HEIGHT/2) {
+            viewOneY = 0;
+        }
+        else if(playerOne.getY() >= GameWorld.WORLD_HEIGHT - VIEW_HEIGHT/2) {
+            viewOneY = GameWorld.WORLD_HEIGHT - VIEW_HEIGHT;
+        }
+        else {
+            viewOneY = (int)playerOne.getY() - VIEW_HEIGHT/2;
+        }
+        
+        if(playerTwo.getX() <= VIEW_WIDTH/2) {
+            viewTwoX = 0;
+        }
+        else if(playerTwo.getX() >= GameWorld.WORLD_WIDTH - VIEW_WIDTH/2) {
+            viewTwoX = GameWorld.WORLD_WIDTH - VIEW_WIDTH;
+        }
+        else {
+            viewTwoX = (int)playerTwo.getX() - VIEW_WIDTH/2;
+        }
+        
+        if(playerTwo.getY() <= VIEW_HEIGHT/2) {
+            viewTwoY = 0;
+        }
+        else if(playerTwo.getY() >= GameWorld.WORLD_HEIGHT - VIEW_HEIGHT/2) {
+            viewTwoY = GameWorld.WORLD_HEIGHT - VIEW_HEIGHT;
+        }
+        else {
+            viewTwoY = (int)playerTwo.getY() - VIEW_HEIGHT/2;
+        }
+               
+
+        playerOneView = worldImage.getSubimage(viewOneX, viewOneY, VIEW_WIDTH, VIEW_HEIGHT);
+        playerTwoView = worldImage.getSubimage(viewTwoX, viewTwoY, VIEW_WIDTH, VIEW_HEIGHT);
+    }
+    
     private void drawHealthbars(Graphics2D graphics) {
         Rectangle healthBarOne, healthBarTwo;
         healthBarOne = new Rectangle(BAR_MARGIN, this.getHeight() - BAR_MARGIN, 
@@ -100,9 +151,8 @@ public class GamePanel extends JPanel {
     @Override
     public void paintComponent(Graphics graphics) {
         Graphics2D g2D = (Graphics2D) graphics.create();
-
-        playerOneView = worldImage.getSubimage(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
-        playerTwoView = worldImage.getSubimage(500, 500, VIEW_WIDTH, VIEW_HEIGHT);
+        
+        drawPlayerViews();
         g2D.drawImage(playerOneView, 0, 0, this.getWidth()/2, this.getHeight(), null);
         g2D.drawImage(playerTwoView, this.getWidth()/2, 0, this.getWidth()/2, this.getHeight(), null);
         g2D.setColor(Color.BLACK);
