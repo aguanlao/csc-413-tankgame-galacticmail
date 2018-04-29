@@ -1,21 +1,19 @@
 package TankGame;
 
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Color;
 import java.awt.Point;
 
 public class Tank extends CollidableObject {
     private static final int HITBOX_TRIM = 9;
-    private static final int TANK_HEALTH = 10;
-    private static final int TANK_LIVES = 1;
+    private static final int TANK_HEALTH = 100;
+    private static final int TANK_LIVES = 3;
 
     private static final double BASE_SPEED = 0.25;
     private static final double TURN_SPEED = 1;
       
-    double startX, startY, speed, lastX, lastY, turnSpeed;
-    int direction, lastDirection, livesLeft, health;
-    boolean isForward, isBackwards, isLeft, isRight, isColliding, isShooting;
+    private double startX, startY, speed, lastX, lastY, turnSpeed;
+    private int startDirection, direction, lastDirection, livesLeft, health;
+    private boolean isForward, isBackwards, isLeft, isRight, isColliding, isShooting;
     
     public Tank(int x, int y, String image) {
         this(x, y, 0, image);
@@ -28,6 +26,7 @@ public class Tank extends CollidableObject {
         this.startY = y;
         
         this.direction = direction % 360;
+        startDirection = this.direction;
         health = TANK_HEALTH;
         speed = BASE_SPEED;
         turnSpeed = TURN_SPEED;
@@ -151,12 +150,11 @@ public class Tank extends CollidableObject {
     
     public void respawn() {
     	livesLeft--;
-    	System.out.println(livesLeft);
     	if (livesLeft > 0) {
-    		System.out.println("translated");
     		hitbox.translate(((int)this.startX - (int)this.x), ((int)this.startY - (int)this.y));
 	        this.x = this.startX;
 	        this.y = this.startY;
+                this.direction = this.startDirection;
 	        
 	        health = TANK_HEALTH;
 	        isLive = true;
@@ -166,16 +164,6 @@ public class Tank extends CollidableObject {
     @Override
     public void repaint(Graphics graphics) {
         checkPosition();
-        graphics.drawImage(sprite.getImage((int)direction/6), (int) this.x, (int) this.y, null);        
-        
-        drawHitbox(graphics);
-        
-        Graphics g2D = (Graphics2D) graphics.create();
-        
-        g2D.setColor(Color.RED);
-        g2D.drawOval((int)this.x, (int)this.y, 3, 3);
-        
-        
-        g2D.dispose();
+        graphics.drawImage(sprite.getImage((int)direction/6), (int) this.x, (int) this.y, null);     
     }
 }
