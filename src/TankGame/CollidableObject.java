@@ -50,17 +50,6 @@ public abstract class CollidableObject extends GameObject{
         return isLive;
     }
     
-    public void tookDamage(int damage) {
-    	health -= damage;
-        if (health <= 0) {
-            isLive = false;
-        }
-    }
-    
-    public int getHp() {
-    	return health;
-    }
-    
     @Override
     public void repaint(Graphics graphics) {
         graphics.drawImage(sprite.getImage(0), (int)x, (int)y, null);

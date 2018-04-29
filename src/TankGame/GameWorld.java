@@ -6,8 +6,8 @@ import java.awt.Point;
 
 public class GameWorld implements Observer, Runnable{
 
-    public static final int WORLD_WIDTH = 900;
-    public static final int WORLD_HEIGHT = 900;
+    public static final int WORLD_WIDTH = 1000;
+    public static final int WORLD_HEIGHT = 1000;
     private static final int TANK1_START_X = 200;
     private static final int TANK1_START_Y = 200;
     private static final int TANK2_START_X = 200;
@@ -18,7 +18,7 @@ public class GameWorld implements Observer, Runnable{
     private static final String TANK_IMAGE2 = "resources" + File.separator + "Tank_red_heavy_strip60.png";
     
     private final TankListener keyListener;
-    private final Tank playerOne, playerTwo;
+    public static Tank playerOne, playerTwo;
     private final ArrayList<GameObject> objects;
     private ArrayList<Shot> shotsFired;
 
@@ -103,13 +103,16 @@ public class GameWorld implements Observer, Runnable{
                 
                 for(int j = 0; j < shotsFired.size(); j++) {
                     Shot thisShot = shotsFired.get(j);
-                    if(isNear(collider, thisShot) && thisShot.getSource() != collider && thisShot.collides(collider)){
+                    if (isNear(collider, thisShot) && thisShot.getSource() != collider && thisShot.collides(collider)){
                         Explosion newBoom = new Explosion((int)thisShot.getX(), (int)thisShot.getY());
                         objects.add(newBoom);
                         shotsFired.remove(thisShot);
-                        collider.tookDamage(20);
-                        System.out.println("A shot collided with something!");
-                        System.out.println("HP: " + collider.getHp());
+                        if (collider instanceof Tank)
+                        {
+                        	((Tank) collider).tookDamage(20);
+	                        System.out.println("A shot collided with something!");
+	                        System.out.println("HP: " + ((Tank) collider).getHp());
+                        }
                     }
                 }
                 

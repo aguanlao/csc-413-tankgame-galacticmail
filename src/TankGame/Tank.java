@@ -157,7 +157,6 @@ public class Tank extends CollidableObject {
     	}
     }
     
-    @Override
     public void tookDamage(int damage) {
     	health -= damage;
         if (health <= 0) {
@@ -165,6 +164,10 @@ public class Tank extends CollidableObject {
             respawn();
         }
         
+    }
+    
+    public int getHp() {
+    	return health;
     }
     
     @Override

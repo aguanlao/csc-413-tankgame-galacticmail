@@ -8,11 +8,13 @@ import javax.swing.*;
 import javax.imageio.ImageIO;
 
 public class GamePanel extends JPanel {
-    private static final String BACKGROUND_IMAGE = "resources" + File.separator + "background_tile.png";
+
+	private static final long serialVersionUID = 1L;
+	private static final String BACKGROUND_IMAGE = "resources" + File.separator + "background_tile.png";
     private static final int MINIMAP_WIDTH = 200;
     private static final int MINIMAP_HEIGHT = 200;
-    private static final int VIEW_WIDTH = 400;
-    private static final int VIEW_HEIGHT = 400;
+    private static final int VIEW_WIDTH = 600;
+    private static final int VIEW_HEIGHT = 600;
     
     private BufferedImage backgroundTile, worldImage, background, playerOneView, playerTwoView;
     private ArrayList<GameObject> worldObjects;
@@ -41,8 +43,8 @@ public class GamePanel extends JPanel {
         Graphics2D graphics = background.createGraphics();
         int w = backgroundTile.getWidth();
         int h = backgroundTile.getHeight();
-        for (int y = 0; y < background.getWidth(); y += h) {
-            for (int x = 0; x < background.getHeight(); x += w) {
+        for (int y = 0; y < background.getHeight(); y += h) {
+            for (int x = 0; x < background.getWidth(); x += w) {
                 graphics.drawImage(backgroundTile, x, y, this);
             }
         }
@@ -71,15 +73,21 @@ public class GamePanel extends JPanel {
     @Override
     public void paintComponent(Graphics graphics) {
         Graphics2D g2D = (Graphics2D) graphics.create();
-
-        playerOneView = worldImage.getSubimage(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
-        playerTwoView = worldImage.getSubimage(500, 500, VIEW_WIDTH, VIEW_HEIGHT);
+        
+        playerOneView = worldImage.getSubimage( (int) (GameWorld.playerOne.getX()/2.5), (int) (GameWorld.playerOne.getY()/2.5), VIEW_WIDTH, VIEW_HEIGHT);
+        
+        playerTwoView = worldImage.getSubimage( (int) (GameWorld.playerTwo.getX()/2.5), (int) (GameWorld.playerTwo.getY()/2.5), VIEW_WIDTH, VIEW_HEIGHT);
+        
         g2D.drawImage(playerOneView, 0, 0, this.getWidth()/2, this.getHeight(), null);
         g2D.drawImage(playerTwoView, this.getWidth()/2, 0, this.getWidth()/2, this.getHeight(), null);
+        
         g2D.setColor(Color.BLACK);
+        
         g2D.drawLine(this.getWidth()/2, 0, this.getWidth()/2, this.getHeight());
+        
         g2D.drawImage(worldImage, this.getWidth()/2 - MINIMAP_WIDTH/2, this.getHeight() * 1/2, 
                 MINIMAP_WIDTH, MINIMAP_HEIGHT, null);
+        
         g2D.drawRect(this.getWidth()/2 - MINIMAP_WIDTH/2, this.getHeight() * 1/2, 
                 MINIMAP_WIDTH, MINIMAP_HEIGHT);
 
