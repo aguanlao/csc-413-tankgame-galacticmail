@@ -8,6 +8,7 @@ public class GameWorld implements Observer {
     public static final int WORLD_HEIGHT = 960;
     private static final int TANK1_START_X = 200;
     private static final int TANK1_START_Y = 200;
+    private static final int TANK2_DIRECTION = 180;
     private static final int TANK2_START_X = 700;
     private static final int TANK2_START_Y = 700;
     private static final int FIRING_DELAY = 1000;
@@ -29,7 +30,7 @@ public class GameWorld implements Observer {
         walls = new ArrayList<>();
         level = new ArrayList<>();
         playerOne = new Tank(TANK1_START_X, TANK1_START_Y, TANK_IMAGE1);
-        playerTwo = new Tank(TANK2_START_X, TANK2_START_Y, TANK_IMAGE2);
+        playerTwo = new Tank(TANK2_START_X, TANK2_START_Y, TANK2_DIRECTION, TANK_IMAGE2);
         keyListener = listener;
 
         keyListener.addTanks(playerOne, playerTwo);
