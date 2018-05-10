@@ -1,6 +1,8 @@
 package tankgame;
 
 import common.GameObject;
+import common.Shot;
+
 import java.io.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;

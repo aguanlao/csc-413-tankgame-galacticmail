@@ -3,6 +3,8 @@ package tankgame;
 import common.GameClock;
 import common.CollidableObject;
 import common.GameObject;
+import common.Shot;
+
 import java.io.*;
 import java.util.*;
 
