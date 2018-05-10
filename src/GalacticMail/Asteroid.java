@@ -1,4 +1,4 @@
-package GalacticMail;
+package galacticmail;
 
 import java.awt.Graphics;
 import java.io.File;
