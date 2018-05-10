@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.io.File;
 
 public class Explosion extends NonCollidableObject {
-    private static final String EXPLOSION_IMAGE = "tankgame/resources" + File.separator + "Explosion_small_strip6.png";
+    private static final String EXPLOSION_IMAGE = "tankgame" + File.separator + "resources" + File.separator + "Explosion_small_strip6.png";
     private static final int NUMBER_OF_FRAMES = 6;
     private static final int FRAME_DELAY = 20;
     

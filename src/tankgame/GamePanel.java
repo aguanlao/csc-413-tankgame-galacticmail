@@ -9,7 +9,7 @@ import javax.swing.*;
 import javax.imageio.ImageIO;
 
 public class GamePanel extends JPanel {
-    private static final String BACKGROUND_IMAGE = "tankgame/resources" + File.separator + "background_tile.png";
+    private static final String BACKGROUND_IMAGE = "tankgame" + File.separator + "resources" + File.separator + "background_tile.png";
     private static final int MINIMAP_WIDTH = 200;
     private static final int MINIMAP_HEIGHT = 200;
     private static final int VIEW_WIDTH = 800;

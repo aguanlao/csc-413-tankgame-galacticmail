@@ -19,9 +19,9 @@ public class GameWorld implements Observer {
     private static final int TANK2_START_Y = 700;
     private static final int FIRING_DELAY = 1000;
     private static final int NEAR_DISTANCE = 100;
-    private static final String TANK_IMAGE1 = "tankgame/resources" + File.separator + "Tank_blue_heavy_strip60.png";
-    private static final String TANK_IMAGE2 = "tankgame/resources" + File.separator + "Tank_red_heavy_strip60.png";
-    private static final String LEVEL_FILE = "tankgame/resources" + File.separator + "Level30x30.txt";
+    private static final String TANK_IMAGE1 = "tankgame" + File.separator + "resources" + File.separator + "Tank_blue_heavy_strip60.png";
+    private static final String TANK_IMAGE2 = "tankgame" + File.separator + "resources" + File.separator + "Tank_red_heavy_strip60.png";
+    private static final String LEVEL_FILE = "tankgame" + File.separator + "resources" + File.separator + "Level30x30.txt";
 
     private final TankListener keyListener;
     private final Tank playerOne, playerTwo;
