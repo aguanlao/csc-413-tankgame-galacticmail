@@ -1,5 +1,6 @@
 package tankgame;
 
+import common.GameClock;
 import static tankgame.GameWorld.isGameOver;
 import java.util.*;
 import javax.swing.*;
@@ -9,7 +10,7 @@ public class Window extends JFrame implements Observer {
     private static final long serialVersionUID = 1L;
     public static final int WINDOW_WIDTH = 1200;
     public static final int WINDOW_HEIGHT = 800;
-    private static final int REFRESH_DELAY = 15;
+    private static final int REFRESH_DELAY = 75;
     
     private final GameWorld world;
     public GamePanel panel;

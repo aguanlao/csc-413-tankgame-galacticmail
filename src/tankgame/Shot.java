@@ -1,11 +1,12 @@
 package tankgame;
 
+import common.CollidableObject;
 import java.io.File;
 import java.awt.Graphics;
 import java.awt.Point;
 
 public class Shot extends CollidableObject{
-    private static final String SHOT_IMAGE = "resources" + File.separator + "Shell_basic_strip60.png";
+    private static final String SHOT_IMAGE = "tankgame/resources" + File.separator + "Shell_basic_strip60.png";
     private static final int BASE_SPEED = 3;
     private static final int BASE_DAMAGE = 10;
     private static final int TRIM_X = 3;

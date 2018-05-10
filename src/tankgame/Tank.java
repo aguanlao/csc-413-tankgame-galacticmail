@@ -1,5 +1,6 @@
 package tankgame;
 
+import common.CollidableObject;
 import java.awt.Graphics;
 import java.awt.Point;
 

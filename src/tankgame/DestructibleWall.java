@@ -1,9 +1,10 @@
 package tankgame;
 
+import common.CollidableObject;
 import java.io.File;
 
 public class DestructibleWall extends CollidableObject{
-    private static final String WALL_IMAGE = "resources" + File.separator + "wall.png"; 
+    private static final String WALL_IMAGE = "tankgame/resources" + File.separator + "wall.png"; 
     public static final int IMAGE_LENGTH = 32;
     private static final int BASE_HITPOINTS = 20;
     
