@@ -1,5 +1,6 @@
-package TankGame;
+package common;
 
+import tankgame.Tank;
 import java.io.File;
 import java.awt.Color;
 import java.awt.Graphics;

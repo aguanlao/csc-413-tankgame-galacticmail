@@ -1,4 +1,4 @@
-package TankGame;
+package common;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

@@ -1,4 +1,4 @@
-package TankGame;
+package common;
 
 import java.util.Observable;
 import java.awt.Graphics;

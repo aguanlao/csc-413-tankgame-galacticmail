@@ -1,8 +1,10 @@
-package TankGame;
+package tankgame;
 
-import static TankGame.GameWorld.isGameOver;
+import static tankgame.GameWorld.isGameOver;
 import java.util.*;
 import javax.swing.*;
+
+import common.GameClock;
 
 public class Window extends JFrame implements Observer {
 

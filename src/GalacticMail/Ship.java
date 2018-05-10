@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.io.File;
 
-import TankGame.CollidableObject;
+import common.CollidableObject;
 
 public class Ship extends CollidableObject {
 	private static final String Ship_Image = "resources" + File.separator + "Flying_strip72.png"; 

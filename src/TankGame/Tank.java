@@ -1,7 +1,9 @@
-package TankGame;
+package tankgame;
 
 import java.awt.Graphics;
 import java.awt.Point;
+
+import common.CollidableObject;
 
 public class Tank extends CollidableObject {
     private static final int HITBOX_TRIM = 9;

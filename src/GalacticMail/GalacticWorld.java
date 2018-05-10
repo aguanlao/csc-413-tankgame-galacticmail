@@ -3,6 +3,9 @@ package galacticmail;
 import java.io.*;
 import java.util.*;
 
+import common.Shot;
+import common.GameObject;
+
 public class GalacticWorld implements Observer {
 
 	static boolean GameOver, endScreen;
@@ -21,13 +24,14 @@ public class GalacticWorld implements Observer {
         objects = new ArrayList<>();
         shotsFired = new ArrayList<>();
         level = new ArrayList<>();
+        asteroids = new ArrayList<>();
         playerOne = new Ship(WORLD_WIDTH/2, WORLD_HEIGHT/2);
         keyListener = listener;
 
         keyListener.addShip(playerOne);
         objects.add(playerOne);
-        readLevel();
-        buildLevel();
+        //readLevel();
+        //buildLevel();
 	}
 	
 	@Override

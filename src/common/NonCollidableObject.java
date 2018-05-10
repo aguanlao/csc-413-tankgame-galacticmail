@@ -1,4 +1,4 @@
-package TankGame;
+package common;
 
 public abstract class NonCollidableObject extends GameObject{
     public NonCollidableObject(int x, int y, String image) {

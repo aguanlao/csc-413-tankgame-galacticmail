@@ -1,9 +1,9 @@
 package galacticmail;
 
+import common.CollidableObject;
+
 import java.awt.Graphics;
 import java.io.File;
-
-import TankGame.CollidableObject;
 
 public class Asteroid extends CollidableObject{
 	private static final String Asteroid_Image = "resources" + File.separator + "Asteroid_strip180.png";

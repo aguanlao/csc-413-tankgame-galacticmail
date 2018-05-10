@@ -1,10 +1,14 @@
-package TankGame;
+package tankgame;
 
 import java.io.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.swing.*;
+
+import common.GameObject;
+import common.Shot;
+
 import javax.imageio.ImageIO;
 
 public class GamePanel extends JPanel {

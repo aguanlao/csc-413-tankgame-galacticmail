@@ -1,7 +1,13 @@
-package TankGame;
+package tankgame;
 
 import java.io.*;
 import java.util.*;
+
+import common.CollidableObject;
+import common.Explosion;
+import common.GameClock;
+import common.GameObject;
+import common.Shot;
 
 public class GameWorld implements Observer {
 
@@ -14,7 +20,7 @@ public class GameWorld implements Observer {
     private static final int TANK2_DIRECTION = 180;
     private static final int TANK2_START_X = 700;
     private static final int TANK2_START_Y = 700;
-    private static final int FIRING_DELAY = 1000;
+    private static final int FIRING_DELAY = 100;
     private static final int NEAR_DISTANCE = 100;
     private static final String TANK_IMAGE1 = "resources" + File.separator + "Tank_blue_heavy_strip60.png";
     private static final String TANK_IMAGE2 = "resources" + File.separator + "Tank_red_heavy_strip60.png";

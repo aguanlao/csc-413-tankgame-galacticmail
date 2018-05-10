@@ -1,6 +1,8 @@
-package TankGame;
+package tankgame;
 
 import java.io.File;
+
+import common.CollidableObject;
 
 public class IndestructibleWall extends CollidableObject{
     private static final String INDESTRUCT_WALL_IMAGE = "resources" + File.separator + "wall_indestructible.png";
