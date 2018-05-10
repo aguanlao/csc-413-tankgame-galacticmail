@@ -1,4 +1,4 @@
-package TankGame;
+package common;
 
 import java.util.Observable;
 import static java.lang.Thread.sleep;

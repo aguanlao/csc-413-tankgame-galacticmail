@@ -1,5 +1,6 @@
-package TankGame;
+package tankgame;
 
+import common.GameObject;
 import java.io.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -8,7 +9,7 @@ import javax.swing.*;
 import javax.imageio.ImageIO;
 
 public class GamePanel extends JPanel {
-    private static final String BACKGROUND_IMAGE = "resources" + File.separator + "background_tile.png";
+    private static final String BACKGROUND_IMAGE = "tankgame" + File.separator + "resources" + File.separator + "background_tile.png";
     private static final int MINIMAP_WIDTH = 200;
     private static final int MINIMAP_HEIGHT = 200;
     private static final int VIEW_WIDTH = 800;
@@ -162,19 +163,20 @@ public class GamePanel extends JPanel {
     
     public void displayWinnerScreen () {
     	
-    	String winner = "";
-    	if (GameWorld.player1Won)
-    		winner = "Player 1";
-    	
-    	else if (GameWorld.player2Won)
-    		winner = "Player 2";
-    	
+        String winner = "";
+        if (GameWorld.player1Won) {
+            winner = "Player 1";
+        } else if (GameWorld.player2Won) {
+            winner = "Player 2";
+        }
+
     	JLabel winScreen = new JLabel(winner + " wins!");
     	winScreen.setVerticalTextPosition(JLabel.CENTER);
     	winScreen.setHorizontalTextPosition(JLabel.CENTER);
     	winScreen.setSize(Window.WINDOW_WIDTH, Window.WINDOW_HEIGHT);
         winScreen.setBackground(Color.BLACK);
         winScreen.setForeground(Color.WHITE);
+        winScreen.setFont(new Font("SansSerif", Font.PLAIN, 48));
         winScreen.setOpaque(true);
         winScreen.setHorizontalAlignment(JLabel.CENTER);
     	winScreen.setVisible(true);

@@ -1,11 +1,14 @@
-package TankGame;
+package tankgame;
 
+import common.GameClock;
+import common.CollidableObject;
+import common.GameObject;
 import java.io.*;
 import java.util.*;
 
 public class GameWorld implements Observer {
 
-    static boolean isGameOver, player1Won, player2Won, endScreen;
+    static boolean isGameOver, player1Won, player2Won;
     
     public static final int WORLD_WIDTH = 960;
     public static final int WORLD_HEIGHT = 960;
@@ -16,9 +19,9 @@ public class GameWorld implements Observer {
     private static final int TANK2_START_Y = 700;
     private static final int FIRING_DELAY = 1000;
     private static final int NEAR_DISTANCE = 100;
-    private static final String TANK_IMAGE1 = "resources" + File.separator + "Tank_blue_heavy_strip60.png";
-    private static final String TANK_IMAGE2 = "resources" + File.separator + "Tank_red_heavy_strip60.png";
-    private static final String LEVEL_FILE = "resources" + File.separator + "Level30x30.txt";
+    private static final String TANK_IMAGE1 = "tankgame" + File.separator + "resources" + File.separator + "Tank_blue_heavy_strip60.png";
+    private static final String TANK_IMAGE2 = "tankgame" + File.separator + "resources" + File.separator + "Tank_red_heavy_strip60.png";
+    private static final String LEVEL_FILE = "tankgame" + File.separator + "resources" + File.separator + "Level30x30.txt";
 
     private final TankListener keyListener;
     private final Tank playerOne, playerTwo;
@@ -35,6 +38,8 @@ public class GameWorld implements Observer {
         playerOne = new Tank(TANK1_START_X, TANK1_START_Y, TANK_IMAGE1);
         playerTwo = new Tank(TANK2_START_X, TANK2_START_Y, TANK2_DIRECTION, TANK_IMAGE2);
         keyListener = listener;
+        player1Won = false;
+        player2Won = false;
 
         keyListener.addTanks(playerOne, playerTwo);
         objects.add(playerOne);
@@ -51,7 +56,7 @@ public class GameWorld implements Observer {
     private void readLevel() {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(LEVEL_FILE));
-            String line = null;
+            String line;
             while ((line = reader.readLine()) != null) {
                 level.add(line);
             }
@@ -111,11 +116,11 @@ public class GameWorld implements Observer {
         //On clock tick, check collisions, firing
 
         if (playerOne.getLivesLeft() <= 0) {
-            isGameOver = true;
             player2Won = true;
-        } else if (playerTwo.getLivesLeft() <= 0) {
             isGameOver = true;
+        } else if (playerTwo.getLivesLeft() <= 0) {
             player1Won = true;
+            isGameOver = true;
         }
 
         if (!isGameOver) {
@@ -163,13 +168,11 @@ public class GameWorld implements Observer {
                             shotsFired.remove(thisShot);
                         }
                     }
-
                 } else if (objects.get(i) instanceof Explosion) {
                     if (((Explosion) objects.get(i)).isFinished()) {
                         objects.remove(i);
                     }
                 }
-
             }
         } // end of if (isGameOver)
     }

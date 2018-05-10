@@ -1,4 +1,6 @@
-package TankGame;
+package tankgame;
+
+import common.GameClock;
 
 public class TankGame {
     public TankGame() {

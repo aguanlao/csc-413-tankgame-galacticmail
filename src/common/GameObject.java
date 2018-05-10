@@ -1,9 +1,9 @@
-package TankGame;
+package common;
 
-import java.util.Observable;
+import common.Sprite;
 import java.awt.Graphics;
 
-public class GameObject extends Observable {
+public class GameObject {
 
     protected double x, y;
     protected Sprite sprite;
