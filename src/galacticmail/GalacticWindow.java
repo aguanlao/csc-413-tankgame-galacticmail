@@ -1,4 +1,4 @@
-package GalacticMail;
+package galacticmail;
 
 public class GalacticWindow {
 

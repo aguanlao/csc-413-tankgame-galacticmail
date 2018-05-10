@@ -1,4 +1,4 @@
-package GalacticMail;
+package galacticmail;
 
 import java.io.*;
 import java.util.*;
