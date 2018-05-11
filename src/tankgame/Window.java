@@ -13,7 +13,7 @@ public class Window extends JFrame implements Observer {
     private static final int REFRESH_DELAY = 75;
     
     private final GameWorld world;
-    public GamePanel panel;
+    private GamePanel panel;
     public Window(GameWorld world) {
         this.world = world;
         initializeFrame();

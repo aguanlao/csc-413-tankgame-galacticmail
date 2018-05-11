@@ -16,7 +16,7 @@ public class Ship extends CollidableObject {
     
     private double speed, turnSpeed;
     private int direction;
-    private boolean isForward, isLeft, isRight;
+    private boolean isForward, isLeft, isRight, isLanded;
 
     public Ship(int x, int y) {
         this(x, y, 0);
@@ -30,6 +30,7 @@ public class Ship extends CollidableObject {
         speed = BASE_SPEED;
         turnSpeed = TURN_SPEED;
         isLive = true;
+        isLanded = false;
     }
 
     public void addAngle(double angle) {
@@ -62,7 +63,7 @@ public class Ship extends CollidableObject {
 
     public void setLanding(GameObject obj) {
         // set player's x, y, speed, and direction the same as the base obj
-
+        isLanded = true;
     }
 
     public void move() {

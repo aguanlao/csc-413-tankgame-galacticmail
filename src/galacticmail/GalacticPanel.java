@@ -13,10 +13,13 @@ public class GalacticPanel extends JPanel{
     private static final int VIEW_WIDTH = 800;
     private static final int VIEW_HEIGHT = 800;
     
-    private List<GameObject> worldObjects;
+    private final GalacticWorld world;
     
-    public GalacticPanel() {
-        worldObjects = new ArrayList<>();
+    Asteroid a;
+    
+    public GalacticPanel(GalacticWorld world) {
+        this.world = world;
+        a = new Asteroid(50, 50);
     }
     
     private void createBackground() {
@@ -28,6 +31,12 @@ public class GalacticPanel extends JPanel{
     
     @Override
     public void paintComponent(Graphics graphics) {
+        Graphics2D g2D = (Graphics2D)graphics.create();
+        for(int i = 0; i < world.getAsteroids().size(); i++) {
+            world.getAsteroids().get(i).repaint(g2D);
+        }
+        a.repaint(g2D);
+        g2D.dispose();
         
     }    
 }

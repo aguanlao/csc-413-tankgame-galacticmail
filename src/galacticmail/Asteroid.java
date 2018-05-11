@@ -9,16 +9,19 @@ public class Asteroid extends CollidableObject {
     private static final String ASTEROID_IMAGE = "galacticmail" + File.separator + "resources" + File.separator + "Asteroid_strip180.png";
     
     private static final int ASTEROID_FRAMES = 180;
-    private final float velocity;
-    private final double vector;
-    private final int rotationSpeed;
-    private int angle;
+    private final double velocity, vector, rotationSpeed;
+    private double angle;
+    
+    //TODO: Debug constructor
+    public Asteroid(int startX, int startY) {
+        this(startX, startY, 270, 0.5, .1);
+    }
 
-    public Asteroid(int startX, int startY, int direction, int speed, int rotateSpeed) {
+    public Asteroid(int startX, int startY, int direction, double speed, double rotateSpeed) {
         super(startX, startY, ASTEROID_IMAGE, ASTEROID_FRAMES);
         velocity = speed;
         vector = Math.toRadians(direction);
-        angle = (int)(Math.random() * 361);
+        angle = Math.random() * 360;
         rotationSpeed = rotateSpeed;
     }
 

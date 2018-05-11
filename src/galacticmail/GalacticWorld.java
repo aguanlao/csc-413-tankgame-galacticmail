@@ -32,25 +32,44 @@ public class GalacticWorld implements Observer {
 
         keyListener.setShip(player);
         objects.add(player);
-        //readLevel();
-        //buildLevel();
+        
+        buildLevel();
     }
 
     public List<GameObject> getObjects() {
         return objects;
     }
+    
+    public List<Asteroid> getAsteroids() {
+        return asteroids;
+    }   
 
     private boolean isNear(GameObject one, GameObject two) {
         return (one.calculateDistance(two) < 100);
     }
+    
+    private void spawnAsteroid() {
+        int spawnX, spawnY, direction;
+        double speed, rotateSpeed;
+        
+        spawnX = (int)(Math.random() * WORLD_WIDTH);
+        spawnY = (int)(Math.random() * WORLD_HEIGHT);
+        direction = (int)(Math.random() * 360);
+        speed = Math.random() + 0.5;
+        rotateSpeed = Math.random() * 2;
+        
+        asteroids.add(new Asteroid(spawnX, spawnY, direction, speed, rotateSpeed));
+    }
 
     public void buildLevel() {
-        Asteroid newAsteroid;
         // add ~10 asteroids and ~5 bases
+        for(int i = 0; i < 10; i++) {
+            spawnAsteroid();
+        }
     }
 
     @Override
-    public void update(Observable arg0, Object arg1) {
+    public void update(Observable observed, Object arg) {
         if (player.isLiveNow() == false) {
             GameOver = true;
         }
@@ -61,16 +80,17 @@ public class GalacticWorld implements Observer {
             for (int i = 0; i < objects.size(); i++) {
 
                 if (objects.get(i) instanceof Planet) {
-                    Planet collider = (Planet) objects.get(i);
-                    if (isNear(collider, player) && player.collides(collider)) {
+                    Planet base = (Planet) objects.get(i);
+                    if (isNear(base, player) && player.collides(base)) {
                         player.setLanding(objects.get(i));
                     }
                 } else if (objects.get(i) instanceof Asteroid) {
-                    Asteroid collider = (Asteroid) objects.get(i);
-                    if (isNear(collider, player) && player.collides(collider)) {
+                    Asteroid asteroid = (Asteroid) objects.get(i);
+                    if (isNear(asteroid, player) && player.collides(asteroid)) {
                         Explosion newBoom = new Explosion((int) player.getX(), (int) player.getY(), 
                                 EXPLOSION_IMAGE, 9);
                         objects.add(newBoom);
+                        player.setLive(false);
                     }
                 } else if (objects.get(i) instanceof Explosion) {
                     if (((Explosion) objects.get(i)).isFinished()) {

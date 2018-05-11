@@ -57,6 +57,10 @@ public abstract class CollidableObject extends GameObject{
     public boolean isLiveNow() {
         return isLive;
     }
+    
+    public void setLive(boolean flag) {
+        isLive = flag;
+    }
 
     @Override
     public void repaint(Graphics graphics) {
