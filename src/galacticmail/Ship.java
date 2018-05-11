@@ -10,29 +10,26 @@ import common.GameObject;
 public class Ship extends CollidableObject {
 
     private static final String SHIP_IMAGE = "galacticmail" + File.separator + "resources" + File.separator + "Flying_strip72.png";
-
-    private double startX, startY, speed, turnSpeed;
-    private int startDirection, direction;
+    private static final int SHIP_FRAMES = 72;
+    private static final int BASE_SPEED = 1;
+    private static final int TURN_SPEED = 1;
+    
+    private double speed, turnSpeed;
+    private int direction;
     private boolean isForward, isLeft, isRight;
 
     public Ship(int x, int y) {
-
-        super(x, y, SHIP_IMAGE);
+        this(x, y, 0);
     }
 
     public Ship(int x, int y, int direction) {
-        super(x, y, SHIP_IMAGE);
-
-        this.startX = x;
-        this.startY = y;
+        super(x, y, SHIP_IMAGE, SHIP_FRAMES);
 
         this.direction = direction % 360;
-        startDirection = this.direction;
 
-        speed = 1;
-        turnSpeed = 1;
+        speed = BASE_SPEED;
+        turnSpeed = TURN_SPEED;
         isLive = true;
-
     }
 
     public void addAngle(double angle) {
@@ -40,7 +37,7 @@ public class Ship extends CollidableObject {
         if (angle < 0) {
             angle += 360;
         }
-        this.direction = (this.direction + (int) angle) % 360;
+        direction = (direction + (int) angle) % 360;
     }
 
     public void setForward(boolean flag) {
@@ -56,7 +53,7 @@ public class Ship extends CollidableObject {
     }
 
     public int getDirection() {
-        return this.direction;
+        return direction;
     }
 
     public Point getHitboxCenter() {
@@ -68,33 +65,33 @@ public class Ship extends CollidableObject {
 
     }
 
-    public void checkPosition() {
+    public void move() {
         double oldX, oldY;
         double rads, dx, dy;
-        rads = Math.toRadians(this.direction);
-        dx = Math.cos(rads) * this.speed;
-        dy = Math.sin(rads) * this.speed;
-        oldX = this.x;
-        oldY = this.y;
+        rads = Math.toRadians(direction);
+        dx = Math.cos(rads) * speed;
+        dy = Math.sin(rads) * speed;
+        oldX = x;
+        oldY = y;
 
-        if (this.isForward) {
-            this.x += 1.2 * dx;
-            this.y -= 1.2 * dy;
-            hitbox.translate(((int) this.x - (int) oldX), ((int) this.y - (int) oldY));
+        if (isForward) {
+            x += dx;
+            y -= dy;
+            hitbox.translate(((int)x - (int)oldX), ((int)y - (int)oldY));
         }
 
-        if (this.isLeft && !this.isRight) {
-            this.addAngle(this.turnSpeed);
-            hitbox.rotate(this.direction);
-        } else if (this.isRight && !this.isLeft) {
-            this.addAngle(-this.turnSpeed);
-            hitbox.rotate(this.direction);
+        if (isLeft && !isRight) {
+            addAngle(turnSpeed);
+            hitbox.rotate(direction);
+        } else if (isRight && !isLeft) {
+            addAngle(-turnSpeed);
+            hitbox.rotate(direction);
         }
     }
 
     @Override
     public void repaint(Graphics graphics) {
-        checkPosition();
-        graphics.drawImage(sprite.getImage((int) direction / 6), (int) this.x, (int) this.y, null);
+        move();
+        graphics.drawImage(sprite.getImage((int) direction / 5), (int)x, (int)y, null);
     }
 }

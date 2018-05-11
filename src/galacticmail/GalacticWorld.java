@@ -30,7 +30,7 @@ public class GalacticWorld implements Observer {
         GameOver = false;
         endScreen = false;
 
-        keyListener.addShip(player);
+        keyListener.setShip(player);
         objects.add(player);
         //readLevel();
         //buildLevel();
