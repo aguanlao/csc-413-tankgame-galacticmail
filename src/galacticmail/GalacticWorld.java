@@ -3,9 +3,10 @@ package galacticmail;
 import java.io.*;
 import java.util.*;
 
+import javax.swing.JFrame;
+
 import common.GameObject;
 import tankgame.Explosion;
-import tankgame.Shot;
 
 public class GalacticWorld implements Observer {
 
@@ -42,6 +43,11 @@ public class GalacticWorld implements Observer {
 	
     private boolean isNear(GameObject one, GameObject two) {
         return (one.calculateDistance(two) < 100);
+    }
+    
+    public void buildLevel() {
+    	Asteroid newAsteroid;
+    	// add ~10 asteroids and ~5 bases
     }
     
 	@Override

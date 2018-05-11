@@ -25,10 +25,6 @@ public class GalacticListener implements KeyListener {
         	playerShip.setLeft(true);
             break;
 
-        case KeyEvent.VK_S:
-        	playerShip.setBackwards(true);
-            break;
-
         case KeyEvent.VK_D:
         	playerShip.setRight(true);
             break;
@@ -52,10 +48,6 @@ public class GalacticListener implements KeyListener {
 
         case KeyEvent.VK_A:
         	playerShip.setLeft(false);
-            break;
-
-        case KeyEvent.VK_S:
-        	playerShip.setBackwards(false);
             break;
 
         case KeyEvent.VK_D:

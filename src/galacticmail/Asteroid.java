@@ -1,6 +1,7 @@
 package galacticmail;
 
 import common.CollidableObject;
+import galacticmail.Ship;
 
 import java.awt.Graphics;
 import java.io.File;

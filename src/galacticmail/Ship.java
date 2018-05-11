@@ -47,10 +47,6 @@ public class Ship extends CollidableObject {
         isForward = flag;
     }
     
-    public void setBackwards(boolean flag) {
-        isBackwards = flag;
-    }
-    
     public void setLeft(boolean flag) {
         isLeft = flag;
     }
@@ -97,19 +93,14 @@ public class Ship extends CollidableObject {
         oldX = this.x;
         oldY = this.y;
         
-        if(!this.isColliding) {
+        if (!this.isColliding) {
             lastX = this.x;
             lastY = this.y;
             lastDirection = this.direction;
             
-            if (this.isForward && !this.isBackwards) {
+            if (this.isForward) {
                 this.x += 1.2*dx;
                 this.y -= 1.2*dy;
-                hitbox.translate(((int)this.x - (int)oldX), ((int)this.y - (int)oldY));
-            } 
-            else if (this.isBackwards && !this.isForward) {
-                this.x -= 1.2*dx;
-                this.y += 1.2*dy;
                 hitbox.translate(((int)this.x - (int)oldX), ((int)this.y - (int)oldY));
             }
 
@@ -122,6 +113,7 @@ public class Ship extends CollidableObject {
                 hitbox.rotate(this.direction);
             }
         }
+        
         else {
             this.x = lastX;
             this.y = lastY;
