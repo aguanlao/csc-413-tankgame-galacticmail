@@ -1,17 +1,17 @@
 package galacticmail;
 
-import java.awt.Graphics;
-import java.io.File;
 import common.CollidableObject;
 
+import java.awt.Graphics;
+import java.io.File;
+
 public class Asteroid extends CollidableObject{
-	private static final String Asteroid_Image = "galacticmail" + File.separator + "resources" + File.separator + "Asteroid_strip180.png";
+	private static final String ASTEROID_IMAGE = "galacticmail" + File.separator + "resources" + File.separator + "Asteroid_strip180.png";
 	private float velocity;
 	private int vector;
-	private Ship source;
 	
 	public Asteroid(int x, int y) {
-		super(x, y, Asteroid_Image, 1);
+		super(x, y, ASTEROID_IMAGE, 1);
 	}
 	
     private void makeMove() {
