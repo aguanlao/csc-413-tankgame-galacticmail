@@ -3,9 +3,6 @@ package tankgame;
 import common.GameClock;
 
 public class TankGame {
-    public TankGame() {
-    	
-    }
 
     public static void main(String[] args) {
         final GameClock clock = new GameClock();

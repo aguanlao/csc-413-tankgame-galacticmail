@@ -1,6 +1,5 @@
 package common;
 
-import common.Sprite;
 import java.awt.Graphics;
 
 public class GameObject {
