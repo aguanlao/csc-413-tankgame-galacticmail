@@ -3,8 +3,9 @@ package galacticmail;
 import java.io.*;
 import java.util.*;
 
-import common.Shot;
+import common.CollidableObject;
 import common.GameObject;
+import tankgame.Shot;
 
 public class GalacticWorld implements Observer {
 
@@ -15,8 +16,8 @@ public class GalacticWorld implements Observer {
 	
 	private final List<Asteroid> asteroids;
     private final GalacticListener keyListener;
-    private final Ship playerOne;
-    private final List<GameObject> objects;
+    private final Ship player;
+    private final List<CollidableObject> objects;
     private final List<Shot> shotsFired;
     private final List<String> level;
     
@@ -25,19 +26,44 @@ public class GalacticWorld implements Observer {
         shotsFired = new ArrayList<>();
         level = new ArrayList<>();
         asteroids = new ArrayList<>();
-        playerOne = new Ship(WORLD_WIDTH/2, WORLD_HEIGHT/2);
+        player = new Ship(WORLD_WIDTH/2, WORLD_HEIGHT/2);
         keyListener = listener;
 
-        keyListener.addShip(playerOne);
-        objects.add(playerOne);
+        GameOver = false;
+        endScreen = false;
+        
+        keyListener.addShip(player);
+        objects.add(player);
         //readLevel();
         //buildLevel();
 	}
 	
+	public List<CollidableObject> getObjects() {
+		return objects;
+	}
+	
+    private boolean isNear(GameObject one, GameObject two) {
+        return (one.calculateDistance(two) < 100);
+    }
+    
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
+		if (player.isAlive() == false) {
+			GameOver = true;
+		}
 		
+		if (!GameOver) {
+			// check if player collides with a moon or an asteroid
+			for (int i = 0; i < objects.size(); i++) {
+				if (objects.get(i) instanceof Asteroid) {
+                    CollidableObject collider = (CollidableObject) objects.get(i);
+                    if (isNear(collider, player) && collider != player && player.collides(collider)) {
+                        player.setLanding(objects.get(i));
+                    }
+				}
+			}
+			
+		}
 	}
 
 }

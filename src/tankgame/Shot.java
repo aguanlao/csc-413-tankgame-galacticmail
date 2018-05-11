@@ -1,8 +1,8 @@
-package common;
+package tankgame;
 
 import java.io.File;
 
-import tankgame.Tank;
+import common.CollidableObject;
 
 import java.awt.Graphics;
 import java.awt.Point;

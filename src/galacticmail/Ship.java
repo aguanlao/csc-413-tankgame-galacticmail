@@ -10,7 +10,7 @@ public class Ship extends CollidableObject {
 	private static final String Ship_Image = "resources" + File.separator + "Flying_strip72.png"; 
 	
     private double startX, startY, speed, lastX, lastY, turnSpeed;
-    private int startDirection, direction, lastDirection, health;
+    private int startDirection, direction, lastDirection;
     private boolean isForward, isBackwards, isLeft, isRight, isColliding, isShooting;
     
     private final int HitBoxTrim = 9;
@@ -27,7 +27,6 @@ public class Ship extends CollidableObject {
         
         this.direction = direction % 360;
         startDirection = this.direction;
-        health = 100;
         speed = 1;
         turnSpeed = 1;
         isLive = true;
@@ -41,13 +40,6 @@ public class Ship extends CollidableObject {
             angle += 360;
         }
         this.direction = (this.direction + (int)angle) % 360;
-    }
-
-    public void tookDamage(int damage) {
-        health -= damage;
-        if (health <= 0) {
-            isLive = false;
-        }
     }
     
     public void setForward(boolean flag) {
@@ -78,12 +70,21 @@ public class Ship extends CollidableObject {
     	return isShooting;
     }
     
+    public boolean isAlive() {
+    	return isLive;
+    }
+    
     public int getDirection() {
     	return this.direction;
     }
     
     public Point getHitboxCenter() {
         return hitbox.getCenter();
+    }
+    
+    public void setLanding(CollidableObject obj) {
+    	// set player's x, y, speed, and direction the same as the base obj
+    	
     }
     
     public void checkPosition() {
