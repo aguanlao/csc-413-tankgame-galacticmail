@@ -1,5 +1,6 @@
 package tankgame;
 
+import common.Explosion;
 import common.GameClock;
 import common.CollidableObject;
 import common.GameObject;
@@ -22,7 +23,8 @@ public class GameWorld implements Observer {
     private static final String TANK_IMAGE1 = "tankgame" + File.separator + "resources" + File.separator + "Tank_blue_heavy_strip60.png";
     private static final String TANK_IMAGE2 = "tankgame" + File.separator + "resources" + File.separator + "Tank_red_heavy_strip60.png";
     private static final String LEVEL_FILE = "tankgame" + File.separator + "resources" + File.separator + "Level30x30.txt";
-
+    private static final String EXPLOSION_IMAGE = "tankgame" + File.separator + "resources" + File.separator + "Explosion_small_strip6.png";
+    
     private final TankListener keyListener;
     private final Tank playerOne, playerTwo;
     private final List<GameObject> objects;
@@ -154,7 +156,8 @@ public class GameWorld implements Observer {
                     for (int j = 0; j < shotsFired.size(); j++) {
                         Shot thisShot = shotsFired.get(j);
                         if (isNear(collider, thisShot) && thisShot.getSource() != collider && thisShot.collides(collider)) {
-                            Explosion newBoom = new Explosion((int) thisShot.getX(), (int) thisShot.getY());
+                            Explosion newBoom = new Explosion((int) thisShot.getX(), (int) thisShot.getY(), 
+                                EXPLOSION_IMAGE, 6);
                             objects.add(newBoom);
 
                             if (collider instanceof Tank) {
