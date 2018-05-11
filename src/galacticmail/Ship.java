@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.io.File;
 
 import common.CollidableObject;
+import common.GameObject;
 
 public class Ship extends CollidableObject {
 	private static final String Ship_Image = "resources" + File.separator + "Flying_strip72.png"; 
@@ -82,7 +83,7 @@ public class Ship extends CollidableObject {
         return hitbox.getCenter();
     }
     
-    public void setLanding(CollidableObject obj) {
+    public void setLanding(GameObject obj) {
     	// set player's x, y, speed, and direction the same as the base obj
     	
     }
