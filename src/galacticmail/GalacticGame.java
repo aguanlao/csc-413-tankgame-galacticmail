@@ -1,17 +1,17 @@
-package tankgame;
+package galacticmail;
 
 import common.GameClock;
 
-public class TankGame {
-    public TankGame() {
+public class GalacticGame {
+    public GalacticGame() {
     	
     }
 
     public static void main(String[] args) {
         final GameClock clock = new GameClock();
-        final TankListener keys = new TankListener();
-        final GameWorld world = new GameWorld(keys);
-        final Window window = new Window(world);
+        final GalacticListener keys = new GalacticListener();
+        final GalacticWorld world = new GalacticWorld(keys);
+        final GalacticWindow window = new GalacticWindow(world);
         window.addKeyListener(keys);
         clock.addObserver(world);
         clock.addObserver(window);
@@ -20,5 +20,4 @@ public class TankGame {
         clockThread.start();
         
     }
-    
 }
