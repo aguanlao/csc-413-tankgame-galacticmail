@@ -2,11 +2,10 @@ package galacticmail;
 
 import java.awt.Graphics;
 import java.io.File;
-
-import TankGame.CollidableObject;
+import common.CollidableObject;
 
 public class Asteroid extends CollidableObject{
-	private static final String Asteroid_Image = "resources" + File.separator + "Asteroid_strip180.png";
+	private static final String Asteroid_Image = "galacticmail" + File.separator + "resources" + File.separator + "Asteroid_strip180.png";
 	private float velocity;
 	private int vector;
 	private Ship source;

@@ -3,11 +3,10 @@ package galacticmail;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.io.File;
-
-import TankGame.CollidableObject;
+import common.CollidableObject;
 
 public class Ship extends CollidableObject {
-	private static final String Ship_Image = "resources" + File.separator + "Flying_strip72.png"; 
+	private static final String SHIP_IMAGE = "galacticmail" + File.separator + "resources" + File.separator + "Flying_strip72.png"; 
 	
     private double startX, startY, speed, lastX, lastY, turnSpeed;
     private int startDirection, direction, lastDirection, health;
@@ -16,11 +15,11 @@ public class Ship extends CollidableObject {
     private final int HitBoxTrim = 9;
     
 	public Ship(int x, int y) {
-		super(x, y, Ship_Image);
+		super(x, y, SHIP_IMAGE);
 	}
 
 	public Ship(int x, int y, int direction) {
-        super(x, y, Ship_Image);
+        super(x, y, SHIP_IMAGE);
         
         this.startX = x;
         this.startY = y;
