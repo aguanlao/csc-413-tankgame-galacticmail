@@ -61,11 +61,18 @@ public class Ship extends CollidableObject {
         return hitbox.getCenter();
     }
 
-    public void setLanding(GameObject obj) {
+    public void landOn(GameObject obj) {
         // set player's x, y, speed, and direction the same as the base obj
+        x = obj.getX();
+        y = obj.getY();
         isLanded = true;
+        isForward = false;
     }
 
+    public boolean getLanded() {
+        return isLanded;
+    }
+    
     public void move() {
         double oldX, oldY;
         double rads, dx, dy;
@@ -79,6 +86,9 @@ public class Ship extends CollidableObject {
             x += dx;
             y -= dy;
             hitbox.translate(((int)x - (int)oldX), ((int)y - (int)oldY));
+            if (isLanded) {
+                isLanded = false;
+            } 
         }
 
         if (isLeft && !isRight) {
