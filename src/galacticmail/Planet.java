@@ -9,6 +9,7 @@ public class Planet extends CollidableObject {
 
     private static final String BASES_IMAGE = "galacticmail" + File.separator + "resources" + File.separator + "Bases_strip8.png";
     private static final int BASES_COUNT = 8;
+    private static int HITBOX_TRIM = 28;
 
     private final int imageIndex;
 
@@ -18,6 +19,8 @@ public class Planet extends CollidableObject {
         super(x, y, BASES_IMAGE, BASES_COUNT);
         imageIndex = (int) (Math.random() * BASES_COUNT);
         isLive = true;
+        
+        trimHitbox(HITBOX_TRIM, -HITBOX_TRIM, HITBOX_TRIM, -HITBOX_TRIM);
     }
 
     public void markDelivered() {
@@ -37,5 +40,7 @@ public class Planet extends CollidableObject {
     @Override
     public void repaint(Graphics graphics) {
         graphics.drawImage(sprite.getImage(imageIndex), (int) x, (int) y, null);
+        
+        drawHitbox(graphics);
     }
 }

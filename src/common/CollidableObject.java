@@ -3,6 +3,7 @@ package common;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.geom.Area;
 
 public abstract class CollidableObject extends GameObject {
@@ -61,6 +62,10 @@ public abstract class CollidableObject extends GameObject {
     public void setLive(boolean flag) {
         isLive = flag;
     }
+    
+    public Point getCenter() {
+        return hitbox.getCenter();
+    }
 
     public void moveTo(int destinationX, int destinationY) {
         double oldX, oldY;
@@ -71,6 +76,14 @@ public abstract class CollidableObject extends GameObject {
         this.y = destinationY;
 
         hitbox.translate(((int) this.x - (int) oldX), ((int) this.y - (int) oldY));
+    }
+    
+    public void shiftBy(int shiftX, int shiftY) {
+//        this.x += shiftX;
+//        this.y += shiftY;
+//        
+//        hitbox.translate(shiftX, shiftY);
+        moveTo((int)this.x + shiftX, (int)this.y + shiftY);
     }
 
     @Override

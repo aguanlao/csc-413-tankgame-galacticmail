@@ -46,8 +46,8 @@ public class GalacticWorld implements Observer {
     private Point randomPosition() {
         int x, y;
         
-        x = (int)(Math.random() * WORLD_WIDTH);
-        y = (int)(Math.random() * WORLD_HEIGHT);
+        x = (int)(Math.random() * (WORLD_WIDTH - 20) + 10);
+        y = (int)(Math.random() * (WORLD_HEIGHT - 20) + 10);
         return new Point(x, y);
     }
     
@@ -102,7 +102,7 @@ public class GalacticWorld implements Observer {
     public void buildLevel() {
         // add ~10 asteroids and ~5 bases
         for(int i = 0; i < 10; i++) {
-            if(i < 5) {
+            if(i < 7) {
                 spawnPlanet();
             }
             spawnAsteroid();
@@ -148,14 +148,14 @@ public class GalacticWorld implements Observer {
                     }
                     
                     else if (isNear(base, player) && player.collides(base)) {
-                        player.landOn(obj);
-                        ((Planet)obj).setLandedOn(true);
-                        ((Planet)obj).markDelivered();
+                        player.landOn(base);
+                        base.setLandedOn(true);
+                        base.markDelivered();
                     }
                     
                 } else if (obj instanceof Asteroid) {
                     Asteroid asteroid = (Asteroid) obj;
-                    if (isNear(asteroid, player) && player.collides(asteroid)) {
+                    if (isNear(asteroid, player) && !player.getLanded() && player.collides(asteroid)) {
                         Explosion newBoom = new Explosion((int) player.getX(), (int) player.getY(), 
                                 EXPLOSION_IMAGE, 9);
                         objects.add(newBoom);

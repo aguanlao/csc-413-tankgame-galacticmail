@@ -61,10 +61,16 @@ public class Ship extends CollidableObject {
         return hitbox.getCenter();
     }
 
-    public void landOn(GameObject obj) {
-        // set player's x, y, speed, and direction the same as the base obj
-        x = obj.getX();
-        y = obj.getY();
+    public void landOn(CollidableObject obj) {
+        // Move player's center to obj's center
+//        int shiftX, shiftY, oldX, oldY;
+        Point oldCenter = this.getCenter();
+        Point newCenter = obj.getCenter();
+        
+        shiftBy(newCenter.x - oldCenter.x, newCenter.y - oldCenter.y);
+        
+//        x = obj.getX();
+//        y = obj.getY();
         isLanded = true;
         isForward = false;
     }
