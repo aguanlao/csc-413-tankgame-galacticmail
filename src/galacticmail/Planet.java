@@ -27,6 +27,7 @@ public class Planet extends CollidableObject {
         //Sets collidableObject.isLive to false, to be ignored in rendering later
         //Possibly code for fade out effect
         isLive = false;
+        isLandedOn = true;
     }
     
     public boolean isLandedOn() {

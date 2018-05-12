@@ -13,7 +13,8 @@ public class GalacticWorld implements Observer {
 
     public static final int WORLD_WIDTH = 1200;
     public static final int WORLD_HEIGHT = 800;
-    private static final int CLOCK_DELAY = 50;
+    private static final int SPAWN_MARGIN = 200;
+    private static final int CLOCK_DELAY = 4000;
     private static final int BASE_REWARD = 20;
     private static final String EXPLOSION_IMAGE = "galacticmail" + File.separator
             + "resources" + File.separator + "Explosion_strip9.png";
@@ -23,8 +24,8 @@ public class GalacticWorld implements Observer {
     private final List<GameObject> objects;
     private final List<Asteroid> asteroids;
     private final List<String> level;
-    private int score;
-    static boolean GameOver, endScreen;
+    private int score, deliveryCount;
+    private boolean gameOver, endScreen;
 
     public GalacticWorld(GalacticListener listener) {
         objects = new ArrayList<>();
@@ -33,69 +34,69 @@ public class GalacticWorld implements Observer {
         player = new Ship(WORLD_WIDTH / 2, WORLD_HEIGHT / 2);
         keyListener = listener;
         score = 0;
+        deliveryCount = 0;
 
-        GameOver = false;
+        gameOver = false;
         endScreen = false;
 
         keyListener.setShip(player);
 //        objects.add(player);
-        
+
         buildLevel();
-    } 
+    }
 
     private boolean isNear(GameObject one, GameObject two) {
         return (one.calculateDistance(two) < 100);
     }
-    
+
     private Point randomPosition() {
         int x, y;
-        
-        x = (int)(Math.random() * (WORLD_WIDTH - 20) + 10);
-        y = (int)(Math.random() * (WORLD_HEIGHT - 20) + 10);
+
+        x = (int) (Math.random() * (WORLD_WIDTH - SPAWN_MARGIN)) + (SPAWN_MARGIN / 2);
+        y = (int) (Math.random() * (WORLD_HEIGHT - SPAWN_MARGIN)) + (SPAWN_MARGIN / 2);
         return new Point(x, y);
     }
-    
-    private void spawnAsteroid() {
+
+    private Asteroid spawnAsteroid() {
         int direction;
         double speed, rotateSpeed;
-        
-        Point start = randomPosition();        
-        direction = (int)(Math.random() * 360);
+
+        Point start = randomPosition();
+        direction = (int) (Math.random() * 360);
         speed = (Math.random() * 0.5) + 0.2;
         rotateSpeed = Math.random() * 0.5;
-        
-//        asteroids.add(new Asteroid(start.x, start.y, direction, speed, rotateSpeed));
-        objects.add(new Asteroid(start.x, start.y, direction, speed, rotateSpeed));
+
+        return new Asteroid(start.x, start.y, direction, speed, rotateSpeed);
     }
-    
-    private void spawnPlanet() {
+
+    private Planet spawnPlanet() {
         Point position = randomPosition();
-        objects.add(new Planet(position.x, position.y));
+        return new Planet(position.x, position.y);
     }
-    
+
     private void checkPosition(GameObject object) {
-        if(object.getX() + object.getWidth() < 0 || object.getX() > WORLD_WIDTH 
+        if (object.getX() + object.getWidth() < 0 || object.getX() > WORLD_WIDTH
                 || object.getY() + object.getHeight() < 0 || object.getY() > WORLD_HEIGHT) {
             double newX, newY;
-            
-            if(object.getX() + object.getWidth() < 0) {
+
+            if (object.getX() + object.getWidth() < 0) {
                 newX = WORLD_WIDTH;
-            } else if(object.getX() > WORLD_WIDTH) {
+            } else if (object.getX() > WORLD_WIDTH) {
                 newX = -object.getWidth() + 1;
             } else {
                 newX = object.getX();
             }
 
-            if(object.getY() + object.getHeight() < 0) {
+            if (object.getY() + object.getHeight() < 0) {
                 newY = WORLD_HEIGHT;
-            } else if(object.getY() > WORLD_HEIGHT) {
+            } else if (object.getY() > WORLD_HEIGHT) {
                 newY = -object.getHeight() + 1;
             } else {
                 newY = object.getY();
             }
-            
-            if(object instanceof CollidableObject) {
-                ((CollidableObject)object).moveTo((int)newX, (int)newY);
+
+            if (object instanceof CollidableObject) {
+                ((CollidableObject) object).moveTo((int) newX, (int) newY);
             } else {
                 object.setX(newX);
                 object.setY(newY);
@@ -105,71 +106,78 @@ public class GalacticWorld implements Observer {
 
     public void buildLevel() {
         // add ~10 asteroids and ~5 bases
-        for(int i = 0; i < 10; i++) {
-            if(i < 7) {
-                spawnPlanet();
+        for (int i = 0; i < 10; i++) {
+            if (i < 7) {
+                objects.add(spawnPlanet());
             }
-            spawnAsteroid();
+            objects.add(spawnAsteroid());
         }
-        
+
     }
 
     public List<GameObject> getObjects() {
         return objects;
     }
-    
+
     public List<Asteroid> getAsteroids() {
         return asteroids;
     }
-    
+
     public Ship getShip() {
         return player;
     }
-    
+
     public int getScore() {
         return score;
+    }
+    
+    public boolean getGameOver() {
+        return gameOver;
     }
 
     @Override
     public void update(Observable observed, Object arg) {
         if (!player.isLiveNow()) {
-            GameOver = true;
+            gameOver = true;
         }
-            
-        if (!GameOver) {
+
+        if (!gameOver && ((GameClock) observed).getFrame() % CLOCK_DELAY == 0) {
             // check if player collides with a moon or an asteroid
             // player will clip onto the moon or explode via asteroid
             if (player.getLandedState()) {
                 // decrease player's points
-                if(score > 0) {
+                if (score > 0) {
                     score--;
                 }
             }
-            
+
             ListIterator<GameObject> objIterator = objects.listIterator();
             while (objIterator.hasNext()) {
                 GameObject obj = objIterator.next();
                 if (obj instanceof Planet) {
                     Planet base = (Planet) obj;
-                    
-                    //TODO: Might need to instead check if base is still live
-                    if (isNear(base, player) && base.isLandedOn()) {
-                        if(!player.getLandedState()) {
-                            objIterator.remove();
+
+                    if (isNear(base, player)) {
+                        if (base.isLandedOn()) {
+                            if (!player.getLandedState()) {
+                                objIterator.remove();
+                                objIterator.add(spawnPlanet());
+                            }
+                        } else if (!player.getLandedState() && player.collides(base)) {
+                            player.landOn(base);
+                            base.markDelivered();
+                            score += BASE_REWARD;
+                            deliveryCount++;
+                            if (deliveryCount % 5 == 0) {
+                                objIterator.add(spawnAsteroid());
+                            }
                         }
                     }
-                    
-                    else if (isNear(base, player) && player.collides(base)) {
-                        player.landOn(base);
-                        base.setLandedOn(true);
-                        base.markDelivered();
-                        score += BASE_REWARD;
-                    }
-                    
+
                 } else if (obj instanceof Asteroid) {
                     Asteroid asteroid = (Asteroid) obj;
                     if (isNear(asteroid, player) && !player.getLandedState() && player.collides(asteroid)) {
-                        Explosion newBoom = new Explosion((int) player.getX(), (int) player.getY(), 
+                        Explosion newBoom = new Explosion((int) player.getX(), (int) player.getY(),
                                 EXPLOSION_IMAGE, 9);
                         objIterator.add(newBoom);
                         player.setLive(false);
@@ -179,12 +187,14 @@ public class GalacticWorld implements Observer {
                         objIterator.remove();
                     }
                 }
-                
+
                 checkPosition(obj);
             }
-            
+
             checkPosition(player);
         } // (!GameOver)
+
+        System.out.println("Score: " + getScore());
     }
 
 }

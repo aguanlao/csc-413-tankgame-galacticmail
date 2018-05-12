@@ -52,7 +52,7 @@ public class GalacticPanel extends JPanel{
             world.getShip().repaint(g2D);
         }
         
-        System.out.println("Score: " + world.getScore());
+//        System.out.println("Score: " + world.getScore());
         
         g2D.dispose();        
     }    
