@@ -13,9 +13,11 @@ public class GalacticWorld implements Observer {
 
     public static final int WORLD_WIDTH = 1200;
     public static final int WORLD_HEIGHT = 800;
+    private static final int NEAR_DISTANCE = 200;
     private static final int SPAWN_MARGIN = 200;
+    private static final int SCORE_DELAY = 30000;
     private static final int CLOCK_DELAY = 4000;
-    private static final int BASE_REWARD = 20;
+    private static final int BASE_REWARD = 50;
     private static final String EXPLOSION_IMAGE = "galacticmail" + File.separator
             + "resources" + File.separator + "Explosion_strip9.png";
 
@@ -40,13 +42,12 @@ public class GalacticWorld implements Observer {
         endScreen = false;
 
         keyListener.setShip(player);
-//        objects.add(player);
 
         buildLevel();
     }
 
     private boolean isNear(GameObject one, GameObject two) {
-        return (one.calculateDistance(two) < 100);
+        return (one.calculateDistance(two) < NEAR_DISTANCE);
     }
 
     private Point randomPosition() {
@@ -71,7 +72,20 @@ public class GalacticWorld implements Observer {
 
     private Planet spawnPlanet() {
         Point position = randomPosition();
-        return new Planet(position.x, position.y);
+        Planet newPlanet = new Planet(position.x, position.y);
+        
+        for(int i = 0; i < objects.size(); i++) {
+            if(isNear(newPlanet, objects.get(i)) || isNear(newPlanet, player)) {
+                i = 0;
+            } else {
+                continue;
+            }
+            position = randomPosition();
+            newPlanet = new Planet(position.x, position.y);
+        }
+        
+//        return new Planet(position.x, position.y);
+        return newPlanet;
     }
 
     private void checkPosition(GameObject object) {
@@ -145,8 +159,7 @@ public class GalacticWorld implements Observer {
             // check if player collides with a moon or an asteroid
             // player will clip onto the moon or explode via asteroid
             if (player.getLandedState()) {
-                // decrease player's points
-                if (score > 0) {
+                if (score > 0 && ((GameClock) observed).getFrame() % SCORE_DELAY == 0) {
                     score--;
                 }
             }
@@ -193,8 +206,6 @@ public class GalacticWorld implements Observer {
 
             checkPosition(player);
         } // (!GameOver)
-
-//        System.out.println("Score: " + getScore());
     }
 
 }

@@ -5,7 +5,6 @@ import java.awt.Point;
 import java.io.File;
 
 import common.CollidableObject;
-import common.GameObject;
 import common.Sprite;
 
 public class Ship extends CollidableObject {
@@ -15,11 +14,11 @@ public class Ship extends CollidableObject {
     private static final int SHIP_FRAMES = 72;
     private static final int HITBOX_TRIM = 5;
     private static final double BASE_SPEED = 1;
-    private static final double TURN_SPEED = 0.5;
+    private static final double TURN_SPEED = 0.3;
 
     private double speed, turnSpeed;
     private double direction;
-    private boolean isForward, isLeft, isRight, isLanded;
+    private boolean isLeft, isRight, isLanded;
     private Sprite otherSprite;
 
     public Ship(int x, int y) {
@@ -27,15 +26,15 @@ public class Ship extends CollidableObject {
     }
 
     public Ship(int x, int y, int direction) {
-        super(x, y, FLYING_IMAGE, SHIP_FRAMES);
+        super(x, y, LANDED_IMAGE, SHIP_FRAMES);
 
         this.direction = direction % 360;
-        otherSprite = new Sprite(LANDED_IMAGE, SHIP_FRAMES);
+        otherSprite = new Sprite(FLYING_IMAGE, SHIP_FRAMES);
 
         speed = BASE_SPEED;
         turnSpeed = TURN_SPEED;
         isLive = true;
-        isLanded = false;
+        isLanded = true;
 
         trimHitbox(HITBOX_TRIM, -HITBOX_TRIM, HITBOX_TRIM, -HITBOX_TRIM);
     }
@@ -47,19 +46,10 @@ public class Ship extends CollidableObject {
     }
 
     public void addAngle(double angle) {
-        // prevents out of bounds, allow complete 360 turns
-//        if (angle < 0) {
-//            angle += 360;
-//        }
         direction = (direction + angle) % 360;
         if (direction < 0) {
             direction += 360;
         }
-        System.out.println(direction);
-    }
-
-    public void setForward(boolean flag) {
-        isForward = flag;
     }
 
     public void setLeft(boolean flag) {
@@ -110,8 +100,6 @@ public class Ship extends CollidableObject {
         oldY = y;
 
         if (!isLanded) {
-            if (isForward) {
-            }
             x += dx;
             y -= dy;
             hitbox.translate(((int) x - (int) oldX), ((int) y - (int) oldY));
@@ -131,6 +119,6 @@ public class Ship extends CollidableObject {
         move();
         graphics.drawImage(sprite.getImage((int) direction / 5), (int) x, (int) y, null);
 
-        drawHitbox(graphics);
+//        drawHitbox(graphics);
     }
 }

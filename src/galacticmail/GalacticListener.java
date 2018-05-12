@@ -15,14 +15,7 @@ public class GalacticListener implements KeyListener {
     public synchronized void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             // Ship Controls
-            // W activates forward thrusters
             // A/D to turn left/right
-            case KeyEvent.VK_W:
-                if(!playerShip.getLandedState()) {
-                    playerShip.setForward(true);
-                }
-                break;
-
             case KeyEvent.VK_A:
                 playerShip.setLeft(true);
                 break;
@@ -30,10 +23,11 @@ public class GalacticListener implements KeyListener {
             case KeyEvent.VK_D:
                 playerShip.setRight(true);
                 break;
-                
+
             case KeyEvent.VK_SPACE:
-                playerShip.setLanded(false);
-                playerShip.takeOff();
+                if (playerShip.getLandedState()) {
+                    playerShip.takeOff();
+                }
                 break;
 
             default:
@@ -44,10 +38,6 @@ public class GalacticListener implements KeyListener {
     @Override
     public synchronized void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_W:
-                playerShip.setForward(false);
-                break;
-
             case KeyEvent.VK_A:
                 playerShip.setLeft(false);
                 break;

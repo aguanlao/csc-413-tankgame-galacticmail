@@ -32,8 +32,10 @@ public class GalacticPanel extends JPanel{
         
     }
     
-    public void redrawWorldImage() {
+    public void displayTitleScreen() {
+    }
     
+    public void displayEndScreen() {
     }
     
     @Override

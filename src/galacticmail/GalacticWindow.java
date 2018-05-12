@@ -38,6 +38,7 @@ public class GalacticWindow extends JFrame implements Observer {
     public void update(Observable observed, Object arg) {
         if(((GameClock)observed).getFrame() % REFRESH_DELAY == 0) {
             panel.repaint();
+            setTitle("Galactic Mail | Score: " + world.getScore());
         }
     }
 
