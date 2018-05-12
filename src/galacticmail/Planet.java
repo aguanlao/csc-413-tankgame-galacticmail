@@ -12,6 +12,8 @@ public class Planet extends CollidableObject {
 
     private final int imageIndex;
 
+    private boolean isLandedOn;
+    
     public Planet(int x, int y) {
         super(x, y, BASES_IMAGE, BASES_COUNT);
         imageIndex = (int) (Math.random() * (BASES_COUNT + 1));
@@ -23,7 +25,15 @@ public class Planet extends CollidableObject {
         //Possibly code for fade out effect
         isLive = false;
     }
-
+    
+    public boolean isLandedOn() {
+        return isLandedOn;
+    }
+    
+    public void setIsLandedOn(boolean flag) {
+        isLandedOn = flag;
+    }
+    
     @Override
     public void repaint(Graphics graphics) {
         graphics.drawImage(sprite.getImage(imageIndex), (int) x, (int) y, null);

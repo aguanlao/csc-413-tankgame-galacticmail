@@ -56,8 +56,8 @@ public class GalacticWorld implements Observer {
         
         Point start = randomPosition();        
         direction = (int)(Math.random() * 360);
-        speed = Math.random() + 2;
-        rotateSpeed = Math.random() * 2;
+        speed = Math.random()/2;
+        rotateSpeed = Math.random()/2;
         
         asteroids.add(new Asteroid(start.x, start.y, direction, speed, rotateSpeed));
     }
@@ -120,32 +120,47 @@ public class GalacticWorld implements Observer {
         if (player.isLiveNow() == false) {
             GameOver = true;
         }
-
+            
         if (!GameOver) {
             // check if player collides with a moon or an asteroid
             // player will clip onto the moon or explode via asteroid
-            for (int i = 0; i < objects.size(); i++) {
-
-                if (objects.get(i) instanceof Planet) {
-                    Planet base = (Planet) objects.get(i);
-                    if (isNear(base, player) && player.collides(base)) {
-                        player.setLanding(objects.get(i));
+            if (player.getIsLanded()) {
+                // decrease player's points
+            }
+            
+            Iterator<GameObject> objIterator = objects.iterator();
+            while (objIterator.hasNext()) {
+            //for (int i = 0; i < objects.size(); i++) {
+                GameObject obj = objIterator.next();
+                if (obj instanceof Planet) {
+                    Planet base = (Planet) obj;
+                    
+                    // check if player is already landed and is flying off
+                    if (isNear(base, player) && base.isLandedOn() && player.leftThePlanet()) {
+                        objIterator.remove();
                     }
-                } else if (objects.get(i) instanceof Asteroid) {
-                    Asteroid asteroid = (Asteroid) objects.get(i);
+                    
+                    else if (isNear(base, player) && player.collides(base)) {
+                        player.setLanding(obj);
+                        ((Planet)obj).setIsLandedOn(true);
+                        ((Planet)obj).markDelivered();
+                    }
+                    
+                } else if (obj instanceof Asteroid) {
+                    Asteroid asteroid = (Asteroid) obj;
                     if (isNear(asteroid, player) && player.collides(asteroid)) {
                         Explosion newBoom = new Explosion((int) player.getX(), (int) player.getY(), 
                                 EXPLOSION_IMAGE, 9);
                         objects.add(newBoom);
                         player.setLive(false);
                     }
-                } else if (objects.get(i) instanceof Explosion) {
-                    if (((Explosion) objects.get(i)).isFinished()) {
-                        objects.remove(i);
+                } else if (obj instanceof Explosion) {
+                    if (((Explosion) obj).isFinished()) {
+                        objIterator.remove();
                     }
                 }
                 
-                checkPosition(objects.get(i));
+                checkPosition(obj);
             }
             
             for (int i = 0; i < asteroids.size(); i++) {

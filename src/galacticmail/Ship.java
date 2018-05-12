@@ -16,7 +16,7 @@ public class Ship extends CollidableObject {
     
     private double speed, turnSpeed;
     private int direction;
-    private boolean isForward, isLeft, isRight, isLanded;
+    private boolean isForward, isLeft, isRight, isLanded, leftThePlanet;
 
     public Ship(int x, int y) {
         this(x, y, 0);
@@ -63,9 +63,24 @@ public class Ship extends CollidableObject {
 
     public void setLanding(GameObject obj) {
         // set player's x, y, speed, and direction the same as the base obj
+        x = obj.getX();
+        y = obj.getY();
         isLanded = true;
+        isForward = false;
     }
 
+    public boolean getIsLanded() {
+        return isLanded;
+    }
+    
+    public void setLeftThePlanet(boolean flag) {
+        leftThePlanet = flag;
+    }
+    
+    public boolean leftThePlanet() {
+        return leftThePlanet;
+    }
+    
     public void move() {
         double oldX, oldY;
         double rads, dx, dy;
@@ -79,6 +94,10 @@ public class Ship extends CollidableObject {
             x += dx;
             y -= dy;
             hitbox.translate(((int)x - (int)oldX), ((int)y - (int)oldY));
+            if (isLanded) {
+                leftThePlanet = true;
+                isLanded = false;
+            } 
         }
 
         if (isLeft && !isRight) {

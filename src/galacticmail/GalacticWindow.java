@@ -11,7 +11,7 @@ public class GalacticWindow extends JFrame implements Observer {
     private static final long serialVersionUID = 1L;
     public static final int WINDOW_WIDTH = 1200;
     public static final int WINDOW_HEIGHT = 800;
-    private static final int REFRESH_DELAY = 75;
+    private static final int REFRESH_DELAY = 150;
 
     private final GalacticWorld world;
     private GalacticPanel panel;
