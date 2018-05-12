@@ -13,7 +13,7 @@ public class Ship extends CollidableObject {
     private static final int SHIP_FRAMES = 72;
     private static final int BASE_SPEED = 1;
     private static final int TURN_SPEED = 1;
-    
+
     private double speed, turnSpeed;
     private int direction;
     private boolean isForward, isLeft, isRight, isLanded;
@@ -66,19 +66,23 @@ public class Ship extends CollidableObject {
 //        int shiftX, shiftY, oldX, oldY;
         Point oldCenter = this.getCenter();
         Point newCenter = obj.getCenter();
-        
+
         shiftBy(newCenter.x - oldCenter.x, newCenter.y - oldCenter.y);
-        
+
 //        x = obj.getX();
 //        y = obj.getY();
         isLanded = true;
         isForward = false;
     }
 
-    public boolean getLanded() {
+    public boolean getLandedState() {
         return isLanded;
     }
-    
+
+    public void setLanded(boolean flag) {
+        isLanded = flag;
+    }
+
     public void move() {
         double oldX, oldY;
         double rads, dx, dy;
@@ -88,13 +92,12 @@ public class Ship extends CollidableObject {
         oldX = x;
         oldY = y;
 
-        if (isForward) {
-            x += dx;
-            y -= dy;
-            hitbox.translate(((int)x - (int)oldX), ((int)y - (int)oldY));
-            if (isLanded) {
-                isLanded = false;
-            } 
+        if (!isLanded) {
+            if (isForward) {
+                x += dx;
+                y -= dy;
+                hitbox.translate(((int) x - (int) oldX), ((int) y - (int) oldY));
+            }
         }
 
         if (isLeft && !isRight) {
@@ -109,9 +112,8 @@ public class Ship extends CollidableObject {
     @Override
     public void repaint(Graphics graphics) {
         move();
-        graphics.drawImage(sprite.getImage((int) direction / 5), (int)x, (int)y, null);
-        
-        
+        graphics.drawImage(sprite.getImage((int) direction / 5), (int) x, (int) y, null);
+
         drawHitbox(graphics);
 //        System.out.println(this);
     }

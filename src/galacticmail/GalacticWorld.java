@@ -13,6 +13,8 @@ public class GalacticWorld implements Observer {
 
     public static final int WORLD_WIDTH = 1200;
     public static final int WORLD_HEIGHT = 800;
+    private static final int CLOCK_DELAY = 50;
+    private static final int BASE_REWARD = 20;
     private static final String EXPLOSION_IMAGE = "galacticmail" + File.separator
             + "resources" + File.separator + "Explosion_strip9.png";
 
@@ -21,6 +23,7 @@ public class GalacticWorld implements Observer {
     private final List<GameObject> objects;
     private final List<Asteroid> asteroids;
     private final List<String> level;
+    private int score;
     static boolean GameOver, endScreen;
 
     public GalacticWorld(GalacticListener listener) {
@@ -29,6 +32,7 @@ public class GalacticWorld implements Observer {
         asteroids = new ArrayList<>();
         player = new Ship(WORLD_WIDTH / 2, WORLD_HEIGHT / 2);
         keyListener = listener;
+        score = 0;
 
         GameOver = false;
         endScreen = false;
@@ -57,7 +61,7 @@ public class GalacticWorld implements Observer {
         
         Point start = randomPosition();        
         direction = (int)(Math.random() * 360);
-        speed = Math.random() * 0.5;
+        speed = (Math.random() * 0.5) + 0.2;
         rotateSpeed = Math.random() * 0.5;
         
 //        asteroids.add(new Asteroid(start.x, start.y, direction, speed, rotateSpeed));
@@ -121,44 +125,53 @@ public class GalacticWorld implements Observer {
     public Ship getShip() {
         return player;
     }
+    
+    public int getScore() {
+        return score;
+    }
 
     @Override
     public void update(Observable observed, Object arg) {
-        if (player.isLiveNow() == false) {
+        if (!player.isLiveNow()) {
             GameOver = true;
         }
             
         if (!GameOver) {
             // check if player collides with a moon or an asteroid
             // player will clip onto the moon or explode via asteroid
-            if (player.getLanded()) {
+            if (player.getLandedState()) {
                 // decrease player's points
+                if(score > 0) {
+                    score--;
+                }
             }
             
-            Iterator<GameObject> objIterator = objects.iterator();
+            ListIterator<GameObject> objIterator = objects.listIterator();
             while (objIterator.hasNext()) {
-            //for (int i = 0; i < objects.size(); i++) {
                 GameObject obj = objIterator.next();
                 if (obj instanceof Planet) {
                     Planet base = (Planet) obj;
                     
                     //TODO: Might need to instead check if base is still live
                     if (isNear(base, player) && base.isLandedOn()) {
-                        objIterator.remove();
+                        if(!player.getLandedState()) {
+                            objIterator.remove();
+                        }
                     }
                     
                     else if (isNear(base, player) && player.collides(base)) {
                         player.landOn(base);
                         base.setLandedOn(true);
                         base.markDelivered();
+                        score += BASE_REWARD;
                     }
                     
                 } else if (obj instanceof Asteroid) {
                     Asteroid asteroid = (Asteroid) obj;
-                    if (isNear(asteroid, player) && !player.getLanded() && player.collides(asteroid)) {
+                    if (isNear(asteroid, player) && !player.getLandedState() && player.collides(asteroid)) {
                         Explosion newBoom = new Explosion((int) player.getX(), (int) player.getY(), 
                                 EXPLOSION_IMAGE, 9);
-                        objects.add(newBoom);
+                        objIterator.add(newBoom);
                         player.setLive(false);
                     }
                 } else if (obj instanceof Explosion) {

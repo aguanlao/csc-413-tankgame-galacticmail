@@ -47,7 +47,12 @@ public class GalacticPanel extends JPanel{
         for(int i = 0; i < world.getObjects().size(); i++) {
             world.getObjects().get(i).repaint(g2D);
         }
-        world.getShip().repaint(g2D);
+        
+        if(world.getShip().isLiveNow()) {
+            world.getShip().repaint(g2D);
+        }
+        
+        System.out.println("Score: " + world.getScore());
         
         g2D.dispose();        
     }    

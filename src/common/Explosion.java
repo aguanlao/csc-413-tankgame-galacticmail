@@ -26,8 +26,10 @@ public class Explosion extends NonCollidableObject {
     
     @Override
     public void repaint(Graphics graphics) {
-        graphics.drawImage(sprite.getImage(currentFrame/FRAME_DELAY), (int) this.x, (int) this.y, null);
-        currentFrame++;
+        if(!isFinished) {
+            graphics.drawImage(sprite.getImage(currentFrame/FRAME_DELAY), (int) this.x, (int) this.y, null);
+            currentFrame++;
+        }
 
         if(currentFrame == frameCount * FRAME_DELAY) {
             isFinished = true;
