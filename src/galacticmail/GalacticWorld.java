@@ -194,7 +194,7 @@ public class GalacticWorld implements Observer {
             checkPosition(player);
         } // (!GameOver)
 
-        System.out.println("Score: " + getScore());
+//        System.out.println("Score: " + getScore());
     }
 
 }
