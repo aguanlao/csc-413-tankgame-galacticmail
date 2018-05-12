@@ -6,31 +6,44 @@ import java.io.File;
 
 import common.CollidableObject;
 import common.GameObject;
+import common.Sprite;
 
 public class Ship extends CollidableObject {
 
-    private static final String SHIP_IMAGE = "galacticmail" + File.separator + "resources" + File.separator + "Flying_strip72.png";
+    private static final String FLYING_IMAGE = "galacticmail" + File.separator + "resources" + File.separator + "Flying_strip72.png";
+    private static final String LANDED_IMAGE = "galacticmail" + File.separator + "resources" + File.separator + "Landed_strip72.png";
     private static final int SHIP_FRAMES = 72;
-    private static final int BASE_SPEED = 1;
-    private static final int TURN_SPEED = 1;
+    private static final int HITBOX_TRIM = 5;
+    private static final double BASE_SPEED = 1;
+    private static final double TURN_SPEED = 1;
 
     private double speed, turnSpeed;
     private int direction;
     private boolean isForward, isLeft, isRight, isLanded;
+    private Sprite otherSprite;
 
     public Ship(int x, int y) {
         this(x, y, 0);
     }
 
     public Ship(int x, int y, int direction) {
-        super(x, y, SHIP_IMAGE, SHIP_FRAMES);
+        super(x, y, FLYING_IMAGE, SHIP_FRAMES);
 
         this.direction = direction % 360;
-
+        otherSprite = new Sprite(LANDED_IMAGE, SHIP_FRAMES);
+        
         speed = BASE_SPEED;
         turnSpeed = TURN_SPEED;
         isLive = true;
         isLanded = false;
+        
+        trimHitbox(HITBOX_TRIM, -HITBOX_TRIM, HITBOX_TRIM, -HITBOX_TRIM);
+    }
+    
+    public void swapSprites() {         
+        Sprite tempSprite = sprite;
+        sprite = otherSprite;
+        otherSprite = tempSprite;
     }
 
     public void addAngle(double angle) {
@@ -66,8 +79,13 @@ public class Ship extends CollidableObject {
         Point newCenter = obj.getCenter();
 
         shiftBy(newCenter.x - oldCenter.x, newCenter.y - oldCenter.y);
+        swapSprites();
         isLanded = true;
-        isForward = false;
+    }
+    
+    public void takeOff() {
+        swapSprites();
+        isLanded = false;
     }
 
     public boolean getLandedState() {
@@ -110,6 +128,5 @@ public class Ship extends CollidableObject {
         graphics.drawImage(sprite.getImage((int) direction / 5), (int) x, (int) y, null);
 
         drawHitbox(graphics);
-//        System.out.println(this);
     }
 }

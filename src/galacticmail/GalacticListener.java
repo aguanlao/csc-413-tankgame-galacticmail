@@ -33,6 +33,7 @@ public class GalacticListener implements KeyListener {
                 
             case KeyEvent.VK_SPACE:
                 playerShip.setLanded(false);
+                playerShip.takeOff();
                 break;
 
             default:
