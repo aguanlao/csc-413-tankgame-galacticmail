@@ -42,6 +42,6 @@ public class Planet extends CollidableObject {
     public void repaint(Graphics graphics) {
         graphics.drawImage(sprite.getImage(imageIndex), (int) x, (int) y, null);
         
-        drawHitbox(graphics);
+//        drawHitbox(graphics);
     }
 }
