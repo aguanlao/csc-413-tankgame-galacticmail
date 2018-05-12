@@ -2,6 +2,7 @@ package galacticmail;
 
 import java.io.*;
 import java.util.*;
+import java.awt.Point;
 
 import common.GameObject;
 import common.Explosion;
@@ -34,6 +35,64 @@ public class GalacticWorld implements Observer {
         objects.add(player);
         
         buildLevel();
+    } 
+
+    private boolean isNear(GameObject one, GameObject two) {
+        return (one.calculateDistance(two) < 100);
+    }
+    
+    private Point randomPosition() {
+        int x, y;
+        
+        x = (int)(Math.random() * WORLD_WIDTH);
+        y = (int)(Math.random() * WORLD_HEIGHT);
+        return new Point(x, y);
+    }
+    
+    private void spawnAsteroid() {
+        int direction;
+        double speed, rotateSpeed;
+        
+        Point start = randomPosition();        
+        direction = (int)(Math.random() * 360);
+        speed = Math.random() + 0.5;
+        rotateSpeed = Math.random() * 2;
+        
+        asteroids.add(new Asteroid(start.x, start.y, direction, speed, rotateSpeed));
+    }
+    
+    private void spawnPlanet() {
+        Point position = randomPosition();
+        objects.add(new Planet(position.x, position.y));
+    }
+    
+    private void checkPosition(GameObject object) {
+        int newX, newY;
+        
+        if(object.getX() <= 0) {
+            object.setX(WORLD_WIDTH);
+        }
+        else if(object.getX() >= WORLD_WIDTH) {
+            object.setX(0);
+        }
+    
+        if(object.getY() <= 0) {
+            object.setY(WORLD_HEIGHT);
+        }
+        else if(object.getY() >= WORLD_HEIGHT) {
+            object.setY(0);
+        }
+    }
+
+    public void buildLevel() {
+        // add ~10 asteroids and ~5 bases
+        for(int i = 0; i < 10; i++) {
+            if(i < 5) {
+                spawnPlanet();
+            }
+            spawnAsteroid();
+        }
+        
     }
 
     public List<GameObject> getObjects() {
@@ -42,31 +101,7 @@ public class GalacticWorld implements Observer {
     
     public List<Asteroid> getAsteroids() {
         return asteroids;
-    }   
-
-    private boolean isNear(GameObject one, GameObject two) {
-        return (one.calculateDistance(two) < 100);
-    }
-    
-    private void spawnAsteroid() {
-        int spawnX, spawnY, direction;
-        double speed, rotateSpeed;
-        
-        spawnX = (int)(Math.random() * WORLD_WIDTH);
-        spawnY = (int)(Math.random() * WORLD_HEIGHT);
-        direction = (int)(Math.random() * 360);
-        speed = Math.random() + 0.5;
-        rotateSpeed = Math.random() * 2;
-        
-        asteroids.add(new Asteroid(spawnX, spawnY, direction, speed, rotateSpeed));
-    }
-
-    public void buildLevel() {
-        // add ~10 asteroids and ~5 bases
-        for(int i = 0; i < 10; i++) {
-            spawnAsteroid();
-        }
-    }
+    }  
 
     @Override
     public void update(Observable observed, Object arg) {
@@ -97,6 +132,8 @@ public class GalacticWorld implements Observer {
                         objects.remove(i);
                     }
                 }
+                
+                checkPosition(objects.get(i));
             } // for int i
         } // (!GameOver)
     }

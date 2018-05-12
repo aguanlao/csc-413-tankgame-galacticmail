@@ -61,6 +61,17 @@ public abstract class CollidableObject extends GameObject{
     public void setLive(boolean flag) {
         isLive = flag;
     }
+    
+    public void moveTo(int destinationX, int destinationY) {
+        double oldX, oldY;
+        
+        oldX = this.x;
+        oldY = this.y;
+        this.x = destinationX;
+        this.y = destinationY;
+        
+        hitbox.translate((int)(this.x - oldX), (int)(this.y - oldY));    
+    }
 
     @Override
     public void repaint(Graphics graphics) {
