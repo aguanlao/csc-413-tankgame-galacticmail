@@ -97,6 +97,6 @@ public class Ship extends CollidableObject {
         
         
         drawHitbox(graphics);
-        System.out.println(this);
+//        System.out.println(this);
     }
 }

@@ -9,8 +9,6 @@ import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 
-import common.GameObject;
-
 public class GalacticPanel extends JPanel{
     private static final int VIEW_WIDTH = 1200;
     private static final int VIEW_HEIGHT = 800;
@@ -19,8 +17,6 @@ public class GalacticPanel extends JPanel{
     
     private final GalacticWorld world;
     private BufferedImage background;
-    
-    Asteroid a;
     
     public GalacticPanel(GalacticWorld world) {
         int width = GalacticWorld.WORLD_WIDTH;
@@ -43,6 +39,7 @@ public class GalacticPanel extends JPanel{
     @Override
     public void paintComponent(Graphics graphics) {
         Graphics2D g2D = (Graphics2D)graphics.create();
+        
         graphics.drawImage(background, 0, 0, VIEW_WIDTH, VIEW_HEIGHT, null);
         for(int i = 0; i < world.getAsteroids().size(); i++) {
             world.getAsteroids().get(i).repaint(g2D);
@@ -50,7 +47,8 @@ public class GalacticPanel extends JPanel{
         for(int i = 0; i < world.getObjects().size(); i++) {
             world.getObjects().get(i).repaint(g2D);
         }
-        g2D.dispose();
+        world.getShip().repaint(g2D);
         
+        g2D.dispose();        
     }    
 }

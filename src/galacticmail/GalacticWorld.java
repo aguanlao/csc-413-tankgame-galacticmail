@@ -7,6 +7,7 @@ import java.awt.Point;
 import common.GameObject;
 import common.CollidableObject;
 import common.Explosion;
+import common.GameClock;
 
 public class GalacticWorld implements Observer {
 
@@ -33,7 +34,7 @@ public class GalacticWorld implements Observer {
         endScreen = false;
 
         keyListener.setShip(player);
-        objects.add(player);
+//        objects.add(player);
         
         buildLevel();
     } 
@@ -59,7 +60,8 @@ public class GalacticWorld implements Observer {
         speed = Math.random() + 1;
         rotateSpeed = Math.random();
         
-        asteroids.add(new Asteroid(start.x, start.y, direction, speed, rotateSpeed));
+//        asteroids.add(new Asteroid(start.x, start.y, direction, speed, rotateSpeed));
+        objects.add(new Asteroid(start.x, start.y, direction, speed, rotateSpeed));
     }
     
     private void spawnPlanet() {
@@ -114,7 +116,11 @@ public class GalacticWorld implements Observer {
     
     public List<Asteroid> getAsteroids() {
         return asteroids;
-    }  
+    }
+    
+    public Ship getShip() {
+        return player;
+    }
 
     @Override
     public void update(Observable observed, Object arg) {
@@ -149,9 +155,7 @@ public class GalacticWorld implements Observer {
                 checkPosition(objects.get(i));
             }
             
-            for (int i = 0; i < asteroids.size(); i++) {
-                checkPosition(asteroids.get(i));
-            }
+            checkPosition(player);
         } // (!GameOver)
     }
 
