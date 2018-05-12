@@ -37,12 +37,13 @@ public class Asteroid extends CollidableObject {
         angle = (angle + rotationSpeed) % 360;
         
         hitbox.translate(((int) x - (int) oldX), ((int) y - (int) oldY));
-        hitbox.rotate(angle);
+        hitbox.rotate(-angle);
     }
 
     @Override
     public void repaint(Graphics graphics) {
         move();
         graphics.drawImage(sprite.getImage((int) angle / 2), (int) x, (int) y, null);
+        drawHitbox(graphics);
     }
 }

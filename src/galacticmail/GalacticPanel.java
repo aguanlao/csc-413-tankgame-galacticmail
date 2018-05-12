@@ -34,7 +34,6 @@ public class GalacticPanel extends JPanel{
             exception.printStackTrace();
         }
         
-        a = new Asteroid(50, 50);
     }
     
     public void redrawWorldImage() {
@@ -48,7 +47,9 @@ public class GalacticPanel extends JPanel{
         for(int i = 0; i < world.getAsteroids().size(); i++) {
             world.getAsteroids().get(i).repaint(g2D);
         }
-        a.repaint(g2D);
+        for(int i = 0; i < world.getObjects().size(); i++) {
+            world.getObjects().get(i).repaint(g2D);
+        }
         g2D.dispose();
         
     }    

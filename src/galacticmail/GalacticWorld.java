@@ -5,12 +5,13 @@ import java.util.*;
 import java.awt.Point;
 
 import common.GameObject;
+import common.CollidableObject;
 import common.Explosion;
 
 public class GalacticWorld implements Observer {
 
-    public static final int WORLD_WIDTH = 960;
-    public static final int WORLD_HEIGHT = 960;
+    public static final int WORLD_WIDTH = 1200;
+    public static final int WORLD_HEIGHT = 800;
     private static final String EXPLOSION_IMAGE = "galacticmail" + File.separator
             + "resources" + File.separator + "Explosion_strip9.png";
 
@@ -55,7 +56,7 @@ public class GalacticWorld implements Observer {
         
         Point start = randomPosition();        
         direction = (int)(Math.random() * 360);
-        speed = Math.random() + 0.5;
+        speed = Math.random() + 2;
         rotateSpeed = Math.random() * 2;
         
         asteroids.add(new Asteroid(start.x, start.y, direction, speed, rotateSpeed));
@@ -67,20 +68,31 @@ public class GalacticWorld implements Observer {
     }
     
     private void checkPosition(GameObject object) {
-        int newX, newY;
-        
-        if(object.getX() <= 0) {
-            object.setX(WORLD_WIDTH);
-        }
-        else if(object.getX() >= WORLD_WIDTH) {
-            object.setX(0);
-        }
-    
-        if(object.getY() <= 0) {
-            object.setY(WORLD_HEIGHT);
-        }
-        else if(object.getY() >= WORLD_HEIGHT) {
-            object.setY(0);
+        if(object.getX() < 0 || object.getX() > WORLD_WIDTH || object.getY() < 0 || object.getY() > WORLD_HEIGHT) {
+            double newX, newY;
+            
+            if(object.getX() + object.getWidth() < 0) {
+                newX = WORLD_WIDTH;
+            } else if(object.getX() > WORLD_WIDTH) {
+                newX = 0;
+            } else {
+                newX = object.getX();
+            }
+
+            if(object.getY() + object.getHeight() < 0) {
+                newY = WORLD_HEIGHT;
+            } else if(object.getY() > WORLD_HEIGHT) {
+                newY = 0;
+            } else {
+                newY = object.getY();
+            }
+            
+            if(object instanceof CollidableObject) {
+                ((CollidableObject)object).moveTo((int)newX, (int)newY);
+            } else {
+                object.setX(newX);
+                object.setY(newY);
+            }
         }
     }
 
@@ -134,7 +146,11 @@ public class GalacticWorld implements Observer {
                 }
                 
                 checkPosition(objects.get(i));
-            } // for int i
+            }
+            
+            for (int i = 0; i < asteroids.size(); i++) {
+                checkPosition(asteroids.get(i));
+            }
         } // (!GameOver)
     }
 

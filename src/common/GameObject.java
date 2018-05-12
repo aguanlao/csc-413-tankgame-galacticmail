@@ -52,4 +52,10 @@ public class GameObject {
     public void repaint(Graphics graphics) {
         graphics.drawImage(sprite.getImage(0), (int) x, (int) y, null);
     }
+    
+    @Override
+    public String toString() {
+        String output = "(" + this.x + ", " + this.y + ")";
+        return output;
+    }
 }
