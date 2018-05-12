@@ -1,8 +1,10 @@
 package galacticmail;
 
 import common.CollidableObject;
+import java.awt.Color;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.io.File;
 
 public class Asteroid extends CollidableObject {

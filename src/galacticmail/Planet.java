@@ -14,7 +14,7 @@ public class Planet extends CollidableObject {
 
     public Planet(int x, int y) {
         super(x, y, BASES_IMAGE, BASES_COUNT);
-        imageIndex = (int) (Math.random() * (BASES_COUNT + 1));
+        imageIndex = (int) (Math.random() * BASES_COUNT);
         isLive = true;
     }
 

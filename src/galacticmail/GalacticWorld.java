@@ -56,8 +56,8 @@ public class GalacticWorld implements Observer {
         
         Point start = randomPosition();        
         direction = (int)(Math.random() * 360);
-        speed = Math.random() + 2;
-        rotateSpeed = Math.random() * 2;
+        speed = Math.random() + 1;
+        rotateSpeed = Math.random();
         
         asteroids.add(new Asteroid(start.x, start.y, direction, speed, rotateSpeed));
     }
@@ -68,13 +68,14 @@ public class GalacticWorld implements Observer {
     }
     
     private void checkPosition(GameObject object) {
-        if(object.getX() < 0 || object.getX() > WORLD_WIDTH || object.getY() < 0 || object.getY() > WORLD_HEIGHT) {
+        if(object.getX() + object.getWidth() < 0 || object.getX() > WORLD_WIDTH 
+                || object.getY() + object.getHeight() < 0 || object.getY() > WORLD_HEIGHT) {
             double newX, newY;
             
             if(object.getX() + object.getWidth() < 0) {
                 newX = WORLD_WIDTH;
             } else if(object.getX() > WORLD_WIDTH) {
-                newX = 0;
+                newX = -object.getWidth() + 1;
             } else {
                 newX = object.getX();
             }
@@ -82,7 +83,7 @@ public class GalacticWorld implements Observer {
             if(object.getY() + object.getHeight() < 0) {
                 newY = WORLD_HEIGHT;
             } else if(object.getY() > WORLD_HEIGHT) {
-                newY = 0;
+                newY = -object.getHeight() + 1;
             } else {
                 newY = object.getY();
             }

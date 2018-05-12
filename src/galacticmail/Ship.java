@@ -94,5 +94,9 @@ public class Ship extends CollidableObject {
     public void repaint(Graphics graphics) {
         move();
         graphics.drawImage(sprite.getImage((int) direction / 5), (int)x, (int)y, null);
+        
+        
+        drawHitbox(graphics);
+        System.out.println(this);
     }
 }
