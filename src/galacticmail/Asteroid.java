@@ -1,10 +1,8 @@
 package galacticmail;
 
 import common.CollidableObject;
-import java.awt.Color;
 
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.io.File;
 
 public class Asteroid extends CollidableObject {
@@ -13,11 +11,6 @@ public class Asteroid extends CollidableObject {
     private static final int ASTEROID_FRAMES = 180;
     private final double velocity, vector, rotationSpeed;
     private double angle;
-    
-    //TODO: Debug constructor
-    public Asteroid(int startX, int startY) {
-        this(startX, startY, 270, 0.5, .1);
-    }
 
     public Asteroid(int startX, int startY, int direction, double speed, double rotateSpeed) {
         super(startX, startY, ASTEROID_IMAGE, ASTEROID_FRAMES);

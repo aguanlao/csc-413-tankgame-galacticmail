@@ -2,16 +2,14 @@ package galacticmail;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.List;
-import java.util.ArrayList;
 import javax.swing.*;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 
 public class GalacticPanel extends JPanel{
-    private static final int VIEW_WIDTH = 1200;
-    private static final int VIEW_HEIGHT = 800;
+    private static final int VIEW_WIDTH = 1000;
+    private static final int VIEW_HEIGHT = 600;
     private static final String BACKGROUND_IMAGE = "galacticmail" + File.separator 
             + "resources" + File.separator + "Background.png";
     
@@ -19,10 +17,7 @@ public class GalacticPanel extends JPanel{
     private BufferedImage background;
     private JLabel header, score;
     
-    public GalacticPanel(GalacticWorld world) {
-        int width = GalacticWorld.WORLD_WIDTH;
-        int height = GalacticWorld.WORLD_HEIGHT;
-        
+    public GalacticPanel(GalacticWorld world) {        
         this.world = world;
         try {
             background = ImageIO.read(new File(BACKGROUND_IMAGE));
