@@ -79,10 +79,6 @@ public abstract class CollidableObject extends GameObject {
     }
     
     public void shiftBy(int shiftX, int shiftY) {
-//        this.x += shiftX;
-//        this.y += shiftY;
-//        
-//        hitbox.translate(shiftX, shiftY);
         moveTo((int)this.x + shiftX, (int)this.y + shiftY);
     }
 

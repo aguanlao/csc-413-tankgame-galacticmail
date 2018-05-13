@@ -17,6 +17,7 @@ public class GalacticPanel extends JPanel{
     
     private final GalacticWorld world;
     private BufferedImage background;
+    private JLabel header, score;
     
     public GalacticPanel(GalacticWorld world) {
         int width = GalacticWorld.WORLD_WIDTH;
@@ -29,13 +30,33 @@ public class GalacticPanel extends JPanel{
             System.err.println("Error reading background file.");
             exception.printStackTrace();
         }
-        
+        createEndScreen();
     }
     
     public void displayTitleScreen() {
     }
     
-    public void displayEndScreen() {
+    private void createEndScreen() {
+        header = new JLabel("Game Over! ");
+        score = new JLabel("");
+        Font headerFont = new Font("SansSerif", Font.PLAIN, 36);
+        
+        
+        header.setVerticalAlignment(JLabel.TOP);
+        header.setHorizontalAlignment(JLabel.CENTER);
+        header.setForeground(Color.WHITE);
+        header.setFont(headerFont);
+        header.setOpaque(false);
+        header.setSize(GalacticWindow.WINDOW_WIDTH, GalacticWindow.WINDOW_HEIGHT);
+        score.setLocation(GalacticWindow.WINDOW_WIDTH/2, GalacticWindow.WINDOW_HEIGHT/2);
+        score.setForeground(Color.WHITE);
+        score.setFont(new Font("SansSerif", Font.PLAIN, 24));
+        score.setOpaque(false);
+        
+        header.setVisible(false);
+        score.setVisible(false);
+        this.add(header);
+        this.add(score);
     }
     
     @Override
@@ -54,7 +75,12 @@ public class GalacticPanel extends JPanel{
             world.getShip().repaint(g2D);
         }
         
-//        System.out.println("Score: " + world.getScore());
+        if(world.getEndScreenState()) {
+            String finalScore = "Final score: " + world.getScore(); 
+            score.setText(finalScore);
+            header.setVisible(true);
+            score.setVisible(true);
+        }
         
         g2D.dispose();        
     }    

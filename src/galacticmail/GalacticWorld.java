@@ -145,14 +145,19 @@ public class GalacticWorld implements Observer {
         return score;
     }
     
-    public boolean getGameOver() {
+    public boolean getGameOverState() {
         return gameOver;
+    }
+    
+    public boolean getEndScreenState() {
+        return endScreen;
     }
 
     @Override
     public void update(Observable observed, Object arg) {
         if (!player.isLiveNow()) {
             gameOver = true;
+            endScreen = true;
         }
 
         if (!gameOver && ((GameClock) observed).getFrame() % CLOCK_DELAY == 0) {
