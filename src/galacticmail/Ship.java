@@ -15,7 +15,7 @@ public class Ship extends CollidableObject {
     private static final int HITBOX_TRIM = 5;
     private static final double BASE_SPEED = 1;
     private static final double TURN_SPEED = 0.3;
-
+    
     private double speed, turnSpeed;
     private double direction;
     private boolean isLeft, isRight, isLanded;
@@ -46,10 +46,11 @@ public class Ship extends CollidableObject {
     }
 
     public void addAngle(double angle) {
-        direction = (direction + angle) % 360;
+        direction += angle;
         if (direction < 0) {
             direction += 360;
         }
+        direction = direction % 360;
     }
 
     public void setLeft(boolean flag) {
@@ -118,7 +119,7 @@ public class Ship extends CollidableObject {
     public void repaint(Graphics graphics) {
         move();
         graphics.drawImage(sprite.getImage((int) direction / 5), (int) x, (int) y, null);
-
+       
 //        drawHitbox(graphics);
     }
 }
