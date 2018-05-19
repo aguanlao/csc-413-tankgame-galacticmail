@@ -19,8 +19,7 @@ public class Window extends JFrame implements Observer {
         initializeFrame();
     }
     
-    private void initializeFrame() {
-        
+    private void initializeFrame() {        
         setTitle("Tanks");
     	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);

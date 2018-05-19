@@ -82,8 +82,7 @@ public class GalacticWorld implements Observer {
             position = randomPosition();
             newPlanet = new Planet(position.x, position.y);
         }
-
-//        return new Planet(position.x, position.y);
+        
         return newPlanet;
     }
 
@@ -118,14 +117,12 @@ public class GalacticWorld implements Observer {
     }
 
     public void buildLevel() {
-        // add ~10 asteroids and ~5 bases
         for (int i = 0; i < 10; i++) {
             if (i < 7) {
                 objects.add(spawnPlanet());
             }
             objects.add(spawnAsteroid());
         }
-
     }
 
     public List<GameObject> getObjects() {
@@ -209,7 +206,6 @@ public class GalacticWorld implements Observer {
                 checkPosition(obj);
             }
             checkPosition(player);
-        } // (!GameOver)
+        }
     }
-
 }

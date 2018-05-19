@@ -39,6 +39,5 @@ public class Asteroid extends CollidableObject {
     public void repaint(Graphics graphics) {
         move();
         graphics.drawImage(sprite.getImage((int) angle / 2), (int) x, (int) y, null);
-//        drawHitbox(graphics);
     }
 }

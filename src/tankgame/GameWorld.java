@@ -9,7 +9,6 @@ import java.io.*;
 import java.util.*;
 
 public class GameWorld implements Observer {
-
     static boolean isGameOver, player1Won, player2Won;
     
     public static final int WORLD_WIDTH = 960;
@@ -30,13 +29,11 @@ public class GameWorld implements Observer {
     private final Tank playerOne, playerTwo;
     private final List<GameObject> objects;
     private final List<Shot> shotsFired;
-    private final List<IndestructibleWall> walls;
     private final List<String> level;
 
     public GameWorld(TankListener listener) {
         objects = new ArrayList<>();
         shotsFired = new ArrayList<>();
-        walls = new ArrayList<>();
         level = new ArrayList<>();
         playerOne = new Tank(TANK1_START_X, TANK1_START_Y, TANK_IMAGE1);
         playerTwo = new Tank(TANK2_START_X, TANK2_START_Y, TANK2_DIRECTION, TANK_IMAGE2);
@@ -63,9 +60,7 @@ public class GameWorld implements Observer {
             while ((line = reader.readLine()) != null) {
                 level.add(line);
             }
-        } catch (IOException exception) {
-
-        }
+        } catch (IOException exception) {}
     }
 
     private void buildLevel() {
@@ -117,7 +112,6 @@ public class GameWorld implements Observer {
     @Override
     public void update(Observable observed, Object arg) {
         //On clock tick, check collisions, firing
-
         if (playerOne.getLivesLeft() <= 0) {
             player2Won = true;
             isGameOver = true;
@@ -127,7 +121,6 @@ public class GameWorld implements Observer {
         }
 
         if (!isGameOver) {
-
             if (((GameClock) observed).getFrame() % FIRING_DELAY == 0) {
                 if (playerOne.getShootState()) {
                     createShot(playerOne);
@@ -140,10 +133,8 @@ public class GameWorld implements Observer {
             if (!playerOne.isLiveNow() || !playerTwo.isLiveNow()) {
                 worldReset();
             }
-
             
             for (int i = 0; i < objects.size(); i++) {
-
                 if (objects.get(i) instanceof CollidableObject) {
                     CollidableObject collider = (CollidableObject) objects.get(i);
                     if (isNear(collider, playerOne) && collider != playerOne && playerOne.collides(collider)) {
@@ -178,7 +169,7 @@ public class GameWorld implements Observer {
                     }
                 }
             }
-        } // end of if (isGameOver)
+        }
     }
 
     public List<GameObject> getObjects() {

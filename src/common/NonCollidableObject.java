@@ -1,7 +1,5 @@
 package common;
 
-import common.GameObject;
-
 public abstract class NonCollidableObject extends GameObject{
     public NonCollidableObject(int x, int y, String image) {
         super(x, y, image);

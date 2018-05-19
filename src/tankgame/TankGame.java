@@ -14,8 +14,6 @@ public class TankGame {
         clock.addObserver(window);
         
         Thread clockThread = new Thread(clock);
-        clockThread.start();
-        
-    }
-    
+        clockThread.start();        
+    }    
 }

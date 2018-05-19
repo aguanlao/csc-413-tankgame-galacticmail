@@ -162,8 +162,7 @@ public class GamePanel extends JPanel {
     }
 
     
-    public void displayWinnerScreen () {
-    	
+    public void displayWinnerScreen () {    	
         String winner = "";
         if (GameWorld.player1Won) {
             winner = "Player 1";
@@ -181,7 +180,6 @@ public class GamePanel extends JPanel {
         winScreen.setOpaque(true);
         winScreen.setHorizontalAlignment(JLabel.CENTER);
     	winScreen.setVisible(true);
-    	this.add(winScreen);
-    	
+    	this.add(winScreen);    	
     }
 }

@@ -15,6 +15,5 @@ public class GalacticMail {
         
         Thread clockThread = new Thread(clock);
         clockThread.start();
-    }
-    
+    }    
 }

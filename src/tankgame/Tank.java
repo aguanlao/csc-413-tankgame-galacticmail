@@ -5,11 +5,9 @@ import java.awt.Graphics;
 import java.awt.Point;
 
 public class Tank extends CollidableObject {
-
     private static final int HITBOX_TRIM = 9;
     private static final int TANK_HEALTH = 100;
     private static final int TANK_LIVES = 3;
-
     private static final double BASE_SPEED = 1;
     private static final double TURN_SPEED = 1;
 
